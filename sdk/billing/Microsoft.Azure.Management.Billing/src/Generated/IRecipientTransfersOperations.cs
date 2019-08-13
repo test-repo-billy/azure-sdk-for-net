@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='transferName'>
         /// Transfer Name.
         /// </param>
-        /// <param name='body'>
-        /// Accept transfer parameters.
+        /// <param name='parameters'>
+        /// Parameters supplied to accept the transfer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RecipientTransferDetails>> AcceptWithHttpMessagesAsync(string transferName, AcceptTransferRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecipientTransferDetails>> AcceptWithHttpMessagesAsync(string transferName, AcceptTransferRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Declines the transfer with given transfer Id.
         /// </summary>

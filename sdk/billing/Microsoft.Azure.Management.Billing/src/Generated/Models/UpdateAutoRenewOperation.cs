@@ -10,31 +10,32 @@
 
 namespace Microsoft.Azure.Management.Billing.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Details about the enabled azure sku.
+    /// Summary of cancel product operation
     /// </summary>
-    public partial class EnabledAzureSKUs
+    [Rest.Serialization.JsonTransformation]
+    public partial class UpdateAutoRenewOperation
     {
         /// <summary>
-        /// Initializes a new instance of the EnabledAzureSKUs class.
+        /// Initializes a new instance of the UpdateAutoRenewOperation class.
         /// </summary>
-        public EnabledAzureSKUs()
+        public UpdateAutoRenewOperation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EnabledAzureSKUs class.
+        /// Initializes a new instance of the UpdateAutoRenewOperation class.
         /// </summary>
-        /// <param name="skuId">The sku id.</param>
-        /// <param name="skuDescription">The sku description.</param>
-        public EnabledAzureSKUs(string skuId = default(string), string skuDescription = default(string))
+        /// <param name="endDate">The end date of this asset</param>
+        public UpdateAutoRenewOperation(System.DateTime? endDate = default(System.DateTime?))
         {
-            SkuId = skuId;
-            SkuDescription = skuDescription;
+            EndDate = endDate;
             CustomInit();
         }
 
@@ -44,16 +45,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the sku id.
+        /// Gets or sets the end date of this asset
         /// </summary>
-        [JsonProperty(PropertyName = "skuId")]
-        public string SkuId { get; private set; }
-
-        /// <summary>
-        /// Gets the sku description.
-        /// </summary>
-        [JsonProperty(PropertyName = "skuDescription")]
-        public string SkuDescription { get; private set; }
+        [JsonProperty(PropertyName = "properties.endDate")]
+        public System.DateTime? EndDate { get; set; }
 
     }
 }

@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='transferName'>
         /// Transfer Name.
         /// </param>
-        /// <param name='body'>
-        /// Accept transfer parameters.
+        /// <param name='parameters'>
+        /// Parameters supplied to accept the transfer.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,15 +80,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RecipientTransferDetails>> AcceptWithHttpMessagesAsync(string transferName, AcceptTransferRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecipientTransferDetails>> AcceptWithHttpMessagesAsync(string transferName, AcceptTransferRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (transferName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "transferName");
             }
-            if (body == null)
+            if (parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("transferName", transferName);
-                tracingParameters.Add("body", body);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Accept", tracingParameters);
             }
@@ -145,9 +145,9 @@ namespace Microsoft.Azure.Management.Billing
 
             // Serialize Request
             string _requestContent = null;
-            if(body != null)
+            if(parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -448,7 +448,7 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/transfers/{transferName}/").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/transfers/{transferName}").ToString();
             _url = _url.Replace("{transferName}", System.Uri.EscapeDataString(transferName));
             List<string> _queryParameters = new List<string>();
             if (_queryParameters.Count > 0)

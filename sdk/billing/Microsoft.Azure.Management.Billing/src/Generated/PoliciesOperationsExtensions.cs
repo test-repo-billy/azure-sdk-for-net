@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Billing
     {
             /// <summary>
             /// The policy for a given billing account name and billing profile name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Billing
 
             /// <summary>
             /// The policy for a given billing account name and billing profile name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

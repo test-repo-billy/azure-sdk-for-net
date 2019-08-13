@@ -16,26 +16,25 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing reservation transactions summary.
+    /// Result of listing reservation transactions.
     /// </summary>
-    public partial class TransactionsListResult
+    public partial class TransactionListResult
     {
         /// <summary>
-        /// Initializes a new instance of the TransactionsListResult class.
+        /// Initializes a new instance of the TransactionListResult class.
         /// </summary>
-        public TransactionsListResult()
+        public TransactionListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TransactionsListResult class.
+        /// Initializes a new instance of the TransactionListResult class.
         /// </summary>
-        /// <param name="value">The list of reservation transactions
-        /// summary.</param>
+        /// <param name="value">The list of reservation transactions.</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public TransactionsListResult(IList<TransactionsSummary> value = default(IList<TransactionsSummary>), string nextLink = default(string))
+        public TransactionListResult(IList<Transaction> value = default(IList<Transaction>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -48,10 +47,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of reservation transactions summary.
+        /// Gets the list of reservation transactions.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<TransactionsSummary> Value { get; private set; }
+        public IList<Transaction> Value { get; private set; }
 
         /// <summary>
         /// Gets the link (url) to the next page of results.

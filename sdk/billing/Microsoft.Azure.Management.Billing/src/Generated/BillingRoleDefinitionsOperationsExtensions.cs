@@ -70,15 +70,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
             /// role definition id.
             /// </param>
-            public static BillingRoleDefinition GetByInvoiceSectionName(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string invoiceSectionName, string billingRoleDefinitionName)
+            public static BillingRoleDefinition GetByInvoiceSectionName(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingRoleDefinitionName)
             {
-                return operations.GetByInvoiceSectionNameAsync(billingAccountName, invoiceSectionName, billingRoleDefinitionName).GetAwaiter().GetResult();
+                return operations.GetByInvoiceSectionNameAsync(billingAccountName, billingProfileName, invoiceSectionName, billingRoleDefinitionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -90,6 +93,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
@@ -99,9 +105,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingRoleDefinition> GetByInvoiceSectionNameAsync(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string invoiceSectionName, string billingRoleDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingRoleDefinition> GetByInvoiceSectionNameAsync(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingRoleDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByInvoiceSectionNameWithHttpMessagesAsync(billingAccountName, invoiceSectionName, billingRoleDefinitionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByInvoiceSectionNameWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, billingRoleDefinitionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -196,12 +202,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            public static BillingRoleDefinitionListResult ListByInvoiceSectionName(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string invoiceSectionName)
+            public static BillingRoleDefinitionListResult ListByInvoiceSectionName(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName)
             {
-                return operations.ListByInvoiceSectionNameAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
+                return operations.ListByInvoiceSectionNameAsync(billingAccountName, billingProfileName, invoiceSectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -213,15 +222,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingRoleDefinitionListResult> ListByInvoiceSectionNameAsync(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingRoleDefinitionListResult> ListByInvoiceSectionNameAsync(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByInvoiceSectionNameWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByInvoiceSectionNameWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

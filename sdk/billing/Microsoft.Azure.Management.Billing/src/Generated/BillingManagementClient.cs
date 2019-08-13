@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2018-11-01-preview.
+        /// is 2019-10-01-preview.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IPaymentMethodsOperations.
         /// </summary>
         public virtual IPaymentMethodsOperations PaymentMethods { get; private set; }
+
+        /// <summary>
+        /// Gets the IAddressOperations.
+        /// </summary>
+        public virtual IAddressOperations Address { get; private set; }
 
         /// <summary>
         /// Gets the IAvailableBalancesOperations.
@@ -152,6 +157,16 @@ namespace Microsoft.Azure.Management.Billing
         public virtual ITransfersOperations Transfers { get; private set; }
 
         /// <summary>
+        /// Gets the IPartnerTransfersOperations.
+        /// </summary>
+        public virtual IPartnerTransfersOperations PartnerTransfers { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerTransfersTransfersOperations.
+        /// </summary>
+        public virtual IPartnerTransfersTransfersOperations PartnerTransfersTransfers { get; private set; }
+
+        /// <summary>
         /// Gets the IRecipientTransfersOperations.
         /// </summary>
         public virtual IRecipientTransfersOperations RecipientTransfers { get; private set; }
@@ -180,6 +195,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IAgreementsOperations.
         /// </summary>
         public virtual IAgreementsOperations Agreements { get; private set; }
+
+        /// <summary>
+        /// Gets the ILineOfCreditsOperations.
+        /// </summary>
+        public virtual ILineOfCreditsOperations LineOfCredits { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -424,6 +444,7 @@ namespace Microsoft.Azure.Management.Billing
         {
             BillingAccounts = new BillingAccountsOperations(this);
             PaymentMethods = new PaymentMethodsOperations(this);
+            Address = new AddressOperations(this);
             AvailableBalances = new AvailableBalancesOperations(this);
             BillingProfiles = new BillingProfilesOperations(this);
             InvoiceSections = new InvoiceSectionsOperations(this);
@@ -437,14 +458,17 @@ namespace Microsoft.Azure.Management.Billing
             Policies = new PoliciesOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
             Transfers = new TransfersOperations(this);
+            PartnerTransfers = new PartnerTransfersOperations(this);
+            PartnerTransfersTransfers = new PartnerTransfersTransfersOperations(this);
             RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
             BillingPermissions = new BillingPermissionsOperations(this);
             BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
+            LineOfCredits = new LineOfCreditsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-11-01-preview";
+            ApiVersion = "2019-10-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

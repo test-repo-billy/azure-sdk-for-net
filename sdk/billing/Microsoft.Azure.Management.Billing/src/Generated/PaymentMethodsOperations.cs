@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing account Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing profile Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -417,7 +417,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing account Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing profile Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

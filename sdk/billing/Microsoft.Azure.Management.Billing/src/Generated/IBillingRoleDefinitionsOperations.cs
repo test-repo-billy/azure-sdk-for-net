@@ -54,6 +54,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
@@ -75,7 +78,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingRoleDefinition>> GetByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingRoleDefinition>> GetByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the role definition for a role
         /// </summary>
@@ -132,6 +135,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
@@ -150,7 +156,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the role definition for a Billing Profile
         /// </summary>

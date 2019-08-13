@@ -52,6 +52,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
@@ -70,9 +73,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all billingPermissions for the caller has for a billing
+        /// Lists all billing permissions for the caller has for a billing
         /// account.
         /// </summary>
         /// <param name='billingAccountName'>

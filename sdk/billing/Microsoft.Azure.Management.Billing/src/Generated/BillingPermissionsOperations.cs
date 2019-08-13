@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/providers/Microsoft.Billing/billingPermissions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingPermissions").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -233,6 +233,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
@@ -257,7 +260,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -266,6 +269,10 @@ namespace Microsoft.Azure.Management.Billing
             if (billingAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+            }
+            if (billingProfileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
             if (invoiceSectionName == null)
             {
@@ -279,14 +286,16 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByInvoiceSections", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Billing/billingPermissions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingPermissions").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -414,7 +423,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists all billingPermissions for the caller has for a billing account.
+        /// Lists all billing permissions for the caller has for a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -471,7 +480,7 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.Billing/billingPermissions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/billingPermissions").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             List<string> _queryParameters = new List<string>();
