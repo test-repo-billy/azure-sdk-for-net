@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='expand'>
-            /// May be used to expand the invoiceSections and billingProfiles.
+            /// May be used to expand the address, invoiceSections and billingProfiles.
             /// </param>
             public static BillingAccountListResult List(this IBillingAccountsOperations operations, string expand = default(string))
             {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='expand'>
-            /// May be used to expand the invoiceSections and billingProfiles.
+            /// May be used to expand the address, invoiceSections and billingProfiles.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Billing
             /// billing Account Id.
             /// </param>
             /// <param name='expand'>
-            /// May be used to expand the invoiceSections and billingProfiles.
+            /// May be used to expand the address, invoiceSections and billingProfiles.
             /// </param>
             public static BillingAccount Get(this IBillingAccountsOperations operations, string billingAccountName, string expand = default(string))
             {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Billing
             /// billing Account Id.
             /// </param>
             /// <param name='expand'>
-            /// May be used to expand the invoiceSections and billingProfiles.
+            /// May be used to expand the address, invoiceSections and billingProfiles.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -90,6 +90,86 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<BillingAccount> GetAsync(this IBillingAccountsOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to update a billing account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters supplied to the update billing account operation.
+            /// </param>
+            public static BillingAccount Update(this IBillingAccountsOperations operations, string billingAccountName, BillingAccountUpdateRequest parameters)
+            {
+                return operations.UpdateAsync(billingAccountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update a billing account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters supplied to the update billing account operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BillingAccount> UpdateAsync(this IBillingAccountsOperations operations, string billingAccountName, BillingAccountUpdateRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The operation to update a billing account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters supplied to the update billing account operation.
+            /// </param>
+            public static BillingAccount BeginUpdate(this IBillingAccountsOperations operations, string billingAccountName, BillingAccountUpdateRequest parameters)
+            {
+                return operations.BeginUpdateAsync(billingAccountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update a billing account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='parameters'>
+            /// Request parameters supplied to the update billing account operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BillingAccount> BeginUpdateAsync(this IBillingAccountsOperations operations, string billingAccountName, BillingAccountUpdateRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(billingAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

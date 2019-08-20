@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// The policy for a given billing account name and billing profile name.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Policy>> GetByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Policy>> GetByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Billing
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByBillingProfileName", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetByBillingProfile", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
