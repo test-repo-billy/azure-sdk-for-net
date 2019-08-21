@@ -33,22 +33,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='location'>
             /// The location
             /// </param>
-            /// <param name='name'>
-            /// Resource name to verify.
-            /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include:
-            /// 'Microsoft.NetApp/netAppAccounts',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// Resource group name.
-            /// </param>
-            public static ResourceNameAvailability CheckNameAvailability(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup)
+            public static ResourceNameAvailability CheckNameAvailability(this IAzureNetAppFilesManagementClient operations, string location)
             {
-                return operations.CheckNameAvailabilityAsync(location, name, type, resourceGroup).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -63,25 +50,12 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='location'>
             /// The location
             /// </param>
-            /// <param name='name'>
-            /// Resource name to verify.
-            /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include:
-            /// 'Microsoft.NetApp/netAppAccounts',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// Resource group name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync(this IAzureNetAppFilesManagementClient operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, name, type, resourceGroup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -99,22 +73,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='location'>
             /// The location
             /// </param>
-            /// <param name='name'>
-            /// Resource name to verify.
-            /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include:
-            /// 'Microsoft.NetApp/netAppAccounts',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// Resource group name.
-            /// </param>
-            public static ResourceNameAvailability CheckFilePathAvailability(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup)
+            public static ResourceNameAvailability CheckFilePathAvailability(this IAzureNetAppFilesManagementClient operations, string location)
             {
-                return operations.CheckFilePathAvailabilityAsync(location, name, type, resourceGroup).GetAwaiter().GetResult();
+                return operations.CheckFilePathAvailabilityAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,25 +90,12 @@ namespace Microsoft.Azure.Management.NetApp
             /// <param name='location'>
             /// The location
             /// </param>
-            /// <param name='name'>
-            /// Resource name to verify.
-            /// </param>
-            /// <param name='type'>
-            /// Resource type used for verification. Possible values include:
-            /// 'Microsoft.NetApp/netAppAccounts',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
-            /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// Resource group name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceNameAvailability> CheckFilePathAvailabilityAsync(this IAzureNetAppFilesManagementClient operations, string location, string name, string type, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceNameAvailability> CheckFilePathAvailabilityAsync(this IAzureNetAppFilesManagementClient operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckFilePathAvailabilityWithHttpMessagesAsync(location, name, type, resourceGroup, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckFilePathAvailabilityWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

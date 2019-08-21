@@ -19,14 +19,14 @@ namespace Microsoft.Azure.Management.NetApp
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("NetApp", "Accounts", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "CheckFilePathAvailability", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "CheckNameAvailability", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "MountTargets", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "Operations", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "Pools", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "Snapshots", "2019-06-01"),
-                new Tuple<string, string, string>("NetApp", "Volumes", "2019-06-01"),
+                new Tuple<string, string, string>("NetApp", "Accounts", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "CheckFilePathAvailability", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "CheckNameAvailability", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "MountTargets", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "Operations", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "Pools", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "Snapshots", "2019-07-01"),
+                new Tuple<string, string, string>("NetApp", "Volumes", "2019-07-01"),
               }.AsEnumerable();
           }
       }
