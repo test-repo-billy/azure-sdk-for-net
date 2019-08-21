@@ -35,12 +35,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         /// <param name="value">The list of transfer validation
         /// results.</param>
-        /// <param name="nextLink">The link (url) to the next page of
-        /// results.</param>
-        public ValidateTransferListResponse(IList<ValidateTransferResponse> value = default(IList<ValidateTransferResponse>), string nextLink = default(string))
+        public ValidateTransferListResponse(IList<ValidateTransferResponse> value = default(IList<ValidateTransferResponse>))
         {
             Value = value;
-            NextLink = nextLink;
             CustomInit();
         }
 
@@ -54,12 +51,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ValidateTransferResponse> Value { get; private set; }
-
-        /// <summary>
-        /// Gets the link (url) to the next page of results.
-        /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; private set; }
 
     }
 }
