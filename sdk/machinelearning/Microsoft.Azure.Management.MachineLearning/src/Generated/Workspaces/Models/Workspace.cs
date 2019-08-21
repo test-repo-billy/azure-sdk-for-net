@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.MachineLearning.Workspaces.Models
         /// changed after the resource is created.</param>
         /// <param name="userStorageAccountId">The fully qualified arm id of
         /// the storage account associated with this workspace.</param>
-        /// <param name="ownerEmail">The email id of the owner for this
-        /// workspace.</param>
         /// <param name="id">The resource ID.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="ownerEmail">The email id of the owner for this
+        /// workspace.</param>
         /// <param name="workspaceType">The type of this workspace. Possible
         /// values include: 'Production', 'Free', 'Anonymous', 'PaidStandard',
         /// 'PaidPremium'</param>
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.MachineLearning.Workspaces.Models
         /// learning studio service which hosts this workspace.</param>
         /// <param name="keyVaultIdentifierId">The key vault identifier used
         /// for encrypted workspaces.</param>
-        public Workspace(string location, string userStorageAccountId, string ownerEmail, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), WorkspaceType? workspaceType = default(WorkspaceType?), WorkspaceState? workspaceState = default(WorkspaceState?), string workspaceId = default(string), string creationTime = default(string), string studioEndpoint = default(string), string keyVaultIdentifierId = default(string))
+        public Workspace(string location, string userStorageAccountId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string ownerEmail = default(string), WorkspaceType? workspaceType = default(WorkspaceType?), WorkspaceState? workspaceState = default(WorkspaceState?), string workspaceId = default(string), string creationTime = default(string), string studioEndpoint = default(string), string keyVaultIdentifierId = default(string))
             : base(location, id, name, type, tags)
         {
             UserStorageAccountId = userStorageAccountId;
@@ -144,10 +144,6 @@ namespace Microsoft.Azure.Management.MachineLearning.Workspaces.Models
             if (UserStorageAccountId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "UserStorageAccountId");
-            }
-            if (OwnerEmail == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OwnerEmail");
             }
         }
     }
