@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PricingsOperations operations.
+    /// AdaptiveApplicationControlsOperations operations.
     /// </summary>
-    internal partial class PricingsOperations : IServiceOperations<SecurityCenterClient>, IPricingsOperations
+    internal partial class AdaptiveApplicationControlsOperations : IServiceOperations<SecurityCenterClient>, IAdaptiveApplicationControlsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PricingsOperations class.
+        /// Initializes a new instance of the AdaptiveApplicationControlsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PricingsOperations(SecurityCenterClient client)
+        internal AdaptiveApplicationControlsOperations(SecurityCenterClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,14 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Lists Security Center pricing configurations in the subscription.
+        /// Gets a list of application control VM/server groups for the subscription.
         /// </summary>
+        /// <param name='includePathRecommendations'>
+        /// Include the policy rules
+        /// </param>
+        /// <param name='summary'>
+        /// Return output in a summarized form
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,7 +80,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PricingList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AppWhitelistingGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -87,7 +93,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2018-06-01";
+            string apiVersion = "2015-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -96,17 +102,27 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("includePathRecommendations", includePathRecommendations);
+                tracingParameters.Add("summary", summary);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/applicationWhitelistings").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (includePathRecommendations != null)
+            {
+                _queryParameters.Add(string.Format("includePathRecommendations={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(includePathRecommendations, Client.SerializationSettings).Trim('"'))));
+            }
+            if (summary != null)
+            {
+                _queryParameters.Add(string.Format("summary={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(summary, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -201,7 +217,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PricingList>();
+            var _result = new AzureOperationResponse<AppWhitelistingGroups>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -214,7 +230,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PricingList>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroups>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -234,10 +250,10 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Gets a provided Security Center pricing configuration in the subscription.
+        /// Gets an application control VM/server group.
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
+        /// <param name='groupName'>
+        /// Name of an application control VM/server group
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -260,7 +276,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Pricing>> GetWithHttpMessagesAsync(string pricingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AppWhitelistingGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -273,11 +289,15 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (pricingName == null)
+            if (Client.AscLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "pricingName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
             }
-            string apiVersion = "2018-06-01";
+            if (groupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
+            }
+            string apiVersion = "2015-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -285,16 +305,17 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("pricingName", pricingName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{pricingName}", System.Uri.EscapeDataString(pricingName));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -393,7 +414,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Pricing>();
+            var _result = new AzureOperationResponse<AppWhitelistingGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -406,7 +427,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Pricing>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -426,18 +447,13 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Updates a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Update an application control VM/server group
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
+        /// <param name='groupName'>
+        /// Name of an application control VM/server group
         /// </param>
-        /// <param name='pricingTier'>
-        /// The pricing tier value. Azure Security Center is provided in two pricing
-        /// tiers: free and standard, with the standard tier available with a trial
-        /// period. The standard tier offers advanced security capabilities, while the
-        /// free tier offers basic security features. Possible values include: 'Free',
-        /// 'Standard'
+        /// <param name='body'>
+        /// The updated VM/server group data
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -460,7 +476,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingPutGroupData body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -473,20 +489,19 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (pricingName == null)
+            if (Client.AscLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "pricingName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
             }
-            if (pricingTier == null)
+            if (groupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "pricingTier");
+                throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
             }
-            string apiVersion = "2018-06-01";
-            Pricing pricing = new Pricing();
-            if (pricingTier != null)
+            if (body == null)
             {
-                pricing.PricingTier = pricingTier;
+                throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
+            string apiVersion = "2015-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -494,17 +509,18 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("pricingName", pricingName);
-                tracingParameters.Add("pricing", pricing);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Put", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{pricingName}", System.Uri.EscapeDataString(pricingName));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -548,9 +564,9 @@ namespace Microsoft.Azure.Management.Security
 
             // Serialize Request
             string _requestContent = null;
-            if(pricing != null)
+            if(body != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(pricing, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -609,7 +625,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Pricing>();
+            var _result = new AzureOperationResponse<AppWhitelistingGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -622,7 +638,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Pricing>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AppWhitelistingGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

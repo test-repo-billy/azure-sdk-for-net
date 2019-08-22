@@ -19,35 +19,19 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PricingsOperations operations.
+    /// AdaptiveApplicationControlsOperations operations.
     /// </summary>
-    public partial interface IPricingsOperations
+    public partial interface IAdaptiveApplicationControlsOperations
     {
         /// <summary>
-        /// Lists Security Center pricing configurations in the subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<PricingList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a provided Security Center pricing configuration in the
+        /// Gets a list of application control VM/server groups for the
         /// subscription.
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
+        /// <param name='includePathRecommendations'>
+        /// Include the policy rules
+        /// </param>
+        /// <param name='summary'>
+        /// Return output in a summarized form
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -64,20 +48,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> GetWithHttpMessagesAsync(string pricingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppWhitelistingGroups>> ListWithHttpMessagesAsync(bool? includePathRecommendations = default(bool?), bool? summary = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Gets an application control VM/server group.
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
-        /// </param>
-        /// <param name='pricingTier'>
-        /// The pricing tier value. Azure Security Center is provided in two
-        /// pricing tiers: free and standard, with the standard tier available
-        /// with a trial period. The standard tier offers advanced security
-        /// capabilities, while the free tier offers basic security features.
-        /// Possible values include: 'Free', 'Standard'
+        /// <param name='groupName'>
+        /// Name of an application control VM/server group
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -94,6 +70,31 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppWhitelistingGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update an application control VM/server group
+        /// </summary>
+        /// <param name='groupName'>
+        /// Name of an application control VM/server group
+        /// </param>
+        /// <param name='body'>
+        /// The updated VM/server group data
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingPutGroupData body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
