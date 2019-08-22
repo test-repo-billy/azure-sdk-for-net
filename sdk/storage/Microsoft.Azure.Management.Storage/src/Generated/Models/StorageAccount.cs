@@ -293,6 +293,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 Sku.Validate();
             }
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
