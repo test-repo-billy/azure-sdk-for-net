@@ -29,21 +29,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Identity class.
         /// </summary>
+        /// <param name="type">The identity type. Possible values include:
+        /// 'SystemAssigned', 'None'</param>
         /// <param name="principalId">The principal ID of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
-        public Identity(string principalId = default(string), string tenantId = default(string))
+        public Identity(IdentityType type, string principalId = default(string), string tenantId = default(string))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
+            Type = type;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Identity class.
-        /// </summary>
-        static Identity()
-        {
-            Type = "SystemAssigned";
         }
 
         /// <summary>
@@ -64,10 +60,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// The identity type.
+        /// Gets or sets the identity type. Possible values include:
+        /// 'SystemAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        public IdentityType Type { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }
