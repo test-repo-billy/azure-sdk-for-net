@@ -19,13 +19,18 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PricingsOperations operations.
+    /// NetworkDataOperations operations.
     /// </summary>
-    public partial interface IPricingsOperations
+    public partial interface INetworkDataOperations
     {
         /// <summary>
-        /// Lists Security Center pricing configurations in the subscription.
+        /// Get the network data on all your scanned resources inside a scope
         /// </summary>
+        /// <param name='expand'>
+        /// expand whether you want to get more information about the network
+        /// data (ports and connections details). Possible values include:
+        /// 'true', 'false'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,13 +46,27 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PricingList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NetworkData>>> ListWithHttpMessagesAsync(string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Get the network data on your scanned resource
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='expand'>
+        /// expand whether you want to get more information about the network
+        /// data (ports and connections details). Possible values include:
+        /// 'true', 'false'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -64,20 +83,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> GetWithHttpMessagesAsync(string pricingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkData>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Get the network data on all your scanned resources inside a scope
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
-        /// </param>
-        /// <param name='pricingTier'>
-        /// The pricing tier value. Azure Security Center is provided in two
-        /// pricing tiers: free and standard, with the standard tier available
-        /// with a trial period. The standard tier offers advanced security
-        /// capabilities, while the free tier offers basic security features.
-        /// Possible values include: 'Free', 'Standard'
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -94,6 +105,6 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NetworkData>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
