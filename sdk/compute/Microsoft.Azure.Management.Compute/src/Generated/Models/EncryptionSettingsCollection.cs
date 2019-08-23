@@ -41,15 +41,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// unchanged.</param>
         /// <param name="encryptionSettings">A collection of encryption
         /// settings, one for each disk volume.</param>
-        /// <param name="encryptionSettingsVersion">Describes what type of
-        /// encryption is used for the disks. Once this field is set, it cannot
-        /// be overwritten. '1.0' corresponds to Azure Disk Encryption with AAD
-        /// app.'1.1' corresponds to Azure Disk Encryption.</param>
-        public EncryptionSettingsCollection(bool enabled, IList<EncryptionSettingsElement> encryptionSettings = default(IList<EncryptionSettingsElement>), string encryptionSettingsVersion = default(string))
+        public EncryptionSettingsCollection(bool enabled, IList<EncryptionSettingsElement> encryptionSettings = default(IList<EncryptionSettingsElement>))
         {
             Enabled = enabled;
             EncryptionSettings = encryptionSettings;
-            EncryptionSettingsVersion = encryptionSettingsVersion;
             CustomInit();
         }
 
@@ -74,15 +69,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "encryptionSettings")]
         public IList<EncryptionSettingsElement> EncryptionSettings { get; set; }
-
-        /// <summary>
-        /// Gets or sets describes what type of encryption is used for the
-        /// disks. Once this field is set, it cannot be overwritten. '1.0'
-        /// corresponds to Azure Disk Encryption with AAD app.'1.1' corresponds
-        /// to Azure Disk Encryption.
-        /// </summary>
-        [JsonProperty(PropertyName = "encryptionSettingsVersion")]
-        public string EncryptionSettingsVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
