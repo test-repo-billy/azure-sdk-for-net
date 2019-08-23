@@ -29,17 +29,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the RetentionPolicy class.
         /// </summary>
-        /// <param name="days">The number of days to retain manifest before it
-        /// expires.</param>
-        /// <param name="lastUpdatedTime">The timestamp when the policy was
-        /// last updated.</param>
+        /// <param name="days">The number of days to retain an untagged
+        /// manifest after which it gets purged.</param>
+        /// <param name="name">The name of retention policy.</param>
         /// <param name="status">The value that indicates whether the policy is
         /// enabled or not. Possible values include: 'enabled',
         /// 'disabled'</param>
-        public RetentionPolicy(int? days = default(int?), System.DateTime? lastUpdatedTime = default(System.DateTime?), string status = default(string))
+        public RetentionPolicy(int? days = default(int?), string name = default(string), string status = default(string))
         {
             Days = days;
-            LastUpdatedTime = lastUpdatedTime;
+            Name = name;
             Status = status;
             CustomInit();
         }
@@ -50,17 +49,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of days to retain manifest before it
-        /// expires.
+        /// Gets or sets the number of days to retain an untagged manifest
+        /// after which it gets purged.
         /// </summary>
         [JsonProperty(PropertyName = "days")]
         public int? Days { get; set; }
 
         /// <summary>
-        /// Gets the timestamp when the policy was last updated.
+        /// Gets the name of retention policy.
         /// </summary>
-        [JsonProperty(PropertyName = "lastUpdatedTime")]
-        public System.DateTime? LastUpdatedTime { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or sets the value that indicates whether the policy is enabled
