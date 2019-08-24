@@ -46,12 +46,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// map path rule.</param>
         /// <param name="provisioningState">Path rule of URL path map resource.
         /// Possible values are: 'Updating', 'Deleting', and 'Failed'.</param>
+        /// <param name="firewallPolicy">Reference to the FirewallPolicy
+        /// resource.</param>
         /// <param name="name">Name of the path rule that is unique within an
         /// Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public ApplicationGatewayPathRule(string id = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource redirectConfiguration = default(SubResource), SubResource rewriteRuleSet = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public ApplicationGatewayPathRule(string id = default(string), IList<string> paths = default(IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), SubResource redirectConfiguration = default(SubResource), SubResource rewriteRuleSet = default(SubResource), string provisioningState = default(string), SubResource firewallPolicy = default(SubResource), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Paths = paths;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
             RedirectConfiguration = redirectConfiguration;
             RewriteRuleSet = rewriteRuleSet;
             ProvisioningState = provisioningState;
+            FirewallPolicy = firewallPolicy;
             Name = name;
             Etag = etag;
             Type = type;
@@ -110,6 +113,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets reference to the FirewallPolicy resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallPolicy")]
+        public SubResource FirewallPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets name of the path rule that is unique within an
