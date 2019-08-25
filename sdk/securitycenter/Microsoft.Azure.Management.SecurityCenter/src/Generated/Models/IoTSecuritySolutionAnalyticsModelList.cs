@@ -17,25 +17,30 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// List of pricing configurations response.
+    /// List of Security Analytics of a security solution
     /// </summary>
-    public partial class PricingList
+    public partial class IoTSecuritySolutionAnalyticsModelList
     {
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the
+        /// IoTSecuritySolutionAnalyticsModelList class.
         /// </summary>
-        public PricingList()
+        public IoTSecuritySolutionAnalyticsModelList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the
+        /// IoTSecuritySolutionAnalyticsModelList class.
         /// </summary>
-        /// <param name="value">List of pricing configurations</param>
-        public PricingList(IList<Pricing> value)
+        /// <param name="value">List of Security Analytics of a security
+        /// solution</param>
+        /// <param name="nextLink">The URI to fetch the next page.</param>
+        public IoTSecuritySolutionAnalyticsModelList(IList<IoTSecuritySolutionAnalyticsModel> value, string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -45,10 +50,16 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of pricing configurations
+        /// Gets or sets list of Security Analytics of a security solution
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Pricing> Value { get; set; }
+        public IList<IoTSecuritySolutionAnalyticsModel> Value { get; set; }
+
+        /// <summary>
+        /// Gets the URI to fetch the next page.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
         /// <summary>
         /// Validate the object.

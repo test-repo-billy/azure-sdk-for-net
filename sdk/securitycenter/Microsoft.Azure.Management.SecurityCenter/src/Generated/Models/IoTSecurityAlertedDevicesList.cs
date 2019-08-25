@@ -17,23 +17,25 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// List of pricing configurations response.
+    /// List of devices with the count of raised alerts
     /// </summary>
-    public partial class PricingList
+    public partial class IoTSecurityAlertedDevicesList
     {
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the IoTSecurityAlertedDevicesList
+        /// class.
         /// </summary>
-        public PricingList()
+        public IoTSecurityAlertedDevicesList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the IoTSecurityAlertedDevicesList
+        /// class.
         /// </summary>
-        /// <param name="value">List of pricing configurations</param>
-        public PricingList(IList<Pricing> value)
+        /// <param name="value">List of aggregated alerts data</param>
+        public IoTSecurityAlertedDevicesList(IList<IoTSecurityAlertedDevice> value)
         {
             Value = value;
             CustomInit();
@@ -45,10 +47,10 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of pricing configurations
+        /// Gets or sets list of aggregated alerts data
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Pricing> Value { get; set; }
+        public IList<IoTSecurityAlertedDevice> Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -61,16 +63,6 @@ namespace Microsoft.Azure.Management.Security.Models
             if (Value == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
-            }
-            if (Value != null)
-            {
-                foreach (var element in Value)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

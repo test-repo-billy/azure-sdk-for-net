@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Security
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "AllowedConnections", "2015-06-01-preview"),
@@ -28,6 +29,14 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "InformationProtectionPolicies", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutions", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutionsAnalytics", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutionsAnalyticsAggregatedAlert", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutionsAnalyticsAggregatedAlerts", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutionsAnalyticsRecommendation", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutionsAnalyticsRecommendations", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IoTSecuritySolutionsResourceGroup", "2019-08-01"),
+                new Tuple<string, string, string>("Security", "IotSecuritySolution", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "JitNetworkAccessPolicies", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
@@ -36,6 +45,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceControls", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceStandards", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "SecurityContacts", "2017-08-01-preview"),
+                new Tuple<string, string, string>("Security", "ServerVulnerabilityAssessment", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Settings", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Topology", "2015-06-01-preview"),
