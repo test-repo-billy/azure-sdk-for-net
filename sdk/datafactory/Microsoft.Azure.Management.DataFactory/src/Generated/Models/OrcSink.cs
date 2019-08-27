@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Binary sink.
+    /// A copy activity ORC sink.
     /// </summary>
-    public partial class BinarySink : CopySink
+    public partial class OrcSink : CopySink
     {
         /// <summary>
-        /// Initializes a new instance of the BinarySink class.
+        /// Initializes a new instance of the OrcSink class.
         /// </summary>
-        public BinarySink()
+        public OrcSink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BinarySink class.
+        /// Initializes a new instance of the OrcSink class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the sink data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="storeSettings">Binary store settings.</param>
-        public BinarySink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings))
+        /// <param name="storeSettings">ORC store settings.</param>
+        public OrcSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), StoreWriteSettings storeSettings = default(StoreWriteSettings))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets binary store settings.
+        /// Gets or sets ORC store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
         public StoreWriteSettings StoreSettings { get; set; }
