@@ -16,48 +16,52 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// IP configuration for virtual network gateway.
+    /// Frontend IP configuration of an application gateway.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkGatewayIPConfiguration : SubResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualNetworkGatewayIPConfiguration class.
+        /// ApplicationGatewayFrontendIPConfiguration class.
         /// </summary>
-        public VirtualNetworkGatewayIPConfiguration()
+        public ApplicationGatewayFrontendIPConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualNetworkGatewayIPConfiguration class.
+        /// ApplicationGatewayFrontendIPConfiguration class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
+        /// <param name="privateIPAddress">PrivateIPAddress of the network
+        /// interface IP Configuration.</param>
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the public IP
+        /// <param name="subnet">Reference of the subnet resource.</param>
+        /// <param name="publicIPAddress">Reference of the PublicIP
         /// resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
-        /// <param name="name">The name of the resource that is unique within a
-        /// resource group. This name can be used to access the
-        /// resource.</param>
+        /// frontend IP configuration resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="name">Name of the frontend IP configuration that is
+        /// unique within an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGatewayIPConfiguration(string id = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public ApplicationGatewayFrontendIPConfiguration(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
+            PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -67,6 +71,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets privateIPAddress of the network interface IP
+        /// Configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        public string PrivateIPAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets the private IP address allocation method. Possible
         /// values include: 'Static', 'Dynamic'
         /// </summary>
@@ -74,27 +85,28 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.
+        /// Gets or sets reference of the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the public IP resource.
+        /// Gets or sets reference of the PublicIP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the public IP resource. Possible
-        /// values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets or sets the provisioning state of the frontend IP
+        /// configuration resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource that is unique within a
-        /// resource group. This name can be used to access the resource.
+        /// Gets or sets name of the frontend IP configuration that is unique
+        /// within an Application Gateway.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -105,6 +117,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }
