@@ -175,6 +175,16 @@ namespace Microsoft.Azure.Management.Logic
         IIntegrationAccountSessionsOperations IntegrationAccountSessions { get; }
 
         /// <summary>
+        /// Gets the IIntegrationServiceEnvironmentsOperations.
+        /// </summary>
+        IIntegrationServiceEnvironmentsOperations IntegrationServiceEnvironments { get; }
+
+        /// <summary>
+        /// Gets the IIntegrationServiceEnvironmentOperations.
+        /// </summary>
+        IIntegrationServiceEnvironmentOperations IntegrationServiceEnvironment { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

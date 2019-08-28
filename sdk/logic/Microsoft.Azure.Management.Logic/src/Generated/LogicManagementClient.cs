@@ -180,6 +180,16 @@ namespace Microsoft.Azure.Management.Logic
         public virtual IIntegrationAccountSessionsOperations IntegrationAccountSessions { get; private set; }
 
         /// <summary>
+        /// Gets the IIntegrationServiceEnvironmentsOperations.
+        /// </summary>
+        public virtual IIntegrationServiceEnvironmentsOperations IntegrationServiceEnvironments { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationServiceEnvironmentOperations.
+        /// </summary>
+        public virtual IIntegrationServiceEnvironmentOperations IntegrationServiceEnvironment { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -446,9 +456,11 @@ namespace Microsoft.Azure.Management.Logic
             IntegrationAccountAgreements = new IntegrationAccountAgreementsOperations(this);
             IntegrationAccountCertificates = new IntegrationAccountCertificatesOperations(this);
             IntegrationAccountSessions = new IntegrationAccountSessionsOperations(this);
+            IntegrationServiceEnvironments = new IntegrationServiceEnvironmentsOperations(this);
+            IntegrationServiceEnvironment = new IntegrationServiceEnvironmentOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-07-01-preview";
+            ApiVersion = "2019-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
