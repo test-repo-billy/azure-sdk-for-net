@@ -1498,7 +1498,13 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Get network configuration diagnostic.
+        /// The Network Configuration Diagnostic API helps customers understand and
+        /// debug network behaviour. It provides detailed information on what security
+        /// rules were applied to a specified traffic flow and the result of evaluating
+        /// these rules. Customers must the provide details of a flow like source,
+        /// destination, protocol, etc. The API returns whether traffic was allowed or
+        /// denied, the rules evaluated for the specified flow and the evaluation
+        /// results.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -3945,7 +3951,13 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Get network configuration diagnostic.
+        /// The Network Configuration Diagnostic API helps customers understand and
+        /// debug network behaviour. It provides detailed information on what security
+        /// rules were applied to a specified traffic flow and the result of evaluating
+        /// these rules. Customers must the provide details of a flow like source,
+        /// destination, protocol, etc. The API returns whether traffic was allowed or
+        /// denied, the rules evaluated for the specified flow and the evaluation
+        /// results.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
