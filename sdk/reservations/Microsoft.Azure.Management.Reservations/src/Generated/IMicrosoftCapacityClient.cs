@@ -20,9 +20,8 @@ namespace Microsoft.Azure.Management.Reservations
     using System.Threading.Tasks;
 
     /// <summary>
-    /// This API describe Azure Reservation
     /// </summary>
-    public partial interface IAzureReservationAPIClient : System.IDisposable
+    public partial interface IMicrosoftCapacityClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -45,9 +44,15 @@ namespace Microsoft.Azure.Management.Reservations
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Supported version for this document is 2019-04-01
+        /// The Resource name for the specific resource provider, such as SKU
+        /// name for Microsoft.Compute, pool for Microsoft.Batch.
         /// </summary>
-        string ApiVersion { get; }
+        string ResourceName { get; set; }
+
+        /// <summary>
+        /// Quota Request id.
+        /// </summary>
+        string Id { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -69,14 +74,39 @@ namespace Microsoft.Azure.Management.Reservations
 
 
         /// <summary>
-        /// Gets the IReservationOrderOperations.
+        /// Gets the IQuotaOperations.
         /// </summary>
-        IReservationOrderOperations ReservationOrder { get; }
+        IQuotaOperations Quota { get; }
+
+        /// <summary>
+        /// Gets the IQuotaRequestOperations.
+        /// </summary>
+        IQuotaRequestOperations QuotaRequest { get; }
+
+        /// <summary>
+        /// Gets the IQuotasOperations.
+        /// </summary>
+        IQuotasOperations Quotas { get; }
+
+        /// <summary>
+        /// Gets the IQuotaRequestsOperations.
+        /// </summary>
+        IQuotaRequestsOperations QuotaRequests { get; }
+
+        /// <summary>
+        /// Gets the IQuotaRequestStatusOperations.
+        /// </summary>
+        IQuotaRequestStatusOperations QuotaRequestStatus { get; }
 
         /// <summary>
         /// Gets the IReservationOperations.
         /// </summary>
         IReservationOperations Reservation { get; }
+
+        /// <summary>
+        /// Gets the IReservationOrderOperations.
+        /// </summary>
+        IReservationOrderOperations ReservationOrder { get; }
 
         /// <summary>
         /// Gets the IOperationOperations.

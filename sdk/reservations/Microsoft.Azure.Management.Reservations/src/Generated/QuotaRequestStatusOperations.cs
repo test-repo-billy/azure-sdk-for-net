@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Reservations
     using System.Threading.Tasks;
 
     /// <summary>
-    /// OperationOperations operations.
+    /// QuotaRequestStatusOperations operations.
     /// </summary>
-    internal partial class OperationOperations : IServiceOperations<MicrosoftCapacityClient>, IOperationOperations
+    internal partial class QuotaRequestStatusOperations : IServiceOperations<MicrosoftCapacityClient>, IQuotaRequestStatusOperations
     {
         /// <summary>
-        /// Initializes a new instance of the OperationOperations class.
+        /// Initializes a new instance of the QuotaRequestStatusOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal OperationOperations(MicrosoftCapacityClient client)
+        internal QuotaRequestStatusOperations(MicrosoftCapacityClient client)
         {
             if (client == null)
             {
@@ -51,29 +51,62 @@ namespace Microsoft.Azure.Management.Reservations
         public MicrosoftCapacityClient Client { get; private set; }
 
         /// <summary>
-        /// Get operations.
+        /// For the specified location, gets the Quota request status by requestId.
         /// </summary>
         /// <remarks>
-        /// List all the operations.
+        /// Gets the QuotaRequest details and status by the quota requestId for the
+        /// resources for the resource  provider at a specific location. The requestId
+        /// is returned as response to the Put requests for serviceLimits.
         /// </remarks>
+        /// <param name='subscriptionId'>
+        /// Azure subscription id.
+        /// </param>
+        /// <param name='providerId'>
+        /// Azure resource Provider id.
+        /// </param>
+        /// <param name='location'>
+        /// Azure region.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ExceptionResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<OperationResponse>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SubRequest>>> GetWithHttpMessagesAsync(string subscriptionId, string providerId, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2019-04-01";
+            if (subscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
+            }
+            if (providerId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "providerId");
+            }
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            if (Client.Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Id");
+            }
+            string apiVersion = "2019-07-19-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -81,13 +114,20 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("providerId", providerId);
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Capacity/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Capacity/providers/{providerId}/locations/{location}/serviceLimits/requests/{id}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
+            _url = _url.Replace("{providerId}", System.Uri.EscapeDataString(providerId));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
+            _url = _url.Replace("{id}", System.Uri.EscapeDataString(Client.Id));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -153,11 +193,11 @@ namespace Microsoft.Azure.Management.Reservations
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ExceptionResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    ExceptionResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ExceptionResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -181,7 +221,7 @@ namespace Microsoft.Azure.Management.Reservations
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<OperationResponse>>();
+            var _result = new AzureOperationResponse<IPage<SubRequest>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -194,7 +234,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<OperationResponse>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SubRequest>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -214,10 +254,12 @@ namespace Microsoft.Azure.Management.Reservations
         }
 
         /// <summary>
-        /// Get operations.
+        /// For the specified location, gets the Quota request status by requestId.
         /// </summary>
         /// <remarks>
-        /// List all the operations.
+        /// Gets the QuotaRequest details and status by the quota requestId for the
+        /// resources for the resource  provider at a specific location. The requestId
+        /// is returned as response to the Put requests for serviceLimits.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -228,7 +270,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="ExceptionResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -243,7 +285,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<OperationResponse>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SubRequest>>> GetNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -258,7 +300,7 @@ namespace Microsoft.Azure.Management.Reservations
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -324,11 +366,11 @@ namespace Microsoft.Azure.Management.Reservations
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ExceptionResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    ExceptionResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ExceptionResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -352,7 +394,7 @@ namespace Microsoft.Azure.Management.Reservations
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<OperationResponse>>();
+            var _result = new AzureOperationResponse<IPage<SubRequest>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -365,7 +407,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<OperationResponse>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SubRequest>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
