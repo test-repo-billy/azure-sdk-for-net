@@ -17,25 +17,30 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// List of pricing configurations response.
+    /// List of alerts with the count of raised alerts
     /// </summary>
-    public partial class PricingList
+    public partial class IoTSecurityDeviceAlertsList
     {
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the IoTSecurityDeviceAlertsList
+        /// class.
         /// </summary>
-        public PricingList()
+        public IoTSecurityDeviceAlertsList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the IoTSecurityDeviceAlertsList
+        /// class.
         /// </summary>
-        /// <param name="value">List of pricing configurations</param>
-        public PricingList(IList<Pricing> value)
+        /// <param name="value">List of top alerts data</param>
+        /// <param name="nextLink">When there is too much alert data for one
+        /// page, use this URI to fetch the next page.</param>
+        public IoTSecurityDeviceAlertsList(IList<IoTSecurityDeviceAlert> value, string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -45,10 +50,17 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of pricing configurations
+        /// Gets or sets list of top alerts data
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Pricing> Value { get; set; }
+        public IList<IoTSecurityDeviceAlert> Value { get; set; }
+
+        /// <summary>
+        /// Gets when there is too much alert data for one page, use this URI
+        /// to fetch the next page.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -61,16 +73,6 @@ namespace Microsoft.Azure.Management.Security.Models
             if (Value == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
-            }
-            if (Value != null)
-            {
-                foreach (var element in Value)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

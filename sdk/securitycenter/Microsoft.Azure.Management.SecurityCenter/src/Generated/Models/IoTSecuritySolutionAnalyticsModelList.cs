@@ -17,25 +17,31 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// List of pricing configurations response.
+    /// List of Security analytics of your IoT Security solution
     /// </summary>
-    public partial class PricingList
+    public partial class IoTSecuritySolutionAnalyticsModelList
     {
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the
+        /// IoTSecuritySolutionAnalyticsModelList class.
         /// </summary>
-        public PricingList()
+        public IoTSecuritySolutionAnalyticsModelList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the
+        /// IoTSecuritySolutionAnalyticsModelList class.
         /// </summary>
-        /// <param name="value">List of pricing configurations</param>
-        public PricingList(IList<Pricing> value)
+        /// <param name="value">List of Security analytics of your IoT Security
+        /// solution</param>
+        /// <param name="nextLink">When there is too much alert data for one
+        /// page, use this URI to fetch the next page.</param>
+        public IoTSecuritySolutionAnalyticsModelList(IList<IoTSecuritySolutionAnalyticsModel> value, string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -45,10 +51,18 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of pricing configurations
+        /// Gets or sets list of Security analytics of your IoT Security
+        /// solution
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Pricing> Value { get; set; }
+        public IList<IoTSecuritySolutionAnalyticsModel> Value { get; set; }
+
+        /// <summary>
+        /// Gets when there is too much alert data for one page, use this URI
+        /// to fetch the next page.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
         /// <summary>
         /// Validate the object.

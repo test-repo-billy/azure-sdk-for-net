@@ -19,13 +19,25 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PricingsOperations operations.
+    /// IotSecuritySolutionsAnalyticsRecommendationOperations operations.
     /// </summary>
-    public partial interface IPricingsOperations
+    public partial interface IIotSecuritySolutionsAnalyticsRecommendationOperations
     {
         /// <summary>
-        /// Lists Security Center pricing configurations in the subscription.
+        /// Use this method to get the aggregated security analytics
+        /// recommendation of yours IoT Security solution. This aggregation is
+        /// performed by recommendation name.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='solutionName'>
+        /// The name of the IoT Security solution.
+        /// </param>
+        /// <param name='aggregatedRecommendationName'>
+        /// Name of the recommendation aggregated for this query.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,13 +53,20 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PricingList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IoTSecurityAggregatedRecommendation>> GetWithHttpMessagesAsync(string resourceGroupName, string solutionName, string aggregatedRecommendationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Use this method to get the list of aggregated security analytics
+        /// recommendations of yours IoT Security solution.
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='solutionName'>
+        /// The name of the IoT Security solution.
+        /// </param>
+        /// <param name='top'>
+        /// Number of results to retrieve.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -64,20 +83,13 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> GetWithHttpMessagesAsync(string pricingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IoTSecurityAggregatedRecommendation>>> ListWithHttpMessagesAsync(string resourceGroupName, string solutionName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a provided Security Center pricing configuration in the
-        /// subscription.
+        /// Use this method to get the list of aggregated security analytics
+        /// recommendations of yours IoT Security solution.
         /// </summary>
-        /// <param name='pricingName'>
-        /// name of the pricing configuration
-        /// </param>
-        /// <param name='pricingTier'>
-        /// The pricing tier value. Azure Security Center is provided in two
-        /// pricing tiers: free and standard, with the standard tier available
-        /// with a trial period. The standard tier offers advanced security
-        /// capabilities, while the free tier offers basic security features.
-        /// Possible values include: 'Free', 'Standard'
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -94,6 +106,6 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Pricing>> UpdateWithHttpMessagesAsync(string pricingName, string pricingTier, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IoTSecurityAggregatedRecommendation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
