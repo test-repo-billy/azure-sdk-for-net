@@ -17,23 +17,26 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// List of pricing configurations response.
+    /// List of aggregated recommendation data, per recommendation type, per
+    /// device.
     /// </summary>
-    public partial class PricingList
+    public partial class IoTSecurityDeviceRecommendationsList
     {
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the
+        /// IoTSecurityDeviceRecommendationsList class.
         /// </summary>
-        public PricingList()
+        public IoTSecurityDeviceRecommendationsList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PricingList class.
+        /// Initializes a new instance of the
+        /// IoTSecurityDeviceRecommendationsList class.
         /// </summary>
-        /// <param name="value">List of pricing configurations</param>
-        public PricingList(IList<Pricing> value)
+        /// <param name="value">List of aggregated recommendation data</param>
+        public IoTSecurityDeviceRecommendationsList(IList<IoTSecurityDeviceRecommendation> value)
         {
             Value = value;
             CustomInit();
@@ -45,10 +48,10 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of pricing configurations
+        /// Gets or sets list of aggregated recommendation data
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Pricing> Value { get; set; }
+        public IList<IoTSecurityDeviceRecommendation> Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -61,16 +64,6 @@ namespace Microsoft.Azure.Management.Security.Models
             if (Value == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
-            }
-            if (Value != null)
-            {
-                foreach (var element in Value)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
