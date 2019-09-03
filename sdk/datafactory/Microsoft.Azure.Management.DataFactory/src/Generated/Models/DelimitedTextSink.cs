@@ -81,6 +81,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (StoreSettings != null)
+            {
+                StoreSettings.Validate();
+            }
             if (FormatSettings != null)
             {
                 FormatSettings.Validate();
