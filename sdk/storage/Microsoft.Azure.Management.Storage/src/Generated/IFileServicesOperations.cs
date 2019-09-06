@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileServiceProperties>> PutServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the properties of file services in storage accounts, including
         /// CORS (Cross-Origin Resource Sharing) rules.

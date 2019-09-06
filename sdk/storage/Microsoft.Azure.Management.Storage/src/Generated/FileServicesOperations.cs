@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileServiceProperties>> PutServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("fileServicesName", fileServicesName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PutServiceProperties", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "SetServiceProperties", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
