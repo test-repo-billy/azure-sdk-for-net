@@ -51,16 +51,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// soft delete.</param>
         /// <param name="automaticSnapshotPolicyEnabled">Automatic Snapshot is
         /// enabled if set to true.</param>
-        /// <param name="changeFeed">The blob service properties for change
-        /// feed events.</param>
-        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), string defaultServiceVersion = default(string), DeleteRetentionPolicy deleteRetentionPolicy = default(DeleteRetentionPolicy), bool? automaticSnapshotPolicyEnabled = default(bool?), ChangeFeed changeFeed = default(ChangeFeed))
+        public BlobServiceProperties(string id = default(string), string name = default(string), string type = default(string), CorsRules cors = default(CorsRules), string defaultServiceVersion = default(string), DeleteRetentionPolicy deleteRetentionPolicy = default(DeleteRetentionPolicy), bool? automaticSnapshotPolicyEnabled = default(bool?))
             : base(id, name, type)
         {
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
             AutomaticSnapshotPolicyEnabled = automaticSnapshotPolicyEnabled;
-            ChangeFeed = changeFeed;
             CustomInit();
         }
 
@@ -98,12 +95,6 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.automaticSnapshotPolicyEnabled")]
         public bool? AutomaticSnapshotPolicyEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets the blob service properties for change feed events.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.changeFeed")]
-        public ChangeFeed ChangeFeed { get; set; }
 
         /// <summary>
         /// Validate the object.
