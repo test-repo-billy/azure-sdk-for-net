@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only share names starting with the filter will be
             /// listed.
             /// </param>
-            public static FileShareItems List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string))
+            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string))
             {
                 return operations.ListAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter).GetAwaiter().GetResult();
             }
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileShareItems> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -354,6 +354,40 @@ namespace Microsoft.Azure.Management.Storage
             public static async Task DeleteAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all shares.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<FileShareItem> ListNext(this IFileSharesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all shares.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FileShareItem>> ListNextAsync(this IFileSharesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }
