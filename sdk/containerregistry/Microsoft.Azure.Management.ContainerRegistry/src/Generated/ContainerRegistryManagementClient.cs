@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual IRunsOperations Runs { get; private set; }
 
         /// <summary>
+        /// Gets the ITaskRunsOperations.
+        /// </summary>
+        public virtual ITaskRunsOperations TaskRuns { get; private set; }
+
+        /// <summary>
         /// Gets the ITasksOperations.
         /// </summary>
         public virtual ITasksOperations Tasks { get; private set; }
@@ -342,6 +347,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             Replications = new ReplicationsOperations(this);
             Webhooks = new WebhooksOperations(this);
             Runs = new RunsOperations(this);
+            TaskRuns = new TaskRunsOperations(this);
             Tasks = new TasksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
