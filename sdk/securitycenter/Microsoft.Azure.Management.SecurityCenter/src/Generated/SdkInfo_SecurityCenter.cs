@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "SecurityContacts", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "ServerVulnerabilityAssessment", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Settings", "2019-01-01"),
+                new Tuple<string, string, string>("Security", "SubAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Topology", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "WorkspaceSettings", "2017-08-01-preview"),
