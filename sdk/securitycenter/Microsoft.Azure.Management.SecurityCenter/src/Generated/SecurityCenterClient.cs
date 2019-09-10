@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.Security
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the INetworkDataOperations.
+        /// </summary>
+        public virtual INetworkDataOperations NetworkData { get; private set; }
+
+        /// <summary>
         /// Gets the IComplianceResultsOperations.
         /// </summary>
         public virtual IComplianceResultsOperations ComplianceResults { get; private set; }
@@ -457,6 +462,7 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         private void Initialize()
         {
+            NetworkData = new NetworkDataOperations(this);
             ComplianceResults = new ComplianceResultsOperations(this);
             Pricings = new PricingsOperations(this);
             Alerts = new AlertsOperations(this);

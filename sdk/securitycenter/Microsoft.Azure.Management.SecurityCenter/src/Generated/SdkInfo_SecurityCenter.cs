@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "IotSecuritySolutionsAnalyticsRecommendation", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "JitNetworkAccessPolicies", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "NetworkData", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Pricings", "2018-06-01"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceAssessments", "2019-01-01-preview"),
