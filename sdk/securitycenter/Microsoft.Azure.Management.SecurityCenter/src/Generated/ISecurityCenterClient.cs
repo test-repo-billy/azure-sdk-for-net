@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Security
 
 
         /// <summary>
+        /// Gets the INetworkDataOperations.
+        /// </summary>
+        INetworkDataOperations NetworkData { get; }
+
+        /// <summary>
         /// Gets the IComplianceResultsOperations.
         /// </summary>
         IComplianceResultsOperations ComplianceResults { get; }
