@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Resource group in which the IoT hub is in
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             public static void ManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
             {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Resource group in which the IoT hub is in
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Resource group in which the IoT hub is in
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             public static void BeginManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
             {
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// https://aka.ms/manualfailover/region
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Resource group in which the IoT hub is in
+            /// Name of the resource group containing the IoT hub resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
