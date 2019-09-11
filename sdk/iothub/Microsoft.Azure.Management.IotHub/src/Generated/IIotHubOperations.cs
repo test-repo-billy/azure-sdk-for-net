@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// learn more, see https://aka.ms/manualfailover/region
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Resource group in which the IoT hub is in
+        /// Name of the resource group containing the IoT hub resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// learn more, see https://aka.ms/manualfailover/region
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Resource group in which the IoT hub is in
+        /// Name of the resource group containing the IoT hub resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

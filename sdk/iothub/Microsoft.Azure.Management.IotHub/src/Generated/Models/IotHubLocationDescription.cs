@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="location">The name of the Azure region</param>
         /// <param name="role">The role of the region, can be either primary or
         /// secondary. The primary region is where the IoT hub is currently
-        /// provisioned. The secondary region is the the Azure disaster
-        /// recovery (DR) paired region and also the region where the IoT hub
-        /// can failover to. Possible values include: 'primary',
+        /// provisioned. The secondary region is the Azure disaster recovery
+        /// (DR) paired region and also the region where the IoT hub can
+        /// failover to. Possible values include: 'primary',
         /// 'secondary'</param>
         public IotHubLocationDescription(string location = default(string), string role = default(string))
         {
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets the role of the region, can be either primary or
         /// secondary. The primary region is where the IoT hub is currently
-        /// provisioned. The secondary region is the the Azure disaster
-        /// recovery (DR) paired region and also the region where the IoT hub
-        /// can failover to. Possible values include: 'primary', 'secondary'
+        /// provisioned. The secondary region is the Azure disaster recovery
+        /// (DR) paired region and also the region where the IoT hub can
+        /// failover to. Possible values include: 'primary', 'secondary'
         /// </summary>
         [JsonProperty(PropertyName = "role")]
         public string Role { get; set; }
