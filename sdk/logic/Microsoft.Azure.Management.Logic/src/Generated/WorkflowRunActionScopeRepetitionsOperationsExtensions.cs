@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='actionName'>
             /// The workflow action name.
             /// </param>
-            public static WorkflowRunActionRepetitionDefinitionCollection List(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName)
+            public static IPage<WorkflowRunActionRepetitionDefinition> List(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName)
             {
                 return operations.ListAsync(resourceGroupName, workflowName, runName, actionName).GetAwaiter().GetResult();
             }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WorkflowRunActionRepetitionDefinitionCollection> ListAsync(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<WorkflowRunActionRepetitionDefinition>> ListAsync(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workflowName, runName, actionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -126,6 +126,40 @@ namespace Microsoft.Azure.Management.Logic
             public static async Task<WorkflowRunActionRepetitionDefinition> GetAsync(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName, string repetitionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workflowName, runName, actionName, repetitionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List the workflow run action scoped repetitions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<WorkflowRunActionRepetitionDefinition> ListNext(this IWorkflowRunActionScopeRepetitionsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List the workflow run action scoped repetitions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WorkflowRunActionRepetitionDefinition>> ListNextAsync(this IWorkflowRunActionScopeRepetitionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
