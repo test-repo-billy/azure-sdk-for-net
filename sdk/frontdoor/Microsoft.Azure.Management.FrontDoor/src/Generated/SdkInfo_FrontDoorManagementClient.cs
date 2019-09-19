@@ -19,17 +19,13 @@ namespace Microsoft.Azure.Management.FrontDoor
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Network", "BackendPools", "2019-05-01"),
                 new Tuple<string, string, string>("Network", "CheckFrontDoorNameAvailability", "2019-05-01"),
                 new Tuple<string, string, string>("Network", "CheckFrontDoorNameAvailabilityWithSubscription", "2019-05-01"),
                 new Tuple<string, string, string>("Network", "Endpoints", "2019-05-01"),
                 new Tuple<string, string, string>("Network", "FrontDoors", "2019-05-01"),
                 new Tuple<string, string, string>("Network", "FrontendEndpoints", "2019-05-01"),
-                new Tuple<string, string, string>("Network", "HealthProbeSettings", "2019-05-01"),
-                new Tuple<string, string, string>("Network", "LoadBalancingSettings", "2019-05-01"),
                 new Tuple<string, string, string>("Network", "ManagedRuleSets", "2019-03-01"),
                 new Tuple<string, string, string>("Network", "Policies", "2019-03-01"),
-                new Tuple<string, string, string>("Network", "RoutingRules", "2019-05-01"),
               }.AsEnumerable();
           }
       }
