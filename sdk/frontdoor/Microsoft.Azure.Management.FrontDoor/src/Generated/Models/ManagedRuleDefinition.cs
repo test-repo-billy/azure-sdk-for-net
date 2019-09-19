@@ -59,19 +59,19 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string RuleId { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes the default state for the managed rule.
-        /// Possible values include: 'Disabled', 'Enabled'
+        /// Gets describes the default state for the managed rule. Possible
+        /// values include: 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "defaultState")]
-        public string DefaultState { get; set; }
+        public string DefaultState { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes the default action to be applied when the
-        /// managed rule matches. Possible values include: 'Allow', 'Block',
-        /// 'Log', 'Redirect'
+        /// Gets describes the default action to be applied when the managed
+        /// rule matches. Possible values include: 'Allow', 'Block', 'Log',
+        /// 'Redirect'
         /// </summary>
         [JsonProperty(PropertyName = "defaultAction")]
-        public string DefaultAction { get; set; }
+        public string DefaultAction { get; private set; }
 
         /// <summary>
         /// Gets describes the functionality of the managed rule.
