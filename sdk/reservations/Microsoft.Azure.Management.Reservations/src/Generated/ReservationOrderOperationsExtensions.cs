@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='body'>
             /// Information needed for calculate or purchase reservation
             /// </param>
-            public static CalculatePriceResponse CalculatePrice(this IReservationOrderOperations operations, PurchaseRequest body)
+            public static CalculatePriceResponse Calculate(this IReservationOrderOperations operations, PurchaseRequest body)
             {
-                return operations.CalculatePriceAsync(body).GetAwaiter().GetResult();
+                return operations.CalculateAsync(body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CalculatePriceResponse> CalculatePriceAsync(this IReservationOrderOperations operations, PurchaseRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CalculatePriceResponse> CalculateAsync(this IReservationOrderOperations operations, PurchaseRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CalculatePriceWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CalculateWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
