@@ -490,35 +490,6 @@ namespace Microsoft.Azure.Management.Logic
         /// that resulted in a run.
         /// </param>
         /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> ResubmitWithHttpMessagesAsync(string resourceGroupName, string workflowName, string triggerName, string historyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginResubmitWithHttpMessagesAsync(resourceGroupName, workflowName, triggerName, historyName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Resubmits a workflow run based on the trigger history.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='workflowName'>
-        /// The workflow name.
-        /// </param>
-        /// <param name='triggerName'>
-        /// The workflow trigger name.
-        /// </param>
-        /// <param name='historyName'>
-        /// The workflow trigger history name. Corresponds to the run name for triggers
-        /// that resulted in a run.
-        /// </param>
-        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -536,7 +507,7 @@ namespace Microsoft.Azure.Management.Logic
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginResubmitWithHttpMessagesAsync(string resourceGroupName, string workflowName, string triggerName, string historyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ResubmitWithHttpMessagesAsync(string resourceGroupName, string workflowName, string triggerName, string historyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -574,7 +545,7 @@ namespace Microsoft.Azure.Management.Logic
                 tracingParameters.Add("triggerName", triggerName);
                 tracingParameters.Add("historyName", historyName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginResubmit", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Resubmit", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
