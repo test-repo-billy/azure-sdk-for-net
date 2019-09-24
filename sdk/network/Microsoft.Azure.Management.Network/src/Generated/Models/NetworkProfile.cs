@@ -44,10 +44,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="containerNetworkInterfaceConfigurations">List of chid
         /// container network interface configurations.</param>
         /// <param name="resourceGuid">The resource GUID property of the
-        /// network profile resource.</param>
+        /// network interface resource.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// network profile resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'</param>
+        /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         public NetworkProfile(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<ContainerNetworkInterface> containerNetworkInterfaces = default(IList<ContainerNetworkInterface>), IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations = default(IList<ContainerNetworkInterfaceConfiguration>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
@@ -80,15 +79,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; set; }
 
         /// <summary>
-        /// Gets the resource GUID property of the network profile resource.
+        /// Gets the resource GUID property of the network interface resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the network profile resource.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

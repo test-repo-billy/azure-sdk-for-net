@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the FirewallPolicyRule class.
         /// </summary>
-        /// <param name="name">The name of the rule.</param>
+        /// <param name="name">Name of the Rule</param>
         /// <param name="priority">Priority of the Firewall Policy Rule
         /// resource.</param>
         public FirewallPolicyRule(string name = default(string), int? priority = default(int?))
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the rule.
+        /// Gets or sets name of the Rule
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -28,10 +28,7 @@ namespace Microsoft.Azure.Management.Network
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The location that will be used as a reference for version (not as a filter
-            /// based on location, you will get the list of service tags with prefix
-            /// details across all regions but limited to the cloud that your subscription
-            /// belongs to).
+            /// The location.
             /// </param>
             public static ServiceTagsListResult List(this IServiceTagsOperations operations, string location)
             {
@@ -45,10 +42,7 @@ namespace Microsoft.Azure.Management.Network
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The location that will be used as a reference for version (not as a filter
-            /// based on location, you will get the list of service tags with prefix
-            /// details across all regions but limited to the cloud that your subscription
-            /// belongs to).
+            /// The location.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

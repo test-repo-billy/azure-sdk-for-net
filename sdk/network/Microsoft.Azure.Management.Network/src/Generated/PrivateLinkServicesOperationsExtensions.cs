@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Checks whether the subscription is visible to private link service.
+            /// Checks the subscription is visible to private link service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Checks whether the subscription is visible to private link service.
+            /// Checks the subscription is visible to private link service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -352,8 +352,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Checks whether the subscription is visible to private link service in the
-            /// specified resource group.
+            /// Checks the subscription is visible to private link service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -373,8 +372,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Checks whether the subscription is visible to private link service in the
-            /// specified resource group.
+            /// Checks the subscription is visible to private link service
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
