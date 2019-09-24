@@ -40,8 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="actions">Describes the actions permitted to the
         /// service upon delegation.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// service delegation resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'</param>
+        /// resource.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// subnet. This name can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
@@ -77,9 +76,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> Actions { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the service delegation resource.
-        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
-        /// 'Failed'
+        /// Gets the provisioning state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

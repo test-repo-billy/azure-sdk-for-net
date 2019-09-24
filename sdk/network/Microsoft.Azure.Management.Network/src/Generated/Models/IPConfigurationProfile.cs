@@ -35,9 +35,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="subnet">The reference of the subnet resource to create
         /// a container network interface ip configuration.</param>
-        /// <param name="provisioningState">The provisioning state of the IP
-        /// configuration profile resource. Possible values include:
-        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// resource.</param>
         /// <param name="name">The name of the resource. This name can be used
         /// to access the resource.</param>
         /// <param name="type">Sub Resource type.</param>
@@ -67,9 +66,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the IP configuration profile
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

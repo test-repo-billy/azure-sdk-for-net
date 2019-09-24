@@ -43,8 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// network interfaces created from this container network interface
         /// configuration.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// container network interface configuration resource. Possible values
-        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// resource.</param>
         /// <param name="name">The name of the resource. This name can be used
         /// to access the resource.</param>
         /// <param name="type">Sub Resource type.</param>
@@ -82,9 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> ContainerNetworkInterfaces { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the container network interface
-        /// configuration resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

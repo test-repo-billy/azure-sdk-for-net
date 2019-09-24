@@ -421,16 +421,6 @@ namespace Microsoft.Azure.Management.Network
         IVirtualNetworkTapsOperations VirtualNetworkTaps { get; }
 
         /// <summary>
-        /// Gets the IVirtualRoutersOperations.
-        /// </summary>
-        IVirtualRoutersOperations VirtualRouters { get; }
-
-        /// <summary>
-        /// Gets the IVirtualRouterPeeringsOperations.
-        /// </summary>
-        IVirtualRouterPeeringsOperations VirtualRouterPeerings { get; }
-
-        /// <summary>
         /// Gets the IVirtualWansOperations.
         /// </summary>
         IVirtualWansOperations VirtualWans { get; }
