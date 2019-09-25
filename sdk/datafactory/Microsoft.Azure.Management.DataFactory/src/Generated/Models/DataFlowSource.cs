@@ -35,12 +35,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Transformation description.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="dataset">Dataset reference.</param>
-        public DataFlowSource(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), DatasetReference dataset = default(DatasetReference), object additionalProperties = default(object))
+        public DataFlowSource(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), DatasetReference dataset = default(DatasetReference))
             : base(name, additionalProperties, description)
         {
-            Dataset = dataset;
             AdditionalProperties = additionalProperties;
+            Dataset = dataset;
             CustomInit();
         }
 
@@ -50,15 +52,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets dataset reference.
         /// </summary>
         [JsonProperty(PropertyName = "dataset")]
         public DatasetReference Dataset { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public object AdditionalProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
