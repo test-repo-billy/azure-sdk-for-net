@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,11 +33,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// GetDataFactoryOperationStatusResponse class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="status">Status of the operation.</param>
-        public GetDataFactoryOperationStatusResponse(string status = default(string), object additionalProperties = default(object))
+        public GetDataFactoryOperationStatusResponse(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string status = default(string))
         {
-            Status = status;
             AdditionalProperties = additionalProperties;
+            Status = status;
             CustomInit();
         }
 
@@ -45,15 +49,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets status of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public object AdditionalProperties { get; set; }
 
     }
 }

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,14 +31,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DataFlowSourceSetting class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sourceName">The data flow source name.</param>
         /// <param name="rowLimit">Defines the row limit of data flow source in
         /// debug.</param>
-        public DataFlowSourceSetting(string sourceName = default(string), int? rowLimit = default(int?), object additionalProperties = default(object))
+        public DataFlowSourceSetting(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string sourceName = default(string), int? rowLimit = default(int?))
         {
+            AdditionalProperties = additionalProperties;
             SourceName = sourceName;
             RowLimit = rowLimit;
-            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -44,6 +48,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the data flow source name.
@@ -56,11 +67,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "rowLimit")]
         public int? RowLimit { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public object AdditionalProperties { get; set; }
 
     }
 }
