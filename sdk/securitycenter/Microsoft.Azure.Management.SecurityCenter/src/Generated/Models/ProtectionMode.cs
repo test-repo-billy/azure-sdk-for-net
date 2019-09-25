@@ -55,25 +55,25 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Gets or sets possible values include: 'Audit', 'Enforce', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "Exe")]
+        [JsonProperty(PropertyName = "exe")]
         public string Exe { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Audit', 'Enforce', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "Msi")]
+        [JsonProperty(PropertyName = "msi")]
         public string Msi { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Audit', 'Enforce', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "Script")]
+        [JsonProperty(PropertyName = "script")]
         public string Script { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Audit', 'Enforce', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "Executable")]
+        [JsonProperty(PropertyName = "executable")]
         public string Executable { get; set; }
 
     }
