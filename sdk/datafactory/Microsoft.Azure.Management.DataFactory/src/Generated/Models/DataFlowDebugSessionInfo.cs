@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DataFlowDebugSessionInfo class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="dataFlowName">The name of the data flow.</param>
         /// <param name="computeType">Compute type of the cluster.</param>
         /// <param name="coreCount">Core count of the cluster.</param>
@@ -43,8 +47,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// cluster.</param>
         /// <param name="lastActivityTime">Last activity time of data flow
         /// debug session.</param>
-        public DataFlowDebugSessionInfo(string dataFlowName = default(string), string computeType = default(string), int? coreCount = default(int?), int? nodeCount = default(int?), string integrationRuntimeName = default(string), string sessionId = default(string), string startTime = default(string), string timeToLiveInMinutes = default(string), string lastActivityTime = default(string), object additionalProperties = default(object))
+        public DataFlowDebugSessionInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFlowName = default(string), string computeType = default(string), int? coreCount = default(int?), int? nodeCount = default(int?), string integrationRuntimeName = default(string), string sessionId = default(string), string startTime = default(string), int? timeToLiveInMinutes = default(int?), string lastActivityTime = default(string))
         {
+            AdditionalProperties = additionalProperties;
             DataFlowName = dataFlowName;
             ComputeType = computeType;
             CoreCount = coreCount;
@@ -54,7 +59,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             StartTime = startTime;
             TimeToLiveInMinutes = timeToLiveInMinutes;
             LastActivityTime = lastActivityTime;
-            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -62,6 +66,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the data flow.
@@ -110,18 +121,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets compute type of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "timeToLiveInMinutes")]
-        public string TimeToLiveInMinutes { get; set; }
+        public int? TimeToLiveInMinutes { get; set; }
 
         /// <summary>
         /// Gets or sets last activity time of data flow debug session.
         /// </summary>
         [JsonProperty(PropertyName = "lastActivityTime")]
         public string LastActivityTime { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public object AdditionalProperties { get; set; }
 
     }
 }

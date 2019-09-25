@@ -31,21 +31,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DataFlowDebugPackage class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sessionId">The ID of data flow debug session.</param>
         /// <param name="dataFlow">Data flow instance.</param>
         /// <param name="datasets">List of datasets.</param>
         /// <param name="linkedServices">List of linked services.</param>
         /// <param name="staging">Staging info for debug session.</param>
         /// <param name="debugSettings">Data flow debug settings.</param>
-        public DataFlowDebugPackage(string sessionId = default(string), DataFlowResource dataFlow = default(DataFlowResource), IList<DatasetResource> datasets = default(IList<DatasetResource>), IList<LinkedServiceResource> linkedServices = default(IList<LinkedServiceResource>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), DataFlowDebugPackageDebugSettings debugSettings = default(DataFlowDebugPackageDebugSettings), object additionalProperties = default(object))
+        public DataFlowDebugPackage(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string sessionId = default(string), DataFlowResource dataFlow = default(DataFlowResource), IList<DatasetResource> datasets = default(IList<DatasetResource>), IList<LinkedServiceResource> linkedServices = default(IList<LinkedServiceResource>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), DataFlowDebugPackageDebugSettings debugSettings = default(DataFlowDebugPackageDebugSettings))
         {
+            AdditionalProperties = additionalProperties;
             SessionId = sessionId;
             DataFlow = dataFlow;
             Datasets = datasets;
             LinkedServices = linkedServices;
             Staging = staging;
             DebugSettings = debugSettings;
-            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -53,6 +55,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of data flow debug session.
@@ -89,11 +98,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "debugSettings")]
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public object AdditionalProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

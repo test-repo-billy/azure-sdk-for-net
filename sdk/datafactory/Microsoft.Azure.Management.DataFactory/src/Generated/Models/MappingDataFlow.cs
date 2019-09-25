@@ -39,22 +39,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the data flow.</param>
         /// <param name="folder">The folder that this data flow is in. If not
         /// specified, Data flow will appear at the root level.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="sources">List of sources in data flow.</param>
         /// <param name="sinks">List of sinks in data flow.</param>
         /// <param name="transformations">List of transformations in data
         /// flow.</param>
         /// <param name="script">DataFlow script.</param>
-        public MappingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string), object additionalProperties1 = default(object))
+        public MappingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<DataFlowSource> sources = default(IList<DataFlowSource>), IList<DataFlowSink> sinks = default(IList<DataFlowSink>), IList<Transformation> transformations = default(IList<Transformation>), string script = default(string))
             : base(description, annotations, folder)
         {
-            AdditionalProperties = additionalProperties;
             Sources = sources;
             Sinks = sinks;
             Transformations = transformations;
             Script = script;
-            AdditionalProperties1 = additionalProperties1;
             CustomInit();
         }
 
@@ -62,13 +58,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets list of sources in data flow.
@@ -93,11 +82,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.script")]
         public string Script { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.additionalProperties")]
-        public object AdditionalProperties1 { get; set; }
 
     }
 }
