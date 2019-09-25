@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,15 +30,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the DataFlowSink class.
         /// </summary>
         /// <param name="name">Transformation name.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Transformation description.</param>
         /// <param name="dataset">Dataset reference.</param>
-        public DataFlowSink(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), DatasetReference dataset = default(DatasetReference), object additionalProperties = default(object))
-            : base(name, additionalProperties, description)
+        public DataFlowSink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference))
+            : base(name, description)
         {
             Dataset = dataset;
-            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -54,11 +49,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataset")]
         public DatasetReference Dataset { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "additionalProperties")]
-        public object AdditionalProperties { get; set; }
 
         /// <summary>
         /// Validate the object.
