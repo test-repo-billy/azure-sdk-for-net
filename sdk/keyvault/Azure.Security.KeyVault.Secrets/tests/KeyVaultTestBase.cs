@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Test
 
         public SecretClient Client { get; set; }
 
-        public Uri VaultEndpoint { get; set; }
+        public Uri VaultUri { get; set; }
 
         private readonly Queue<(string Name, bool Delete)> _secretsToCleanup = new Queue<(string, bool)>();
 
@@ -41,7 +41,7 @@ namespace Azure.Security.KeyVault.Test
             base.StartTestRecording();
 
             Client = GetClient();
-            VaultEndpoint = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
         [TearDown]
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Test
                 {
                     if (cleanupItem.Delete)
                     {
-                        await Client.DeleteSecretAsync(cleanupItem.Name);
+                        await Client.DeleteAsync(cleanupItem.Name);
                     }
                 }
 
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Test
 
                 foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
                 {
-                    await Client.PurgeDeletedSecretAsync(cleanupItem.Name);
+                    await Client.PurgeDeletedAsync(cleanupItem.Name);
                 }
 
                 foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Test
             _secretsToCleanup.Enqueue((name, delete));
         }
 
-        protected void AssertSecretsEqual(KeyVaultSecret exp, KeyVaultSecret act)
+        protected void AssertSecretsEqual(Secret exp, Secret act)
         {
             Assert.AreEqual(exp.Value, act.Value);
             AssertSecretPropertiesEqual(exp.Properties, act.Properties);
@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Test
             Assert.AreEqual(exp.Managed, act.Managed);
 
             Assert.AreEqual(exp.Enabled, act.Enabled);
-            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
+            Assert.AreEqual(exp.Expires, act.Expires);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Test
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedAsync(name));
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Test
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        await Client.GetDeletedSecretAsync(name);
+                        await Client.GetDeletedAsync(name);
                         throw new InvalidOperationException("Secret still exists");
                     }
                     catch
@@ -150,7 +150,7 @@ namespace Azure.Security.KeyVault.Test
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetAsync(name));
             }
         }
     }

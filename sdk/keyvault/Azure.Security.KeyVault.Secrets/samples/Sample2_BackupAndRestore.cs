@@ -34,31 +34,31 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // already exists in the key vault, then a new version of the secret is created.
             string secretName = $"StorageAccountPasswor{Guid.NewGuid()}";
 
-            var secret = new KeyVaultSecret(secretName, "f4G34fMh8v")
+            var secret = new Secret(secretName, "f4G34fMh8v")
             {
                 Properties =
                 {
-                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                    Expires = DateTimeOffset.Now.AddYears(1)
                 }
             };
 
-            KeyVaultSecret storedSecret = client.SetSecret(secret);
+            Secret storedSecret = client.Set(secret);
 
             // Backups are good to have if in case secrets get accidentally deleted by you.
             // For long term storage, it is ideal to write the backup to a file.
-            File.WriteAllBytes(backupPath, client.BackupSecret(secretName));
+            File.WriteAllBytes(backupPath, client.Backup(secretName));
 
             // The storage account secret is no longer in use, so you delete it.
-            client.DeleteSecret(secretName);
+            client.Delete(secretName);
 
             // To ensure secret is deleted on server side.
             Assert.IsTrue(WaitForDeletedSecret(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            client.PurgeDeletedSecret(secretName);
+            client.PurgeDeleted(secretName);
 
             // After sometime, the secret is required again. We can use the backup value to restore it in the key vault.
-            SecretProperties restoreSecret = client.RestoreSecretBackup(File.ReadAllBytes(backupPath));
+            SecretProperties restoreSecret = client.Restore(File.ReadAllBytes(backupPath));
 
             AssertSecretsEqual(storedSecret.Properties, restoreSecret);
         }
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    client.GetDeletedSecret(secretName);
+                    client.GetDeleted(secretName);
                     return true;
                 }
                 catch
@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             Assert.AreEqual(exp.Version, act.Version);
             Assert.AreEqual(exp.Managed, act.Managed);
             Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
-            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
+            Assert.AreEqual(exp.Expires, act.Expires);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
         }
     }

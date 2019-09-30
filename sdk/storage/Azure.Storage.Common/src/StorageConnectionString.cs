@@ -12,7 +12,7 @@ using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionar
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-namespace Azure.Storage
+namespace Azure.Storage.Common
 {
     internal class StorageConnectionString
     {
@@ -324,7 +324,7 @@ namespace Azure.Storage
                 throw Errors.ArgumentNull(nameof(connectionString));
             }
 
-            if (ParseCore(connectionString, out StorageConnectionString ret, err => { throw Errors.InvalidFormat(err); }))
+            if (ParseImpl(connectionString, out StorageConnectionString ret, err => { throw Errors.InvalidFormat(err); }))
             {
                 return ret;
             }
@@ -349,7 +349,7 @@ namespace Azure.Storage
 
             try
             {
-                return ParseCore(connectionString, out account, err => { });
+                return ParseImpl(connectionString, out account, err => { });
             }
             catch (Exception)
             {
@@ -532,7 +532,7 @@ namespace Azure.Storage
         /// <param name="accountInformation">The <see cref="StorageConnectionString"/> to return.</param>
         /// <param name="error">A callback for reporting errors.</param>
         /// <returns>If true, the parse was successful. Otherwise, false.</returns>
-        internal static bool ParseCore(string connectionString, out StorageConnectionString accountInformation, Action<string> error)
+        internal static bool ParseImpl(string connectionString, out StorageConnectionString accountInformation, Action<string> error)
         {
             IDictionary<string, string> settings = ParseStringIntoSettings(connectionString, error);
 

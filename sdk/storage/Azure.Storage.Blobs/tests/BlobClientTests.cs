@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Http;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
@@ -44,11 +45,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);
 
-            Assert.AreEqual(containerName, builder1.BlobContainerName);
+            Assert.AreEqual(containerName, builder1.ContainerName);
             Assert.AreEqual(blobName, builder1.BlobName);
             Assert.AreEqual("accountName", builder1.AccountName);
 
-            Assert.AreEqual(containerName, builder2.BlobContainerName);
+            Assert.AreEqual(containerName, builder2.ContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
         }
@@ -94,7 +95,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
             }
         }
 
@@ -113,7 +114,7 @@ namespace Azure.Storage.Blobs.Test
 
                 using (var stream = new MemoryStream(data))
                 {
-                    var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
+                    var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
 
                     await Verify(stream => blob.UploadAsync(stream, parallelTransferOptions: options));
 
@@ -132,7 +133,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
             }
         }
 
@@ -235,7 +236,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
             }
         }
 
@@ -262,7 +263,7 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
+                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
 
                         await Verify(blob.UploadAsync(file, parallelTransferOptions: options));
 
@@ -289,7 +290,7 @@ namespace Azure.Storage.Blobs.Test
                 }
 
                 Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+                Assert.AreEqual(BlobType.BlockBlob, properties.Value.BlobType);
             }
         }
 
@@ -349,7 +350,7 @@ namespace Azure.Storage.Blobs.Test
 
                         var file = new FileInfo(path);
 
-                        var options = new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount };
+                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
 
                         // Assert
                         await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
@@ -569,7 +570,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadStreamAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
         }
 
         [Test]
@@ -592,7 +593,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
+            await UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
         }
 
         #endregion Upload

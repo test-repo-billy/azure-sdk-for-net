@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test: needs debugging (Tracked by: #7458)")]
+        [Ignore("Failing test: needs debugging")]
         public async Task EventProcessorCanStartAgainAfterStopping()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -513,7 +513,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task EventProcessorCanReceiveFromCheckpointedEventPosition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -732,7 +731,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -822,7 +820,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(2)]
         [TestCase(4)]
         [TestCase(15)]
-        [Ignore("Failing test: needs debugging (Tracked by: #7458)")]
         public async Task EventProcessorWaitsMaximumReceiveWaitTimeForEvents(int maximumWaitTimeInSecs)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -991,7 +988,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(30, 10)]
         [TestCase(32, 7)]
         [TestCase(32, 32)]
-        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task PartitionDistributionIsEvenAfterLoadBalancing(int partitions, int eventProcessors)
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitions))
@@ -1053,7 +1049,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Unstable test. (Tracked by: #7458)")]
         public async Task LoadBalancingIsEnforcedWhenDistributionIsUneven()
         {
             var partitions = 10;

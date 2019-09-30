@@ -32,48 +32,48 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             // already exists in the key vault, then a new version of the secret is created.
             string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
 
-            var secret = new KeyVaultSecret(secretName, "f4G34fMh8v")
+            var secret = new Secret(secretName, "f4G34fMh8v")
             {
                 Properties =
                 {
-                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                    Expires = DateTimeOffset.Now.AddYears(1)
                 }
             };
 
-            await client.SetSecretAsync(secret);
+            await client.SetAsync(secret);
 
             // Let's Get the bank secret from the key vault.
-            KeyVaultSecret bankSecret = await client.GetSecretAsync(secretName);
+            Secret bankSecret = await client.GetAsync(secretName);
             Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 
             // After one year, the bank account is still active, we need to update the expiry time of the secret.
             // The update method can be used to update the expiry attribute of the secret. It cannot be used to update
             // the value of the secret.
-            bankSecret.Properties.ExpiresOn = bankSecret.Properties.ExpiresOn.Value.AddYears(1);
-            SecretProperties updatedSecret = await client.UpdateSecretPropertiesAsync(bankSecret.Properties);
-            Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
+            bankSecret.Properties.Expires = bankSecret.Properties.Expires.Value.AddYears(1);
+            SecretProperties updatedSecret = await client.UpdatePropertiesAsync(bankSecret.Properties);
+            Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.Expires}");
 
             // Bank forced a password update for security purposes. Let's change the value of the secret in the key vault.
             // To achieve this, we need to create a new version of the secret in the key vault. The update operation cannot
             // change the value of the secret.
-            var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa")
+            var secretNewValue = new Secret(secretName, "bhjd4DDgsa")
             {
                 Properties =
                 {
-                    ExpiresOn = DateTimeOffset.Now.AddYears(1)
+                    Expires = DateTimeOffset.Now.AddYears(1)
                 }
             };
 
-            await client.SetSecretAsync(secretNewValue);
+            await client.SetAsync(secretNewValue);
 
             // The bank account was closed. You need to delete its credentials from the key vault.
-            await client.DeleteSecretAsync(secretName);
+            await client.DeleteAsync(secretName);
 
             // To ensure secret is deleted on server side.
             Assert.IsTrue(await WaitForDeletedSecretAsync(client, secretName));
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted secret needs to be purged.
-            await client.PurgeDeletedSecretAsync(secretName);
+            await client.PurgeDeletedAsync(secretName);
 
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             {
                 try
                 {
-                    await client.GetDeletedSecretAsync(secretName);
+                    await client.GetDeletedAsync(secretName);
                     return true;
                 }
                 catch
