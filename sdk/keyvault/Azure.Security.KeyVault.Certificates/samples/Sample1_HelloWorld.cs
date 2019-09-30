@@ -41,20 +41,17 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 certOp.UpdateStatus();
 
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Thread.Sleep(certOp.PollingInterval);
             }
 
             // Let's get the created certificate along with it's policy from the Key Vault.
-            CertificateWithPolicy certificate = client.GetCertificate(certName);
+            CertificateWithPolicy certificate = client.GetCertificateWithPolicy(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
-            CertificateProperties certificateProperties = certificate.Properties;
-            certificateProperties.Enabled = false;
-
-            Certificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
+            Certificate updatedCert = client.UpdateCertificate(certName, certificate.Properties.Version, enabled: false);
 
             Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 
@@ -67,7 +64,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             {
                 newCertOp.UpdateStatus();
 
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Thread.Sleep(newCertOp.PollingInterval);
             }
 
             // The certificate is no longer needed, need to delete it from the Key Vault.

@@ -141,10 +141,10 @@ namespace Azure.Storage.Blobs.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to blobs
-                Services = AccountSasServices.Blobs,
+                Services = new AccountSasServices() { Blobs = true }.ToString(),
 
                 // Allow access to the service level APIs
-                ResourceTypes = AccountSasResourceTypes.Service,
+                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
 
                 // Allow read access
                 Permissions = new AccountSasPermissions() { Read = true }.ToString(),
@@ -198,7 +198,7 @@ namespace Azure.Storage.Blobs.Samples
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,
                     ActiveDirectoryApplicationSecret,
-                    new AzureCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    new IdentityClientOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);

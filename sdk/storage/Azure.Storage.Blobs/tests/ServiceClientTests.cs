@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -38,11 +40,11 @@ namespace Azure.Storage.Blobs.Test
             var builder1 = new BlobUriBuilder(service1.Uri);
             var builder2 = new BlobUriBuilder(service2.Uri);
 
-            Assert.IsEmpty(builder1.BlobContainerName);
+            Assert.IsEmpty(builder1.ContainerName);
             Assert.IsEmpty(builder1.BlobName);
             Assert.AreEqual(accountName, builder1.AccountName);
 
-            Assert.IsEmpty(builder2.BlobContainerName);
+            Assert.IsEmpty(builder2.ContainerName);
             Assert.IsEmpty(builder2.BlobName);
             Assert.AreEqual(accountName, builder2.AccountName);
         }
@@ -55,19 +57,12 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var credentials = new StorageSharedKeyCredential(accountName, accountKey);
 
-            BlobServiceClient service1 = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
-            BlobServiceClient service2 = InstrumentClient(new BlobServiceClient(blobEndpoint));
+            BlobServiceClient service = InstrumentClient(new BlobServiceClient(blobEndpoint, credentials));
+            var builder = new BlobUriBuilder(service.Uri);
 
-            var builder1 = new BlobUriBuilder(service1.Uri);
-            var builder2 = new BlobUriBuilder(service2.Uri);
-
-            Assert.IsEmpty(builder1.BlobContainerName);
-            Assert.AreEqual("", builder1.BlobName);
-            Assert.AreEqual(accountName, builder1.AccountName);
-
-            Assert.IsEmpty(builder2.BlobContainerName);
-            Assert.AreEqual("", builder2.BlobName);
-            Assert.AreEqual(accountName, builder2.AccountName);
+            Assert.IsEmpty(builder.ContainerName);
+            Assert.AreEqual("", builder.BlobName);
+            Assert.AreEqual(accountName, builder.AccountName);
         }
 
         [Test]
@@ -79,7 +74,7 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out _, service: service))
             {
                 // Act
-                IList<BlobContainerItem> containers = await service.GetBlobContainersAsync().ToListAsync();
+                IList<ContainerItem> containers = await service.GetContainersAsync().ToListAsync();
 
                 // Assert
                 Assert.IsTrue(containers.Count() >= 1);
@@ -125,8 +120,8 @@ namespace Azure.Storage.Blobs.Test
                 retryOn404);
             using (GetNewContainer(out _, service: service))
             {
-                IList<BlobContainerItem> containers = await EnsurePropagatedAsync(
-                    async () => await service.GetBlobContainersAsync().ToListAsync(),
+                IList<ContainerItem> containers = await EnsurePropagatedAsync(
+                    async () => await service.GetContainersAsync().ToListAsync(),
                     containers => containers.Count > 0);
                 Assert.IsTrue(containers.Count >= 1);
             }
@@ -142,9 +137,9 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service))
             {
                 var marker = default(string);
-                var containers = new List<BlobContainerItem>();
+                var containers = new List<ContainerItem>();
 
-                await foreach (Page<BlobContainerItem> page in service.GetBlobContainersAsync().AsPages(marker))
+                await foreach (Page<ContainerItem> page in service.GetContainersAsync().AsPages(marker))
                 {
                     containers.AddRange(page.Values);
                 }
@@ -165,8 +160,8 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service))
             {
                 // Act
-                Page<BlobContainerItem> page = await
-                    service.GetBlobContainersAsync()
+                Page<ContainerItem> page = await
+                    service.GetContainersAsync()
                     .AsPages(pageSizeHint: 1)
                     .FirstAsync();
 
@@ -185,8 +180,8 @@ namespace Azure.Storage.Blobs.Test
             using (GetNewContainer(out BlobContainerClient container, service: service, containerName: containerName))
             {
                 // Act
-                AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(prefix: prefix);
-                IList<BlobContainerItem> items = await containers.ToListAsync();
+                AsyncPageable<ContainerItem> containers = service.GetContainersAsync(new GetContainersOptions { Prefix = prefix });
+                IList<ContainerItem> items = await containers.ToListAsync();
                 // Assert
                 Assert.AreNotEqual(0, items.Count());
                 Assert.IsTrue(items.All(c => c.Name.StartsWith(prefix)));
@@ -206,7 +201,7 @@ namespace Azure.Storage.Blobs.Test
                 await container.SetMetadataAsync(metadata);
 
                 // Act
-                BlobContainerItem first = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).FirstAsync();
+                ContainerItem first = await service.GetContainersAsync(new GetContainersOptions { IncludeMetadata = true }).FirstAsync();
 
                 // Assert
                 Assert.IsNotNull(first.Metadata);
@@ -222,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
+                service.GetContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
@@ -289,11 +284,11 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobServiceProperties properties = (await service.GetPropertiesAsync()).Value;
-            BlobCorsRule[] originalCors = properties.Cors.ToArray();
+            CorsRule[] originalCors = properties.Cors.ToArray();
             properties.Cors =
                 new[]
                 {
-                    new BlobCorsRule
+                    new CorsRule
                     {
                         MaxAgeInSeconds = 1000,
                         AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
@@ -399,7 +394,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 BlobContainerClient container = InstrumentClient((await service.CreateBlobContainerAsync(name)).Value);
-                Response<BlobContainerItem> properties = await container.GetPropertiesAsync();
+                Response<ContainerItem> properties = await container.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
             }
             finally
