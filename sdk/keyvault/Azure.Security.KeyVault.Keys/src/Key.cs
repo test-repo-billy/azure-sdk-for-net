@@ -38,15 +38,12 @@ namespace Azure.Security.KeyVault.Keys
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The cryptographic keys, the key type, and operations you can perform using the key.
+        /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
         /// </summary>
-        /// <remarks>
-        /// See http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18 for specifications of a JSON web key.
-        /// </remarks>
         public JsonWebKey KeyMaterial { get; set; }
 
         /// <summary>
-        /// Additional properties of the <see cref="Key"/>.
+        /// Gets or sets the attributes of the <see cref="Key"/>.
         /// </summary>
         public KeyProperties Properties { get; }
 

@@ -45,14 +45,14 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this blob.
         /// </param>
-        public BlobClient(string connectionString, string blobContainerName, string blobName)
-            : base(connectionString, blobContainerName, blobName)
+        public BlobClient(string connectionString, string containerName, string blobName)
+            : base(connectionString, containerName, blobName)
         {
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container containing this blob.
         /// </param>
         /// <param name="blobName">
@@ -78,8 +78,8 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public BlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
-            : base(connectionString, blobContainerName, blobName, options)
+        public BlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+            : base(connectionString, containerName, blobName, options)
         {
         }
 
@@ -316,7 +316,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             Upload(
                 content,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -355,7 +355,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             Upload(
                 content,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -394,7 +394,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             UploadAsync(
                 content,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -433,7 +433,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken) =>
             UploadAsync(
                 content,
-                accessConditions: default, // Pass anything else so we don't recurse on this overload
+                blobAccessConditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken);
 #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
@@ -453,14 +453,14 @@ namespace Azure.Storage.Blobs
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
-        /// <param name="httpHeaders">
+        /// <param name="blobHttpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="blobAccessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
@@ -491,18 +491,18 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                httpHeaders,
+                blobHttpHeaders,
                 metadata,
-                accessConditions,
+                blobAccessConditions,
                 progressHandler,
                 accessTier,
                 parallelTransferOptions: parallelTransferOptions,
@@ -526,14 +526,14 @@ namespace Azure.Storage.Blobs
         /// <param name="content">
         /// A <see cref="FileInfo"/> containing the content to upload.
         /// </param>
-        /// <param name="httpHeaders">
+        /// <param name="blobHttpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="blobAccessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
@@ -564,18 +564,18 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             FileInfo content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                httpHeaders,
+                blobHttpHeaders,
                 metadata,
-                accessConditions,
+                blobAccessConditions,
                 progressHandler,
                 accessTier,
                 parallelTransferOptions: parallelTransferOptions,
@@ -599,14 +599,14 @@ namespace Azure.Storage.Blobs
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
-        /// <param name="httpHeaders">
+        /// <param name="blobHttpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="blobAccessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
@@ -637,18 +637,18 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                httpHeaders,
+                blobHttpHeaders,
                 metadata,
-                accessConditions,
+                blobAccessConditions,
                 progressHandler,
                 accessTier,
                 parallelTransferOptions: parallelTransferOptions,
@@ -671,14 +671,14 @@ namespace Azure.Storage.Blobs
         /// <param name="content">
         /// A <see cref="FileInfo"/> containing the content to upload.
         /// </param>
-        /// <param name="httpHeaders">
+        /// <param name="blobHttpHeaders">
         /// Optional standard HTTP header properties that can be set for the
         /// block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
-        /// <param name="accessConditions">
+        /// <param name="blobAccessConditions">
         /// Optional <see cref="BlobAccessConditions"/> to add conditions on
         /// the creation of this new block blob.
         /// </param>
@@ -709,18 +709,18 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             FileInfo content,
-            BlobHttpHeaders? httpHeaders = default,
+            BlobHttpHeaders? blobHttpHeaders = default,
             Metadata metadata = default,
-            BlobAccessConditions? accessConditions = default,
+            BlobAccessConditions? blobAccessConditions = default,
             IProgress<StorageProgress> progressHandler = default,
             AccessTier? accessTier = default,
             ParallelTransferOptions parallelTransferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                httpHeaders,
+                blobHttpHeaders,
                 metadata,
-                accessConditions,
+                blobAccessConditions,
                 progressHandler,
                 accessTier,
                 parallelTransferOptions: parallelTransferOptions,
@@ -784,16 +784,14 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
-            long? singleBlockThreshold = default,
+            long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
             ParallelTransferOptions parallelTransferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
+            Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
 
             var client = new BlockBlobClient(Uri, Pipeline);
-            singleBlockThreshold ??= client.BlockBlobMaxUploadBlobBytes;
-            Debug.Assert(singleBlockThreshold <= client.BlockBlobMaxUploadBlobBytes);
-
             var blockMap = new ConcurrentDictionary<long, string>();
             var blockName = 0;
             Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
@@ -802,7 +800,7 @@ namespace Azure.Storage.Blobs
                 CommitBlockListAsync,
                 threshold => TryGetStreamLength(content, out var length) && length < threshold,
                 memoryPool => new StreamPartitioner(content, memoryPool),
-                singleBlockThreshold.Value,
+                singleBlockThreshold,
                 parallelTransferOptions,
                 async,
                 cancellationToken);
@@ -826,10 +824,8 @@ namespace Azure.Storage.Blobs
 
             // Upload the entire stream
             Task<Response<BlobContentInfo>> UploadStreamAsync()
-            {
-                (content, metadata) = TransformContent(content, metadata);
-
-                return client.UploadInternal(
+                =>
+                client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
@@ -838,7 +834,6 @@ namespace Azure.Storage.Blobs
                     progressHandler,
                     async,
                     cancellationToken);
-            }
 
             string GetNewBase64BlockId(long blockOrdinal)
             {
@@ -958,15 +953,14 @@ namespace Azure.Storage.Blobs
             BlobAccessConditions? blobAccessConditions,
             IProgress<StorageProgress> progressHandler,
             AccessTier? accessTier = default,
-            long? singleBlockThreshold = default,
+            long singleBlockThreshold = BlockBlobClient.BlockBlobMaxUploadBlobBytes,
             ParallelTransferOptions parallelTransferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlockBlobClient(Uri, Pipeline);
-            singleBlockThreshold ??= client.BlockBlobMaxUploadBlobBytes;
-            Debug.Assert(singleBlockThreshold <= client.BlockBlobMaxUploadBlobBytes);
+            Debug.Assert(singleBlockThreshold <= BlockBlobClient.BlockBlobMaxUploadBlobBytes);
 
+            var client = new BlockBlobClient(Uri, Pipeline);
             var blockMap = new ConcurrentDictionary<long, string>();
             var blockName = 0;
             Task<Response<BlobContentInfo>> uploadTask = PartitionedUploader.UploadAsync(
@@ -975,7 +969,7 @@ namespace Azure.Storage.Blobs
                 CommitBlockListAsync,
                 threshold => file.Length < threshold,
                 memoryPool => new StreamPartitioner(file, memoryPool),
-                singleBlockThreshold.Value,
+                singleBlockThreshold,
                 parallelTransferOptions,
                 async,
                 cancellationToken);
@@ -1004,12 +998,9 @@ namespace Azure.Storage.Blobs
             {
                 using (FileStream stream = file.OpenRead())
                 {
-                    Stream transformedStream; // cannot reassign to a "using" variable
-                    (transformedStream, metadata) = TransformContent(stream, metadata);
-
                     return
                         await client.UploadInternal(
-                            transformedStream,
+                            stream,
                             blobHttpHeaders,
                             metadata,
                             blobAccessConditions,
@@ -1066,16 +1057,5 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Upload
-
-        /// <summary>
-        /// Performs a transform on the data for uploads. It is a no-op by default.
-        /// </summary>
-        /// <param name="content">Content to transform.</param>
-        /// <param name="metadata">Content metadata to transform.</param>
-        /// <returns>Transformed content stream and metadata.</returns>
-        internal virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
-        {
-            return (content, metadata); // no-op
-        }
     }
 }

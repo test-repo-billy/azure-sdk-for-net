@@ -184,7 +184,7 @@ namespace Azure.Storage.Test.Shared
                 appId,
                 secret,
                 Recording.InstrumentClientOptions(
-                    new AzureCredentialOptions() { AuthorityHost = authorityHost }));
+                    new IdentityClientOptions() { AuthorityHost = authorityHost }));
 
         public void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {

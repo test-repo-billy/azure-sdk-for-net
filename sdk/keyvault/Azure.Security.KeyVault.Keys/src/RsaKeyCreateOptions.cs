@@ -4,7 +4,7 @@
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// The properties needed to create an Elliptic Curve key using the <see cref="KeyClient"/>.
+    /// Represents the attributes to assign to an RSA key at creation.
     /// </summary>
     public class RsaKeyCreateOptions : KeyCreateOptions
     {

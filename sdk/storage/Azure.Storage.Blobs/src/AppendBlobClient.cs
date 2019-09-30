@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
@@ -33,15 +34,16 @@ namespace Azure.Storage.Blobs.Specialized
     public class AppendBlobClient : BlobBaseClient
     {
         /// <summary>
-        /// Gets the maximum number of bytes that can be sent in a call
-        /// to AppendBlock.
+        /// <see cref="AppendBlobMaxAppendBlockBytes"/> indicates the maximum
+        /// number of bytes that can be sent in a call to AppendBlock.
         /// </summary>
-        public virtual int AppendBlobMaxAppendBlockBytes => Constants.Blob.Append.MaxAppendBlockBytes;
+        public const int AppendBlobMaxAppendBlockBytes = Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
-        /// Gets the maximum number of blocks allowed in an append blob.
+        /// <see cref="AppendBlobMaxBlocks"/> indicates the maximum number of
+        /// blocks allowed in an append blob.
         /// </summary>
-        public virtual int AppendBlobMaxBlocks => Constants.Blob.Append.MaxBlocks;
+        public const int AppendBlobMaxBlocks = Constants.Blob.Append.MaxBlocks;
 
         #region ctors
         /// <summary>
@@ -63,14 +65,14 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container containing this append blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this append blob.
         /// </param>
-        public AppendBlobClient(string connectionString, string blobContainerName, string blobName)
-            : base(connectionString, blobContainerName, blobName)
+        public AppendBlobClient(string connectionString, string containerName, string blobName)
+            : base(connectionString, containerName, blobName)
         {
         }
 
@@ -85,7 +87,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container containing this append blob.
         /// </param>
         /// <param name="blobName">
@@ -96,8 +98,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public AppendBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
-            : base(connectionString, blobContainerName, blobName, options)
+        public AppendBlobClient(string connectionString, string containerName, string blobName, BlobClientOptions options)
+            : base(connectionString, containerName, blobName, options)
         {
         }
 
@@ -215,7 +217,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
-        public new AppendBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (AppendBlobClient)WithCustomerProvidedKeyCore(customerProvidedKey);
+        public new AppendBlobClient WithCustomerProvidedKey(CustomerProvidedKey customerProvidedKey) => (AppendBlobClient)WithCustomerProvidedKeyImpl(customerProvidedKey);
 
         /// <summary>
         /// Creates a new instance of the <see cref="AppendBlobClient"/> class
@@ -226,7 +228,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The customer provided key to be used by the service to encrypt data.
         /// </param>
         /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
-        protected sealed override BlobBaseClient WithCustomerProvidedKeyCore(CustomerProvidedKey customerProvidedKey)
+        protected sealed override BlobBaseClient WithCustomerProvidedKeyImpl(CustomerProvidedKey customerProvidedKey)
         {
             var uriBuilder = new UriBuilder(Uri)
             {
@@ -329,143 +331,6 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a new 0-length
-        /// append blob.  If the append blob already exists, the content of
-        /// the existing append blob will remain unchanged.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync"/> operation.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new append blob.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this append blob.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created append blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<BlobContentInfo> CreateIfNotExists(
-            BlobHttpHeaders? httpHeaders = default,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default) =>
-            CreateIfNotExistsInternal(
-                httpHeaders,
-                metadata,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-
-        /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new 0-length
-        /// append blob.  If the append blob already exists, the content of
-        /// the existing append blob will remain unchanged.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync"/> operation.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new append blob.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this append blob.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created append blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
-            BlobHttpHeaders? httpHeaders = default,
-            Metadata metadata = default,
-            CancellationToken cancellationToken = default) =>
-            await CreateIfNotExistsInternal(
-                httpHeaders,
-                metadata,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new 0-length
-        /// append blob.  If the append blob already exists, the content of
-        /// the existing append blob will remain unchanged.  To add content to the append
-        /// blob, call the <see cref="AppendBlockAsync"/> operation.
-        ///
-        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
-        /// </summary>
-        /// <param name="httpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// new append blob.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this append blob.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created append blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="StorageRequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        private async Task<Response<BlobContentInfo>> CreateIfNotExistsInternal(
-            BlobHttpHeaders? httpHeaders,
-            Metadata metadata,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            AppendBlobAccessConditions accessConditions = new AppendBlobAccessConditions
-            {
-                HttpAccessConditions = new HttpAccessConditions
-                {
-                    IfNoneMatch = new ETag(Constants.Wildcard)
-                }
-            };
-            try
-            {
-                return await CreateInternal(
-                    httpHeaders,
-                    metadata,
-                    accessConditions,
-                    async,
-                    cancellationToken,
-                    Constants.Blob.Append.CreateIfNotExistsOperationName)
-                    .ConfigureAwait(false);
-            }
-            catch (StorageRequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
-            {
-                return default;
-            }
-        }
-
-        /// <summary>
         /// The <see cref="CreateInternal"/> operation creates a new 0-length
         /// append blob.  The content of any existing blob is overwritten with
         /// the newly initialized append blob.  To add content to the append
@@ -491,9 +356,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <param name="operationName">
-        /// Optional. To indicate if the name of the operation.
-        /// </param>
         /// <returns>
         /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// newly created append blob.
@@ -507,8 +369,7 @@ namespace Azure.Storage.Blobs.Specialized
             Metadata metadata,
             AppendBlobAccessConditions? accessConditions,
             bool async,
-            CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Append.CreateOperationName)
+            CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -523,7 +384,6 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.CreateAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
@@ -543,7 +403,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: accessConditions?.HttpAccessConditions?.IfMatch,
                         ifNoneMatch: accessConditions?.HttpAccessConditions?.IfNoneMatch,
                         async: async,
-                        operationName: operationName,
+                        operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.Create",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -748,7 +608,6 @@ namespace Azure.Storage.Blobs.Specialized
                             {
                                 Pipeline.LogTrace($"Append attempt {++appendAttempt}");
                                 return BlobRestClient.AppendBlob.AppendBlockAsync(
-                                    ClientDiagnostics,
                                     Pipeline,
                                     Uri,
                                     body: content,
@@ -1000,7 +859,6 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         sourceUri: sourceUri,

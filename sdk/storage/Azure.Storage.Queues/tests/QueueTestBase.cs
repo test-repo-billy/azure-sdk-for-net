@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Common.Test;
@@ -141,7 +140,7 @@ namespace Azure.Storage.Queues.Tests
             {
                 Protocol = SasProtocol.None,
                 Services = new AccountSasServices { Queues = true }.ToString(),
-                ResourceTypes = new AccountSasResourceTypes { BlobContainer = true }.ToString(),
+                ResourceTypes = new AccountSasResourceTypes { Container = true }.ToString(),
                 StartTime = Recording.UtcNow.AddHours(-1),
                 ExpiryTime = Recording.UtcNow.AddHours(+1),
                 Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),

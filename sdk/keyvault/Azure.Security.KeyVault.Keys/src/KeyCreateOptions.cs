@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// The key-specific properties needed to create a key using the <see cref="KeyClient"/>.
+    /// Represent the key specific attributes needed in order to create a key.
     /// </summary>
     public class KeyCreateOptions
     {

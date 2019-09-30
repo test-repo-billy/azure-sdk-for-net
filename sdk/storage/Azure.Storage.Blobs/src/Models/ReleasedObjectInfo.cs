@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core.Http;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -55,8 +56,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new <see cref="ReleasedObjectInfo"/>.
         /// </summary>
-        /// <param name="info">A released <see cref="BlobContainerInfo"/>.</param>
-        internal ReleasedObjectInfo(BlobContainerInfo info)
+        /// <param name="info">A released <see cref="ContainerInfo"/>.</param>
+        internal ReleasedObjectInfo(ContainerInfo info)
             : this(info.ETag, info.LastModified)
         {
         }

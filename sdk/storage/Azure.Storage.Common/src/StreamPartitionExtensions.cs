@@ -29,19 +29,19 @@ namespace Azure.Storage.Common
         {
             var destinationOffset = destination.Position;
 
-            await foreach (StreamPartition partition in partitions.ConfigureAwait(false))
+            await foreach (StreamPartition partition in partitions)
             {
                 if (async)
                 {
-                    await copyCore(partition).ConfigureAwait(false);
+                    await copyImpl(partition).ConfigureAwait(false);
                 }
                 else
                 {
-                    copyCore(partition).EnsureCompleted();
+                    copyImpl(partition).EnsureCompleted();
                 }
             }
 
-            async Task copyCore(StreamPartition partition)
+            async Task copyImpl(StreamPartition partition)
             {
                 // if the destination is seekable, ensure we position it correctly,
                 // else we trust the partitions are received in order and just write

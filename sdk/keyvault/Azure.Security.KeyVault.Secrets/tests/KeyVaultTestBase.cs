@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Test
                 {
                     if (cleanupItem.Delete)
                     {
-                        await Client.DeleteSecretAsync(cleanupItem.Name);
+                        await Client.DeleteAsync(cleanupItem.Name);
                     }
                 }
 
@@ -64,7 +64,7 @@ namespace Azure.Security.KeyVault.Test
 
                 foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
                 {
-                    await Client.PurgeDeletedSecretAsync(cleanupItem.Name);
+                    await Client.PurgeDeletedAsync(cleanupItem.Name);
                 }
 
                 foreach ((string Name, bool Delete) cleanupItem in _secretsToCleanup)
@@ -114,7 +114,7 @@ namespace Azure.Security.KeyVault.Test
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedAsync(name));
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Test
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        await Client.GetDeletedSecretAsync(name);
+                        await Client.GetDeletedAsync(name);
                         throw new InvalidOperationException("Secret still exists");
                     }
                     catch
@@ -150,7 +150,7 @@ namespace Azure.Security.KeyVault.Test
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetAsync(name));
             }
         }
     }

@@ -14,7 +14,7 @@ namespace Azure.Storage.Sas
     /// A <see cref="SasQueryParameters"/> object represents the components
     /// that make up an Azure Storage Shared Access Signature's query
     /// parameters.  It includes components used by all Azure Storage resources
-    /// (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
+    /// (Containers, Blobs, Files, and Queues).  You can construct a new instance
     /// using the service specific SAS builder types.
     /// For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
     /// </summary>
@@ -132,7 +132,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// Gets the optional unique value up to 64 characters in length that
-        /// correlates to an access policy specified for the blob container, queue,
+        /// correlates to an access policy specified for the container, queue,
         /// or share.
         /// </summary>
         public string Identifier => _identifier ?? string.Empty;
@@ -343,11 +343,11 @@ namespace Azure.Storage.Sas
                         break;
 
                     // Optionally include Blob parameters
-                    case Constants.Sas.Parameters.KeyObjectIdUpper:
+                    case Constants.Sas.Parameters.KeyOidUpper:
                         if (includeBlobParameters) { _keyObjectId = kv.Value; }
                         else { isSasKey = false; }
                         break;
-                    case Constants.Sas.Parameters.KeyTenantIdUpper:
+                    case Constants.Sas.Parameters.KeyTidUpper:
                         if (includeBlobParameters) { _keyTenantId = kv.Value; }
                         else { isSasKey = false; }
                         break;
@@ -493,12 +493,12 @@ namespace Azure.Storage.Sas
             {
                 if (!string.IsNullOrWhiteSpace(_keyObjectId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyObjectId, _keyObjectId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyOid, _keyObjectId);
                 }
 
                 if (!string.IsNullOrWhiteSpace(_keyTenantId))
                 {
-                    AddToBuilder(Constants.Sas.Parameters.KeyTenantId, _keyTenantId);
+                    AddToBuilder(Constants.Sas.Parameters.KeyTid, _keyTenantId);
                 }
 
                 if (_keyStart != DateTimeOffset.MinValue)

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Common
@@ -11,7 +10,7 @@ namespace Azure.Storage.Common
     /// This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage
     /// accounts configured with RA-GRS to retry GET or HEAD requests against the secondary storage Uri.
     /// </summary>
-    internal class GeoRedundantReadPolicy : HttpPipelineSynchronousPolicy
+    internal class GeoRedundantReadPolicy : SynchronousHttpPipelinePolicy
     {
         private readonly string _secondaryStorageHost;
 
@@ -24,7 +23,7 @@ namespace Azure.Storage.Common
             _secondaryStorageHost = secondaryStorageUri.Host;
         }
 
-        public override void OnSendingRequest(HttpMessage message)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
             if (message.Request.Method != RequestMethod.Get && message.Request.Method != RequestMethod.Head)
             {

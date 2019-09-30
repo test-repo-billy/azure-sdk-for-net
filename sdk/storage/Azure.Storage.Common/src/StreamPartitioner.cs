@@ -18,7 +18,7 @@ namespace Azure.Storage.Common
     {
         private MemoryPool<byte> _memoryPool;
         private readonly long? _contentLength;
-        private Func<int, bool, CancellationToken, Task<StreamPartition>> _getNextPartitionCore;
+        private Func<int, bool, CancellationToken, Task<StreamPartition>> _getNextPartitionImpl;
 
         public StreamPartitioner(Stream stream, MemoryPool<byte> memoryPool = default)
         {
@@ -27,14 +27,14 @@ namespace Azure.Storage.Common
                 _contentLength = stream.Length;
             }
             _memoryPool = memoryPool ?? MemoryPool<byte>.Shared;
-            _getNextPartitionCore = (size, async, ct) => GetNextPartitionAsync(stream, size, async, ct);
+            _getNextPartitionImpl = (size, async, ct) => GetNextPartitionAsync(stream, size, async, ct);
         }
 
         public StreamPartitioner(FileInfo file, MemoryPool<byte> memoryPool = default)
         {
             _contentLength = file.Length;
             _memoryPool = memoryPool ?? MemoryPool<byte>.Shared;
-            _getNextPartitionCore = (size, async, ct) => GetNextPartitionAsync(file, size, async, ct);
+            _getNextPartitionImpl = (size, async, ct) => GetNextPartitionAsync(file, size, async, ct);
         }
 
         public async IAsyncEnumerable<StreamPartition> GetPartitionsAsync(
@@ -157,9 +157,9 @@ namespace Azure.Storage.Common
         }
 
         internal Task<StreamPartition> GetNextPartitionAsync(int size = Constants.DefaultBufferSize, bool async = true, CancellationToken ct = default)
-            => _getNextPartitionCore == default
+            => _getNextPartitionImpl == default
             ? throw new ObjectDisposedException(nameof(StreamPartitioner))
-            : _getNextPartitionCore(size, async, ct);
+            : _getNextPartitionImpl(size, async, ct);
 
         private readonly SemaphoreSlim _getNextPartitionAsync_Semaphore = new SemaphoreSlim(1, 1);
 
@@ -286,7 +286,7 @@ namespace Azure.Storage.Common
                 {
                 }
 
-                _getNextPartitionCore = default;
+                _getNextPartitionImpl = default;
                 _memoryPool = default;
 
                 _disposedValue = true;
