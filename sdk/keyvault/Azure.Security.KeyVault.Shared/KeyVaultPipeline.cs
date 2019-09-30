@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault
 {
@@ -14,14 +14,11 @@ namespace Azure.Security.KeyVault
     {
         private readonly Uri _vaultUri;
         private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
-        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        public KeyVaultPipeline(Uri vaultUri, string apiVersion, HttpPipeline pipeline)
         {
             _vaultUri = vaultUri;
             _pipeline = pipeline;
-
-            _clientDiagnostics = clientDiagnostics;
 
             ApiVersion = apiVersion;
         }
@@ -33,7 +30,7 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path, escape: false);
+            firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             return firstPage.ToUri();
@@ -44,7 +41,7 @@ namespace Azure.Security.KeyVault
             var firstPage = new RequestUriBuilder();
             firstPage.Reset(_vaultUri);
 
-            firstPage.AppendPath(path, escape: false);
+            firstPage.AppendPath(path);
             firstPage.AppendQuery("api-version", ApiVersion);
 
             foreach ((string, string) tuple in queryParams)
@@ -78,7 +75,7 @@ namespace Azure.Security.KeyVault
 
             foreach (var p in path)
             {
-                request.Uri.AppendPath(p, escape: false);
+                request.Uri.AppendPath(p);
             }
 
             request.Uri.AppendQuery("api-version", ApiVersion);
@@ -90,18 +87,18 @@ namespace Azure.Security.KeyVault
             where T : IJsonDeserializable
         {
             result.Deserialize(response.ContentStream);
-            return Response.FromValue(result, response);
+            return Response.FromValue(response, result);
         }
 
         public DiagnosticScope CreateScope(string name)
         {
-            return _clientDiagnostics.CreateScope(name);
+            return _pipeline.Diagnostics.CreateScope(name);
         }
 
         public async Task<Page<T>> GetPageAsync<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
                 where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -132,7 +129,7 @@ namespace Azure.Security.KeyVault
         public Page<T> GetPage<T>(Uri firstPageUri, string nextLink, Func<T> itemFactory, string operationName, CancellationToken cancellationToken)
             where T : IJsonDeserializable
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(operationName);
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope(operationName);
             scope.Start();
 
             try
@@ -165,7 +162,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = RequestContent.Create(content.Serialize());
+            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -177,7 +174,7 @@ namespace Azure.Security.KeyVault
             where TResult : IJsonDeserializable
         {
             using Request request = CreateRequest(method, path);
-            request.Content = RequestContent.Create(content.Serialize());
+            request.Content = HttpPipelineRequestContent.Create(content.Serialize());
 
             Response response = SendRequest(request, cancellationToken);
 

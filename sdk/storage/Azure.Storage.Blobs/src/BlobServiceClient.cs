@@ -3,18 +3,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
 {
     /// <summary>
     /// The <see cref="BlobServiceClient"/> allows you to manipulate Azure
-    /// Storage service resources and blob containers. The storage account provides
+    /// Storage service resources and containers. The storage account provides
     /// the top-level namespace for the Blob service.
     /// </summary>
     public class BlobServiceClient
@@ -39,34 +42,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
-        internal virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary>
-        /// The authentication policy for our pipeline.  We cache it here in
-        /// case we need to construct a pipeline for authenticating batch
-        /// operations.
-        /// </summary>
-        private readonly HttpPipelinePolicy _authenticationPolicy;
-
-        internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
-
-        /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
-        /// requests for batching without actually sending them.
-        /// </summary>
-        internal virtual HttpPipeline BatchOperationPipeline { get; set; }
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+        protected virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -134,9 +110,7 @@ namespace Azure.Storage.Blobs
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.BlobEndpoint;
             options ??= new BlobClientOptions();
-            _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
-            _pipeline = options.Build(_authenticationPolicy);
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = options.Build(conn.Credentials);
         }
 
         /// <summary>
@@ -152,7 +126,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, BlobClientOptions options = default)
-            : this(serviceUri, (HttpPipelinePolicy)null, options ?? new BlobClientOptions())
+            : this(serviceUri, (HttpPipelinePolicy)null, options)
         {
         }
 
@@ -172,7 +146,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(), options)
         {
         }
 
@@ -192,7 +166,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy(), options)
         {
         }
 
@@ -212,9 +186,10 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
-            : this(serviceUri, authentication, options.Build(authentication), new ClientDiagnostics(options))
         {
-
+            _uri = serviceUri;
+            options ??= new BlobClientOptions();
+            _pipeline = options.Build(authentication);
         }
 
         /// <summary>
@@ -224,83 +199,72 @@ namespace Azure.Storage.Blobs
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
         /// </param>
-        /// <param name="authentication"></param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        internal BlobServiceClient(Uri serviceUri, HttpPipeline pipeline)
         {
             _uri = serviceUri;
-            _authenticationPolicy = authentication;
             _pipeline = pipeline;
-            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="BlobContainerClient"/> object by appending
-        /// <paramref name="blobContainerName"/> to the end of <see cref="Uri"/>.
+        /// <paramref name="containerName"/> to the end of <see cref="Uri"/>.
         /// The new <see cref="BlobContainerClient"/> uses the same request
         /// policy pipeline as the <see cref="BlobServiceClient"/>.
         /// </summary>
-        /// <param name="blobContainerName">
-        /// The name of the blob container to reference.
+        /// <param name="containerName">
+        /// The name of the container to reference.
         /// </param>
         /// <returns>
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
-        public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics);
+        public virtual BlobContainerClient GetBlobContainerClient(string containerName) =>
+            new BlobContainerClient(Uri.AppendToPath(containerName), Pipeline);
 
-        #region GetBlobContainers
+        #region GetContainers
         /// <summary>
-        /// The <see cref="GetBlobContainers"/> operation returns an async
-        /// sequence of blob containers in the storage account.  Enumerating the
-        /// blob containers may make multiple requests to the service while fetching
+        /// The <see cref="GetContainers"/> operation returns an async
+        /// sequence of containers in the storage account.  Enumerating the
+        /// containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blob containers.
-        /// </param>
-        /// <param name="prefix">
-        /// Specifies a string that filters the results to return only containers
-        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// <param name="options">
+        /// Specifies options for listing, filtering, and shaping the
+        /// containers.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobContainerItem}"/>
-        /// describing the blob containers in the storage account.
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{ContainerItem}"/>
+        /// describing the containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<BlobContainerItem> GetBlobContainers(
-            BlobContainerTraits traits = BlobContainerTraits.None,
-            string prefix = default,
+        public virtual Pageable<ContainerItem> GetContainers(
+            GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, traits, prefix).ToSyncCollection(cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobContainersAsync"/> operation returns an async
-        /// sequence of blob containers in the storage account.  Enumerating the
-        /// blob containers may make multiple requests to the service while fetching
+        /// The <see cref="GetContainersAsync"/> operation returns an async
+        /// sequence of containers in the storage account.  Enumerating the
+        /// containers may make multiple requests to the service while fetching
         /// all the values.  Containers are ordered lexicographically by name.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2"/>.
         /// </summary>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blob containers.
-        /// </param>
-        /// <param name="prefix">
-        /// Specifies a string that filters the results to return only containers
-        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// <param name="options">
+        /// Specifies options for listing, filtering, and shaping the
+        /// containers.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -314,19 +278,18 @@ namespace Azure.Storage.Blobs
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
-            BlobContainerTraits traits = BlobContainerTraits.None,
-            string prefix = default,
+        public virtual AsyncPageable<ContainerItem> GetContainersAsync(
+            GetContainersOptions? options = default,
             CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, traits, prefix).ToAsyncCollection(cancellationToken);
+            new GetContainersAsyncCollection(this, options).ToAsyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobContainersInternal"/> operation returns a
-        /// single segment of blob containers in the storage account, starting
+        /// The <see cref="GetContainersInternal"/> operation returns a
+        /// single segment of containers in the storage account, starting
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
-        /// and the <see cref="BlobContainersSegment.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetBlobContainersAsync"/>
+        /// and the <see cref="ContainersSegment.NextMarker"/> if it's not
+        /// empty to make subsequent calls to <see cref="GetContainersAsync"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
         ///
@@ -334,19 +297,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="continuationToken">
         /// An optional string value that identifies the segment of the list
-        /// of blob containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="BlobContainersSegment.NextMarker"/>
-        /// if the listing operation did not return all blob containers remaining
+        /// of containers to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ContainersSegment.NextMarker"/>
+        /// if the listing operation did not return all containers remaining
         /// to be listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="continuationToken"/> parameter
         /// in a subsequent call to request the next segment of list items.
         /// </param>
-        /// <param name="traits">
-        /// Specifies trait options for shaping the blob containers.
-        /// </param>
-        /// <param name="prefix">
-        /// Specifies a string that filters the results to return only containers
-        /// whose name begins with the specified <paramref name="prefix"/>.
+        /// <param name="options">
+        /// Specifies options for listing, filtering, and shaping the
+        /// containers.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -360,17 +320,16 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContainersSegment}"/> describing a
-        /// segment of the blob containers in the storage account.
+        /// A <see cref="Response{ContainersSegment}"/> describing a
+        /// segment of the containers in the storage account.
         /// </returns>
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContainersSegment>> GetBlobContainersInternal(
+        internal async Task<Response<ContainersSegment>> GetContainersInternal(
             string continuationToken,
-            BlobContainerTraits traits,
-            string prefix,
+            GetContainersOptions? options,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -382,17 +341,16 @@ namespace Azure.Storage.Blobs
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(continuationToken)}: {continuationToken}\n" +
-                    $"{nameof(traits)}: {traits}");
+                    $"{nameof(options)}: {options}");
                 try
                 {
-                    return await BlobRestClient.Service.ListBlobContainersSegmentAsync(
-                        ClientDiagnostics,
+                    return await BlobRestClient.Service.ListContainersSegmentAsync(
                         Pipeline,
                         Uri,
                         marker: continuationToken,
-                        prefix: prefix,
+                        prefix: options?.Prefix,
                         maxresults: pageSizeHint,
-                        include: traits.AsIncludeType(),
+                        include: options?.AsIncludeType(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -408,7 +366,7 @@ namespace Azure.Storage.Blobs
                 }
             }
         }
-        #endregion GetBlobContainers
+        #endregion GetContainers
 
         #region GetAccountInfo
         /// <summary>
@@ -489,7 +447,6 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.GetAccountInfoAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -595,7 +552,6 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.GetPropertiesAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -722,7 +678,6 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.SetPropertiesAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         properties,
@@ -749,7 +704,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatistics"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -777,7 +732,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatisticsAsync"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -805,7 +760,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="GetStatisticsInternal"/> operation retrieves
         /// statistics related to replication for the Blob service.  It is
         /// only available on the secondary location endpoint when read-access
-        /// geo-redundant replication (<see cref="Models.SkuName.StandardRagrs"/>)
+        /// geo-redundant replication (<see cref="Models.SkuName.StandardRAGRS"/>)
         /// is enabled for the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-blob-service-stats"/>.
@@ -835,7 +790,6 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     return await BlobRestClient.Service.GetStatisticsAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         async: async,
@@ -979,7 +933,6 @@ namespace Azure.Storage.Blobs
                     var keyInfo = new KeyInfo { Start = start, Expiry = expiry };
 
                     return await BlobRestClient.Service.GetUserDelegationKeyAsync(
-                        ClientDiagnostics,
                         Pipeline,
                         Uri,
                         keyInfo: keyInfo,
@@ -1004,17 +957,17 @@ namespace Azure.Storage.Blobs
         #region CreateBlobContainer
         /// <summary>
         /// The <see cref="CreateBlobContainer"/> operation creates a new
-        /// blob container under the specified account. If the container with the
+        /// container under the specified account. If the container with the
         /// same name already exists, the operation fails.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container to create.
         /// </param>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
         /// specifies full public read access for container and blob data.
         /// Clients can enumerate blobs within the container via anonymous
         /// request, but cannot enumerate containers within the storage
@@ -1042,29 +995,29 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<BlobContainerClient> CreateBlobContainer(
-            string blobContainerName,
+            string containerName,
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            BlobContainerClient container = GetBlobContainerClient(blobContainerName);
-            Response<BlobContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
-            return Response.FromValue(container, response.GetRawResponse());
+            BlobContainerClient container = GetBlobContainerClient(containerName);
+            Response<ContainerInfo> response = container.Create(publicAccessType, metadata, cancellationToken);
+            return Response.FromValue(response.GetRawResponse(), container);
         }
 
         /// <summary>
         /// The <see cref="CreateBlobContainerAsync"/> operation creates a new
-        /// blob container under the specified account. If the container with the
+        /// container under the specified account. If the container with the
         /// same name already exists, the operation fails.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container to create.
         /// </param>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// publicly and the level of access. <see cref="PublicAccessType.Container"/>
         /// specifies full public read access for container and blob data.
         /// Clients can enumerate blobs within the container via anonymous
         /// request, but cannot enumerate containers within the storage
@@ -1092,30 +1045,30 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContainerClient>> CreateBlobContainerAsync(
-            string blobContainerName,
+            string containerName,
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            BlobContainerClient container = GetBlobContainerClient(blobContainerName);
-            Response<BlobContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(container, response.GetRawResponse());
+            BlobContainerClient container = GetBlobContainerClient(containerName);
+            Response<ContainerInfo> response = await container.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.GetRawResponse(), container);
         }
         #endregion CreateBlobContainer
 
         #region DeleteBlobContainer
         /// <summary>
         /// The <see cref="DeleteBlobContainer"/> operation marks the
-        /// specified blob container for deletion. The container and any blobs
+        /// specified container for deletion. The container and any blobs
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
         /// </summary>
-        /// <param name="blobContainerName">
+        /// <param name="containerName">
         /// The name of the container to delete.
         /// </param>
         /// <param name="accessConditions">
-        /// Optional <see cref="BlobContainerAccessConditions"/> to add
+        /// Optional <see cref="ContainerAccessConditions"/> to add
         /// conditions on the deletion of this container.
         /// </param>
         /// <param name="cancellationToken">
@@ -1131,10 +1084,10 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
-            string blobContainerName,
-            BlobContainerAccessConditions? accessConditions = default,
+            string containerName,
+            ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
-            GetBlobContainerClient(blobContainerName)
+            GetBlobContainerClient(containerName)
                 .Delete(
                     accessConditions,
                     cancellationToken);
@@ -1146,12 +1099,12 @@ namespace Azure.Storage.Blobs
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
         /// </summary>
-        /// <param name="blobContainerName">
-        /// The name of the blob container to delete.
+        /// <param name="containerName">
+        /// The name of the container to delete.
         /// </param>
         /// <param name="accessConditions">
-        /// Optional <see cref="BlobContainerAccessConditions"/> to add
-        /// conditions on the deletion of this blob container.
+        /// Optional <see cref="ContainerAccessConditions"/> to add
+        /// conditions on the deletion of this container.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1166,11 +1119,11 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(
-            string blobContainerName,
-            BlobContainerAccessConditions? accessConditions = default,
+            string containerName,
+            ContainerAccessConditions? accessConditions = default,
             CancellationToken cancellationToken = default) =>
             await
-                GetBlobContainerClient(blobContainerName)
+                GetBlobContainerClient(containerName)
                 .DeleteAsync(
                     accessConditions,
                     cancellationToken)

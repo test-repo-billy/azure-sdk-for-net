@@ -16,7 +16,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -108,9 +108,9 @@ string connectionString = "<connection_string>";
 BlobContainerClient container = new BlobContainerClient(connectionString, "sample-container");
 
 // List all of its blobs
-foreach (BlobItem blob in container.GetBlobs())
+foreach (Response<BlobItem> blob in container.GetBlobs())
 {
-    Console.WriteLine(blob.Name);
+    Console.WriteLine(blob.Value.Name);
 }
 ```
 

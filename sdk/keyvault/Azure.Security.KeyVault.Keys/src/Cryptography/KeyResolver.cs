@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Diagnostics;
+using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -22,8 +22,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         private readonly HttpPipeline  _pipeline;
         private readonly string _apiVersion;
-
-        private ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// Protected constructor for mocking
@@ -56,8 +54,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential));
-
-            _clientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -70,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.KeyResolver.Resolve");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.KeyResolver.Resolve");
             scope.AddAttribute("key", keyId);
             scope.Start();
 
@@ -80,9 +76,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 Key key = GetKey(keyId, cancellationToken);
 
-                KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
+                KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline);
 
-                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
+                return (key != null) ? new CryptographyClient(key.KeyMaterial, pipeline) : new CryptographyClient(keyId, pipeline);
             }
             catch (Exception e)
             {
@@ -101,7 +97,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.KeyResolver.Resolve");
+            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Security.KeyVault.Keys.Cryptography.KeyResolver.Resolve");
             scope.AddAttribute("key", keyId);
             scope.Start();
 
@@ -111,9 +107,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
                 Key key = await GetKeyAsync(keyId, cancellationToken).ConfigureAwait(false);
 
-                KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
+                KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline);
 
-                return (key != null) ? new CryptographyClient(key, pipeline) : new CryptographyClient(keyId, pipeline);
+                return (key != null) ? new CryptographyClient(key.KeyMaterial, pipeline) : new CryptographyClient(keyId, pipeline);
 
             }
             catch (Exception e)
@@ -163,7 +159,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 case 202:
                 case 204:
                     result.Deserialize(response.ContentStream);
-                    return Response.FromValue(result, response);
+                    return Response.FromValue(response, result);
                 default:
                     throw response.CreateRequestFailedException();
             }
