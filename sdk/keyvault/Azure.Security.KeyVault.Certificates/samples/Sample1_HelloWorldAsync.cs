@@ -37,19 +37,16 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
-            CertificateWithPolicy certificate = await certOp.WaitForCompletionAsync();
+            CertificateWithPolicy certificate = await certOp.WaitCompletionAsync();
 
             // At some time later we could get the created certificate along with it's policy from the Key Vault.
-            certificate = await client.GetCertificateAsync(certName);
+            certificate = await client.GetCertificateWithPolicyAsync(certName);
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.Expires}");
 
             // We find that the certificate has been compromised and we want to disable it so applications will no longer be able
             // to access the compromised version of the certificate.
-            CertificateProperties certificateProperties = certificate.Properties;
-            certificateProperties.Enabled = false;
-
-            Certificate updatedCert = await client.UpdateCertificatePropertiesAsync(certificateProperties);
+            Certificate updatedCert = await client.UpdateCertificateAsync(certName, certificate.Properties.Version, enabled: false);
 
             Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
 
@@ -58,7 +55,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // certificate with similar properties to the original certificate
             CertificateOperation newCertOp = await client.StartCreateCertificateAsync(certificate.Name, certificate.Policy);
 
-            CertificateWithPolicy newCert = await newCertOp.WaitForCompletionAsync();
+            CertificateWithPolicy newCert = await newCertOp.WaitCompletionAsync();
 
             // The certificate is no longer needed, need to delete it from the Key Vault.
             await client.DeleteCertificateAsync(certName);
