@@ -52,12 +52,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="isAutoProtected">Indicates if protectable item is
         /// auto-protected</param>
         /// <param name="subinquireditemcount">For instance or AG, indicates
-        /// number of DBs present</param>
+        /// number of DB's present</param>
         /// <param name="subprotectableitemcount">For instance or AG, indicates
-        /// number of DBs to be protected</param>
+        /// number of DB's to be protected</param>
         /// <param name="prebackupvalidation">Pre-backup validation for
         /// protectable objects</param>
-        public AzureVmWorkloadProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string parentUniqueName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), bool? isAutoProtected = default(bool?), int? subinquireditemcount = default(int?), int? subprotectableitemcount = default(int?), PreBackupValidation prebackupvalidation = default(PreBackupValidation))
+        /// <param name="isProtectable">Indicated if item present in inquiry is
+        /// protectable.
+        /// If this is unprotectable, preBackupValidation will have the
+        /// additional details why its unprotectable.</param>
+        public AzureVmWorkloadProtectableItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string parentUniqueName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), bool? isAutoProtected = default(bool?), int? subinquireditemcount = default(int?), int? subprotectableitemcount = default(int?), PreBackupValidation prebackupvalidation = default(PreBackupValidation), bool? isProtectable = default(bool?))
             : base(backupManagementType, workloadType, friendlyName, protectionState)
         {
             ParentName = parentName;
@@ -68,6 +72,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             Subinquireditemcount = subinquireditemcount;
             Subprotectableitemcount = subprotectableitemcount;
             Prebackupvalidation = prebackupvalidation;
+            IsProtectable = isProtectable;
             CustomInit();
         }
 
@@ -110,13 +115,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public bool? IsAutoProtected { get; set; }
 
         /// <summary>
-        /// Gets or sets for instance or AG, indicates number of DBs present
+        /// Gets or sets for instance or AG, indicates number of DB's present
         /// </summary>
         [JsonProperty(PropertyName = "subinquireditemcount")]
         public int? Subinquireditemcount { get; set; }
 
         /// <summary>
-        /// Gets or sets for instance or AG, indicates number of DBs to be
+        /// Gets or sets for instance or AG, indicates number of DB's to be
         /// protected
         /// </summary>
         [JsonProperty(PropertyName = "subprotectableitemcount")]
@@ -127,6 +132,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "prebackupvalidation")]
         public PreBackupValidation Prebackupvalidation { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicated if item present in inquiry is protectable.
+        /// If this is unprotectable, preBackupValidation will have the
+        /// additional details why its unprotectable.
+        /// </summary>
+        [JsonProperty(PropertyName = "IsProtectable")]
+        public bool? IsProtectable { get; set; }
 
     }
 }
