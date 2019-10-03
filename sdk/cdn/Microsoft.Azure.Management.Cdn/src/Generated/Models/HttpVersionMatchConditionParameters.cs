@@ -38,10 +38,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// delivery rule</param>
         /// <param name="negateCondition">Describes if this is negate condition
         /// or not</param>
-        public HttpVersionMatchConditionParameters(IList<string> matchValues, bool? negateCondition = default(bool?))
+        /// <param name="transforms">List of transforms</param>
+        public HttpVersionMatchConditionParameters(IList<string> matchValues, bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>))
         {
             NegateCondition = negateCondition;
             MatchValues = matchValues;
+            Transforms = transforms;
             CustomInit();
         }
         /// <summary>
@@ -69,6 +71,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "matchValues")]
         public IList<string> MatchValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of transforms
+        /// </summary>
+        [JsonProperty(PropertyName = "transforms")]
+        public IList<string> Transforms { get; set; }
 
         /// <summary>
         /// </summary>
