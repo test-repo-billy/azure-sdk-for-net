@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core;
+using Azure.Core.Http;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Specialized
 {
@@ -49,7 +50,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// An optional function that can be used to process the response.  It
         /// is responsible for parsing response bodies and throwing exceptions.
         /// </param>
-        public DelayedResponse(HttpMessage message, Func<Response, Response> processResponse = null)
+        public DelayedResponse(HttpPipelineMessage message, Func<Response, Response> processResponse = null)
         {
             // Have the BatchPipelineTransport associate this response with the
             // message when it's sent.
