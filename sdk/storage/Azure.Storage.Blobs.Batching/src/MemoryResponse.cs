@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Azure.Core;
+using Azure.Core.Http;
 
 namespace Azure.Storage.Blobs.Specialized
 {
