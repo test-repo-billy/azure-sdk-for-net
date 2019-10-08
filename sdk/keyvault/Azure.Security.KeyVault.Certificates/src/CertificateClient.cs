@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -63,7 +62,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             _defaultPolicy = options.DefaultPolicy ?? CreateDefaultPolicy();
 
-            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline, new ClientDiagnostics(options));
+            _pipeline = new KeyVaultPipeline(vaultUri, options.GetVersionString(), pipeline);
         }
 
         // Certificates API
@@ -174,11 +173,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the certificate and policy as a <see cref="CertificateWithPolicy"/> instance</returns>
-        public virtual Response<CertificateWithPolicy> GetCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateWithPolicy> GetCertificateWithPolicy(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateWithPolicy");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
@@ -199,11 +198,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">The name of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the certificate and policy as a <see cref="CertificateWithPolicy"/> instance</returns>
-        public virtual async Task<Response<CertificateWithPolicy>> GetCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateWithPolicy>> GetCertificateWithPolicyAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateWithPolicy");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
@@ -225,11 +224,11 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="version">Ther version of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="Certificate"/></returns>
-        public virtual Response<Certificate> GetCertificateVersion(string name, string version, CancellationToken cancellationToken = default)
+        public virtual Response<Certificate> GetCertificate(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
@@ -251,12 +250,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="version">Ther version of the <see cref="Certificate"/> to retrieve</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The requested <see cref="Certificate"/></returns>
-        public virtual async Task<Response<Certificate>> GetCertificateVersionAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Certificate>> GetCertificateAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificateVersion");
+            using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.GetCertificate");
             scope.AddAttribute("certificate", name);
             scope.Start();
 
