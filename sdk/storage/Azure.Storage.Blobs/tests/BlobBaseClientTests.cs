@@ -13,6 +13,8 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
+using Azure.Storage.Common.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -483,7 +485,7 @@ namespace Azure.Storage.Blobs.Test
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             if (Mode == RecordedTestMode.Live)
             {
-                await ParallelDownloadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumConcurrency = maximumThreadCount });
+                await ParallelDownloadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
             }
         }
 
@@ -1273,8 +1275,8 @@ namespace Azure.Storage.Blobs.Test
                 BlobBaseClient blob = await GetNewBlobClient(container, blobName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    startsOn: null,
-                    expiresOn: Recording.UtcNow.AddHours(1));
+                    start: null,
+                    expiry: Recording.UtcNow.AddHours(1));
 
                 BlockBlobClient identitySasBlob = InstrumentClient(
                     GetServiceClient_BlobServiceIdentitySas_Container(
@@ -1328,8 +1330,8 @@ namespace Azure.Storage.Blobs.Test
                 BlobBaseClient blob = await GetNewBlobClient(container, blobName);
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    startsOn: null,
-                    expiresOn: Recording.UtcNow.AddHours(1));
+                    start: null,
+                    expiry: Recording.UtcNow.AddHours(1));
 
                 BlockBlobClient identitySasBlob = InstrumentClient(
                     GetServiceClient_BlobServiceIdentitySas_Blob(
@@ -1388,8 +1390,8 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
                 Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                    startsOn: null,
-                    expiresOn: Recording.UtcNow.AddHours(1));
+                    start: null,
+                    expiry: Recording.UtcNow.AddHours(1));
 
                 BlockBlobClient identitySasBlob = InstrumentClient(
                     GetServiceClient_BlobServiceIdentitySas_Container(
