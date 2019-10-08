@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault
 {
@@ -10,12 +10,12 @@ namespace Azure.Security.KeyVault
     {
         public static void ConfigureLogging(this ClientOptions clientOptions)
         {
-            IList<string> allowedHeaderNames = clientOptions.Diagnostics.LoggedHeaderNames;
+            IList<string> allowedHeaderNames = clientOptions.Diagnostics.LoggingAllowedHeaderNames;
             allowedHeaderNames.Add("x-ms-keyvault-network-info");
             allowedHeaderNames.Add("x-ms-keyvault-region");
             allowedHeaderNames.Add("x-ms-keyvault-service-version");
 
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("api-version");
+            clientOptions.Diagnostics.LoggingAllowedQueryParameters.Add("api-version");
         }
     }
 }
