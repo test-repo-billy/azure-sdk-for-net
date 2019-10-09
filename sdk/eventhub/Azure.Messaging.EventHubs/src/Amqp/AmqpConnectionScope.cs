@@ -69,13 +69,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static TimeSpan AuthorizationRefreshTimeout { get; } = TimeSpan.FromMinutes(3);
 
         /// <summary>
-        ///   The recommended timeout to associate with an AMQP session.  It is recommended that this
-        ///   interval be used when creating or opening AMQP links and related constructs.
-        /// </summary>
-        ///
-        public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
-
-        /// <summary>
         ///   Indicates whether this <see cref="AmqpConnectionScope"/> has been disposed.
         /// </summary>
         ///
@@ -173,14 +166,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
-        /// </summary>
-        ///
-        protected AmqpConnectionScope()
-        {
-        }
-
-        /// <summary>
         ///   Opens an AMQP link for use with management operations.
         /// </summary>
         ///
@@ -194,8 +179,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   refreshing.
         /// </remarks>
         ///
-        public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(TimeSpan timeout,
-                                                                                   CancellationToken cancellationToken)
+        public async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(TimeSpan timeout,
+                                                                           CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -226,12 +211,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>A link for use with consumer operations.</returns>
         ///
-        public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(string consumerGroup,
-                                                                           string partitionId,
-                                                                           EventPosition eventPosition,
-                                                                           EventHubConsumerOptions consumerOptions,
-                                                                           TimeSpan timeout,
-                                                                           CancellationToken cancellationToken)
+        public async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(string consumerGroup,
+                                                                   string partitionId,
+                                                                   EventPosition eventPosition,
+                                                                   EventHubConsumerOptions consumerOptions,
+                                                                   TimeSpan timeout,
+                                                                   CancellationToken cancellationToken)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
@@ -617,15 +602,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                     {
                         refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
                     }
+
+                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshComplete(EventHubName, endpoint.AbsoluteUri);
                 }
                 catch (Exception ex)
                 {
                     EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshError(EventHubName, endpoint.AbsoluteUri, ex.Message);
                     refreshTimer.Change(Timeout.Infinite, Timeout.Infinite);
-                }
-                finally
-                {
-                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshComplete(EventHubName, endpoint.AbsoluteUri);
                 }
             };
         }

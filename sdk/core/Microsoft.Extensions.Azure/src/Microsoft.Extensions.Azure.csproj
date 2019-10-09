@@ -19,6 +19,7 @@
     <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
     <NoWarn>$(NoWarn);1591</NoWarn>
     <UseProjectReferenceToAzureIdentity>true</UseProjectReferenceToAzureIdentity>
+    <UseProjectReferenceToAzureIdentity>false</UseProjectReferenceToAzureIdentity>
   </PropertyGroup>
 
   <ItemGroup>
