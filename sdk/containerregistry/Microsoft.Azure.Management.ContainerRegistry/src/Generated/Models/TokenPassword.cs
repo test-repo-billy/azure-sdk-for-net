@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="creationTime">The creation datetime of the
         /// password.</param>
         /// <param name="expiry">The expiry datetime of the password.</param>
-        /// <param name="name">The password name "password" or "password2".
+        /// <param name="name">The password name "password1" or "password2".
         /// Possible values include: 'password1', 'password2'</param>
         /// <param name="value">The password value.</param>
         public TokenPassword(System.DateTime? creationTime = default(System.DateTime?), System.DateTime? expiry = default(System.DateTime?), string name = default(string), string value = default(string))
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public System.DateTime? Expiry { get; set; }
 
         /// <summary>
-        /// Gets or sets the password name "password" or "password2". Possible
+        /// Gets or sets the password name "password1" or "password2". Possible
         /// values include: 'password1', 'password2'
         /// </summary>
         [JsonProperty(PropertyName = "name")]

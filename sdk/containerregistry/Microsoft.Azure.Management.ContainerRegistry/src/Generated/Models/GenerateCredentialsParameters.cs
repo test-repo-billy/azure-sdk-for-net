@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="expiry">The expiry date of the generated credentials
         /// after which the credentials become invalid.</param>
         /// <param name="name">Specifies name of the password which should be
-        /// regenerated if any -- password or password2. Possible values
+        /// regenerated if any -- password1 or password2. Possible values
         /// include: 'password1', 'password2'</param>
         public GenerateCredentialsParameters(string tokenId = default(string), System.DateTime? expiry = default(System.DateTime?), string name = default(string))
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets specifies name of the password which should be
-        /// regenerated if any -- password or password2. Possible values
+        /// regenerated if any -- password1 or password2. Possible values
         /// include: 'password1', 'password2'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
