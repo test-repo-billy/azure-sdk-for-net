@@ -60,11 +60,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public ErrorDetail ErrorDetail { get; set; }
 
         /// <summary>
-        /// Gets or sets error Additional Detail in case the status is
-        /// non-success.
+        /// Gets error Additional Detail in case the status is non-success.
         /// </summary>
         [JsonProperty(PropertyName = "additionalDetail")]
-        public string AdditionalDetail { get; set; }
+        public string AdditionalDetail { get; private set; }
 
     }
 }
