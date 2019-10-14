@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="plan">The purchase plan when deploying a virtual
         /// machine scale set from VM Marketplace images.</param>
         /// <param name="upgradePolicy">The upgrade policy.</param>
+        /// <param name="automaticRepairsPolicy">Policy for automatic
+        /// repairs.</param>
         /// <param name="virtualMachineProfile">The virtual machine
         /// profile.</param>
         /// <param name="overprovision">Specifies whether the Virtual Machine
@@ -58,12 +60,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine Scale Set is scaled-in.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
+        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
             : base(tags)
         {
             Sku = sku;
             Plan = plan;
             UpgradePolicy = upgradePolicy;
+            AutomaticRepairsPolicy = automaticRepairsPolicy;
             VirtualMachineProfile = virtualMachineProfile;
             Overprovision = overprovision;
             SinglePlacementGroup = singlePlacementGroup;
@@ -96,6 +99,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.upgradePolicy")]
         public UpgradePolicy UpgradePolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy for automatic repairs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.automaticRepairsPolicy")]
+        public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine profile.
