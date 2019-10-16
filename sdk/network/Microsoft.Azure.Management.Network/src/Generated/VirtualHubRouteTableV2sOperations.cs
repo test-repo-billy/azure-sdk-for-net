@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// P2sVpnServerConfigurationsOperations operations.
+    /// VirtualHubRouteTableV2sOperations operations.
     /// </summary>
-    internal partial class P2sVpnServerConfigurationsOperations : IServiceOperations<NetworkManagementClient>, IP2sVpnServerConfigurationsOperations
+    internal partial class VirtualHubRouteTableV2sOperations : IServiceOperations<NetworkManagementClient>, IVirtualHubRouteTableV2sOperations
     {
         /// <summary>
-        /// Initializes a new instance of the P2sVpnServerConfigurationsOperations class.
+        /// Initializes a new instance of the VirtualHubRouteTableV2sOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal P2sVpnServerConfigurationsOperations(NetworkManagementClient client)
+        internal VirtualHubRouteTableV2sOperations(NetworkManagementClient client)
         {
             if (client == null)
             {
@@ -51,16 +51,16 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Retrieves the details of a P2SVpnServerConfiguration.
+        /// Retrieves the details of a VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the P2SVpnServerConfiguration.
+        /// The resource group name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<P2SVpnServerConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualHubRouteTableV2>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (virtualWanName == null)
+            if (virtualHubName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "virtualWanName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualHubName");
             }
-            if (p2SVpnServerConfigurationName == null)
+            if (routeTableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "routeTableName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -110,19 +110,19 @@ namespace Microsoft.Azure.Management.Network
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualWanName", virtualWanName);
-                tracingParameters.Add("p2SVpnServerConfigurationName", p2SVpnServerConfigurationName);
+                tracingParameters.Add("virtualHubName", virtualHubName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/p2sVpnServerConfigurations/{p2SVpnServerConfigurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{virtualWanName}", System.Uri.EscapeDataString(virtualWanName));
-            _url = _url.Replace("{p2SVpnServerConfigurationName}", System.Uri.EscapeDataString(p2SVpnServerConfigurationName));
+            _url = _url.Replace("{virtualHubName}", System.Uri.EscapeDataString(virtualHubName));
+            _url = _url.Replace("{routeTableName}", System.Uri.EscapeDataString(routeTableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<P2SVpnServerConfiguration>();
+            var _result = new AzureOperationResponse<VirtualHubRouteTableV2>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<P2SVpnServerConfiguration>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualHubRouteTableV2>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -249,20 +249,20 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Creates a P2SVpnServerConfiguration to associate with a VirtualWan if it
-        /// doesn't exist else updates the existing P2SVpnServerConfiguration.
+        /// Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates
+        /// the existing VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualWan.
+        /// The resource group name of the VirtualHub.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationParameters'>
-        /// Parameters supplied to create or Update a P2SVpnServerConfiguration.
+        /// <param name='virtualHubRouteTableV2Parameters'>
+        /// Parameters supplied to create or update VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -270,24 +270,24 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<P2SVpnServerConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, P2SVpnServerConfiguration p2SVpnServerConfigurationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualHubRouteTableV2>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<P2SVpnServerConfiguration> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualWanName, p2SVpnServerConfigurationName, p2SVpnServerConfigurationParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VirtualHubRouteTableV2> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, virtualHubName, routeTableName, virtualHubRouteTableV2Parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Deletes a P2SVpnServerConfiguration.
+        /// Deletes a VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the P2SVpnServerConfiguration.
+        /// The resource group name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -295,21 +295,21 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualWanName, p2SVpnServerConfigurationName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, virtualHubName, routeTableName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieves all P2SVpnServerConfigurations for a particular VirtualWan.
+        /// Retrieves the details of all VirtualHubRouteTableV2s.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualWan.
+        /// The resource group name of the VirtualHub.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<P2SVpnServerConfiguration>>> ListByVirtualWanWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<HubVirtualNetworkConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -342,11 +342,11 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (virtualWanName == null)
+            if (virtualHubName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "virtualWanName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualHubName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -355,17 +355,17 @@ namespace Microsoft.Azure.Management.Network
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualWanName", virtualWanName);
+                tracingParameters.Add("virtualHubName", virtualHubName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByVirtualWan", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/p2sVpnServerConfigurations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{virtualWanName}", System.Uri.EscapeDataString(virtualWanName));
+            _url = _url.Replace("{virtualHubName}", System.Uri.EscapeDataString(virtualHubName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -431,13 +431,14 @@ namespace Microsoft.Azure.Management.Network
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -447,6 +448,10 @@ namespace Microsoft.Azure.Management.Network
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -459,7 +464,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<P2SVpnServerConfiguration>>();
+            var _result = new AzureOperationResponse<IPage<HubVirtualNetworkConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -472,7 +477,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<P2SVpnServerConfiguration>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HubVirtualNetworkConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -492,20 +497,20 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Creates a P2SVpnServerConfiguration to associate with a VirtualWan if it
-        /// doesn't exist else updates the existing P2SVpnServerConfiguration.
+        /// Creates a VirtualHubRouteTableV2 resource if it doesn't exist else updates
+        /// the existing VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualWan.
+        /// The resource group name of the VirtualHub.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationParameters'>
-        /// Parameters supplied to create or Update a P2SVpnServerConfiguration.
+        /// <param name='virtualHubRouteTableV2Parameters'>
+        /// Parameters supplied to create or update VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -528,7 +533,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<P2SVpnServerConfiguration>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, P2SVpnServerConfiguration p2SVpnServerConfigurationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualHubRouteTableV2>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -538,19 +543,19 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (virtualWanName == null)
+            if (virtualHubName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "virtualWanName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualHubName");
             }
-            if (p2SVpnServerConfigurationName == null)
+            if (routeTableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "routeTableName");
             }
-            if (p2SVpnServerConfigurationParameters == null)
+            if (virtualHubRouteTableV2Parameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualHubRouteTableV2Parameters");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -559,20 +564,20 @@ namespace Microsoft.Azure.Management.Network
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualWanName", virtualWanName);
-                tracingParameters.Add("p2SVpnServerConfigurationName", p2SVpnServerConfigurationName);
+                tracingParameters.Add("virtualHubName", virtualHubName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("p2SVpnServerConfigurationParameters", p2SVpnServerConfigurationParameters);
+                tracingParameters.Add("virtualHubRouteTableV2Parameters", virtualHubRouteTableV2Parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/p2sVpnServerConfigurations/{p2SVpnServerConfigurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{virtualWanName}", System.Uri.EscapeDataString(virtualWanName));
-            _url = _url.Replace("{p2SVpnServerConfigurationName}", System.Uri.EscapeDataString(p2SVpnServerConfigurationName));
+            _url = _url.Replace("{virtualHubName}", System.Uri.EscapeDataString(virtualHubName));
+            _url = _url.Replace("{routeTableName}", System.Uri.EscapeDataString(routeTableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -616,9 +621,9 @@ namespace Microsoft.Azure.Management.Network
 
             // Serialize Request
             string _requestContent = null;
-            if(p2SVpnServerConfigurationParameters != null)
+            if(virtualHubRouteTableV2Parameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(p2SVpnServerConfigurationParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(virtualHubRouteTableV2Parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -672,7 +677,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<P2SVpnServerConfiguration>();
+            var _result = new AzureOperationResponse<VirtualHubRouteTableV2>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -685,7 +690,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<P2SVpnServerConfiguration>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualHubRouteTableV2>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -703,7 +708,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<P2SVpnServerConfiguration>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualHubRouteTableV2>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -723,16 +728,16 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Deletes a P2SVpnServerConfiguration.
+        /// Deletes a VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the P2SVpnServerConfiguration.
+        /// The resource group name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -752,7 +757,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -762,15 +767,15 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (virtualWanName == null)
+            if (virtualHubName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "virtualWanName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualHubName");
             }
-            if (p2SVpnServerConfigurationName == null)
+            if (routeTableName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "routeTableName");
             }
-            string apiVersion = "2019-07-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -779,19 +784,19 @@ namespace Microsoft.Azure.Management.Network
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("virtualWanName", virtualWanName);
-                tracingParameters.Add("p2SVpnServerConfigurationName", p2SVpnServerConfigurationName);
+                tracingParameters.Add("virtualHubName", virtualHubName);
+                tracingParameters.Add("routeTableName", routeTableName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}/p2sVpnServerConfigurations/{p2SVpnServerConfigurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{virtualWanName}", System.Uri.EscapeDataString(virtualWanName));
-            _url = _url.Replace("{p2SVpnServerConfigurationName}", System.Uri.EscapeDataString(p2SVpnServerConfigurationName));
+            _url = _url.Replace("{virtualHubName}", System.Uri.EscapeDataString(virtualHubName));
+            _url = _url.Replace("{routeTableName}", System.Uri.EscapeDataString(routeTableName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -900,7 +905,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// Retrieves all P2SVpnServerConfigurations for a particular VirtualWan.
+        /// Retrieves the details of all VirtualHubRouteTableV2s.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -911,7 +916,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -926,7 +931,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<P2SVpnServerConfiguration>>> ListByVirtualWanNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<HubVirtualNetworkConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -941,7 +946,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByVirtualWanNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -1007,13 +1012,14 @@ namespace Microsoft.Azure.Management.Network
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1023,6 +1029,10 @@ namespace Microsoft.Azure.Management.Network
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1035,7 +1045,7 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<P2SVpnServerConfiguration>>();
+            var _result = new AzureOperationResponse<IPage<HubVirtualNetworkConnection>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1048,7 +1058,7 @@ namespace Microsoft.Azure.Management.Network
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<P2SVpnServerConfiguration>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<HubVirtualNetworkConnection>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
