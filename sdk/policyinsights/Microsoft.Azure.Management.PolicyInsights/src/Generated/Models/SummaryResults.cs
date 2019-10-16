@@ -12,10 +12,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Non-compliance summary on a particular summary level.
+    /// Compliance summary on a particular summary level.
     /// </summary>
     public partial class SummaryResults
     {
@@ -32,16 +34,31 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         /// <param name="queryResultsUri">HTTP POST URI for queryResults action
         /// on Microsoft.PolicyInsights to retrieve raw results for the
-        /// non-compliance summary.</param>
+        /// compliance summary. This property will not be available by default
+        /// in future API versions, but could be queried explicitly.</param>
         /// <param name="nonCompliantResources">Number of non-compliant
         /// resources.</param>
         /// <param name="nonCompliantPolicies">Number of non-compliant
         /// policies.</param>
-        public SummaryResults(string queryResultsUri = default(string), int? nonCompliantResources = default(int?), int? nonCompliantPolicies = default(int?))
+        /// <param name="nonCompliantPolicyGroups">Number of non-compliant
+        /// groups.</param>
+        /// <param name="resourceDetails">The resources summary at this
+        /// level.</param>
+        /// <param name="policyDetails">The policy artifact summary at this
+        /// level. For query scope level, it represents policy assignment
+        /// summary. For policy assignment level, it represents policy
+        /// definitions summary.</param>
+        /// <param name="policyGroupDetails">The policy definition group
+        /// summary at this level.</param>
+        public SummaryResults(string queryResultsUri = default(string), int? nonCompliantResources = default(int?), int? nonCompliantPolicies = default(int?), int? nonCompliantPolicyGroups = default(int?), IList<ComplianceDetail> resourceDetails = default(IList<ComplianceDetail>), IList<ComplianceDetail> policyDetails = default(IList<ComplianceDetail>), IList<ComplianceDetail> policyGroupDetails = default(IList<ComplianceDetail>))
         {
             QueryResultsUri = queryResultsUri;
             NonCompliantResources = nonCompliantResources;
             NonCompliantPolicies = nonCompliantPolicies;
+            NonCompliantPolicyGroups = nonCompliantPolicyGroups;
+            ResourceDetails = resourceDetails;
+            PolicyDetails = policyDetails;
+            PolicyGroupDetails = policyGroupDetails;
             CustomInit();
         }
 
@@ -52,8 +69,9 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
 
         /// <summary>
         /// Gets or sets HTTP POST URI for queryResults action on
-        /// Microsoft.PolicyInsights to retrieve raw results for the
-        /// non-compliance summary.
+        /// Microsoft.PolicyInsights to retrieve raw results for the compliance
+        /// summary. This property will not be available by default in future
+        /// API versions, but could be queried explicitly.
         /// </summary>
         [JsonProperty(PropertyName = "queryResultsUri")]
         public string QueryResultsUri { get; set; }
@@ -71,6 +89,32 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public int? NonCompliantPolicies { get; set; }
 
         /// <summary>
+        /// Gets or sets number of non-compliant groups.
+        /// </summary>
+        [JsonProperty(PropertyName = "nonCompliantPolicyGroups")]
+        public int? NonCompliantPolicyGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resources summary at this level.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceDetails")]
+        public IList<ComplianceDetail> ResourceDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy artifact summary at this level. For query
+        /// scope level, it represents policy assignment summary. For policy
+        /// assignment level, it represents policy definitions summary.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyDetails")]
+        public IList<ComplianceDetail> PolicyDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policy definition group summary at this level.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyGroupDetails")]
+        public IList<ComplianceDetail> PolicyGroupDetails { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -85,6 +129,10 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             if (NonCompliantPolicies < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "NonCompliantPolicies", 0);
+            }
+            if (NonCompliantPolicyGroups < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "NonCompliantPolicyGroups", 0);
             }
         }
     }

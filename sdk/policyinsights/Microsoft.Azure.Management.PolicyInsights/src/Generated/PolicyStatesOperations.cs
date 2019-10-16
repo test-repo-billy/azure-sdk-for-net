@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupName");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -834,7 +834,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
             string policyStatesSummaryResource = "latest";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1071,7 +1071,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1331,7 +1331,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             string policyStatesSummaryResource = "latest";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1563,7 +1563,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1824,7 +1824,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
             string policyStatesSummaryResource = "latest";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2062,7 +2062,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policySetDefinitionName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2325,7 +2325,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2567,7 +2567,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2830,7 +2830,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3072,7 +3072,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3335,7 +3335,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3584,7 +3584,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3856,7 +3856,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -4080,7 +4080,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            string apiVersion = "2018-07-01-preview";
+            string apiVersion = "2019-10-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
