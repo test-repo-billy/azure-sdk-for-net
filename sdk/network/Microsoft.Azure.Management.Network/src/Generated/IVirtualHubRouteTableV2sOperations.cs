@@ -19,21 +19,21 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading.Tasks;
 
     /// <summary>
-    /// P2sVpnServerConfigurationsOperations operations.
+    /// VirtualHubRouteTableV2sOperations operations.
     /// </summary>
-    public partial interface IP2sVpnServerConfigurationsOperations
+    public partial interface IVirtualHubRouteTableV2sOperations
     {
         /// <summary>
-        /// Retrieves the details of a P2SVpnServerConfiguration.
+        /// Retrieves the details of a VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the P2SVpnServerConfiguration.
+        /// The resource group name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,24 +50,22 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<P2SVpnServerConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualHubRouteTableV2>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a P2SVpnServerConfiguration to associate with a VirtualWan
-        /// if it doesn't exist else updates the existing
-        /// P2SVpnServerConfiguration.
+        /// Creates a VirtualHubRouteTableV2 resource if it doesn't exist else
+        /// updates the existing VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualWan.
+        /// The resource group name of the VirtualHub.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationParameters'>
-        /// Parameters supplied to create or Update a
-        /// P2SVpnServerConfiguration.
+        /// <param name='virtualHubRouteTableV2Parameters'>
+        /// Parameters supplied to create or update VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -84,18 +82,18 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<P2SVpnServerConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, P2SVpnServerConfiguration p2SVpnServerConfigurationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualHubRouteTableV2>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a P2SVpnServerConfiguration.
+        /// Deletes a VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the P2SVpnServerConfiguration.
+        /// The resource group name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -109,16 +107,47 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves all P2SVpnServerConfigurations for a particular
-        /// VirtualWan.
+        /// Retrieves the details of all VirtualHubRouteTableV2s.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualWan.
+        /// The resource group name of the VirtualHub.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<HubVirtualNetworkConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a VirtualHubRouteTableV2 resource if it doesn't exist else
+        /// updates the existing VirtualHubRouteTableV2.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name of the VirtualHub.
+        /// </param>
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
+        /// </param>
+        /// <param name='virtualHubRouteTableV2Parameters'>
+        /// Parameters supplied to create or update VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -135,52 +164,18 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<P2SVpnServerConfiguration>>> ListByVirtualWanWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualHubRouteTableV2>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, VirtualHubRouteTableV2 virtualHubRouteTableV2Parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a P2SVpnServerConfiguration to associate with a VirtualWan
-        /// if it doesn't exist else updates the existing
-        /// P2SVpnServerConfiguration.
+        /// Deletes a VirtualHubRouteTableV2.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name of the VirtualWan.
+        /// The resource group name of the VirtualHubRouteTableV2.
         /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
+        /// <param name='virtualHubName'>
+        /// The name of the VirtualHub.
         /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
-        /// </param>
-        /// <param name='p2SVpnServerConfigurationParameters'>
-        /// Parameters supplied to create or Update a
-        /// P2SVpnServerConfiguration.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<P2SVpnServerConfiguration>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, P2SVpnServerConfiguration p2SVpnServerConfigurationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a P2SVpnServerConfiguration.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name of the P2SVpnServerConfiguration.
-        /// </param>
-        /// <param name='virtualWanName'>
-        /// The name of the VirtualWan.
-        /// </param>
-        /// <param name='p2SVpnServerConfigurationName'>
-        /// The name of the P2SVpnServerConfiguration.
+        /// <param name='routeTableName'>
+        /// The name of the VirtualHubRouteTableV2.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -194,10 +189,9 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualWanName, string p2SVpnServerConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualHubName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves all P2SVpnServerConfigurations for a particular
-        /// VirtualWan.
+        /// Retrieves the details of all VirtualHubRouteTableV2s.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -208,7 +202,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -217,6 +211,6 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<P2SVpnServerConfiguration>>> ListByVirtualWanNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<HubVirtualNetworkConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
