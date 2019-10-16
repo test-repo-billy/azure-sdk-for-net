@@ -13,41 +13,44 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// VPN client root certificate of P2SVpnServerConfiguration.
+    /// VirtualHubRouteTableV2 Resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class P2SVpnServerConfigVpnClientRootCertificate : SubResource
+    public partial class VirtualHubRouteTableV2 : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// P2SVpnServerConfigVpnClientRootCertificate class.
+        /// Initializes a new instance of the VirtualHubRouteTableV2 class.
         /// </summary>
-        public P2SVpnServerConfigVpnClientRootCertificate()
+        public VirtualHubRouteTableV2()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// P2SVpnServerConfigVpnClientRootCertificate class.
+        /// Initializes a new instance of the VirtualHubRouteTableV2 class.
         /// </summary>
-        /// <param name="publicCertData">The certificate public data.</param>
         /// <param name="id">Resource ID.</param>
-        /// <param name="provisioningState">The provisioning state of the VPN
-        /// client root certificate resource. Possible values include:
+        /// <param name="routes">List of all routes.</param>
+        /// <param name="attachedConnections">List of all connections attached
+        /// to this route table v2.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// virtual hub route table v2 resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public P2SVpnServerConfigVpnClientRootCertificate(string publicCertData, string id = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualHubRouteTableV2(string id = default(string), IList<VirtualHubRouteV2> routes = default(IList<VirtualHubRouteV2>), IList<string> attachedConnections = default(IList<string>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
-            PublicCertData = publicCertData;
+            Routes = routes;
+            AttachedConnections = attachedConnections;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -60,13 +63,20 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the certificate public data.
+        /// Gets or sets list of all routes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicCertData")]
-        public string PublicCertData { get; set; }
+        [JsonProperty(PropertyName = "properties.routes")]
+        public IList<VirtualHubRouteV2> Routes { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the VPN client root certificate
+        /// Gets or sets list of all connections attached to this route table
+        /// v2.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.attachedConnections")]
+        public IList<string> AttachedConnections { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state of the virtual hub route table v2
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
@@ -81,24 +91,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (PublicCertData == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PublicCertData");
-            }
-        }
     }
 }
