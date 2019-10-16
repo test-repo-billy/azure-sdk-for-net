@@ -875,11 +875,11 @@ namespace Azure.Storage.Blobs
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
-        /// <param name="startsOn">
+        /// <param name="start">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiresOn">
+        /// <param name="expiry">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -896,12 +896,12 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            DateTimeOffset? startsOn,
-            DateTimeOffset expiresOn,
+            DateTimeOffset? start,
+            DateTimeOffset expiry,
             CancellationToken cancellationToken = default) =>
             GetUserDelegationKeyInternal(
-                startsOn,
-                expiresOn,
+                start,
+                expiry,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -911,11 +911,11 @@ namespace Azure.Storage.Blobs
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
-        /// <param name="startsOn">
+        /// <param name="start">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiresOn">
+        /// <param name="expiry">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -932,12 +932,12 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
-            DateTimeOffset? startsOn,
-            DateTimeOffset expiresOn,
+            DateTimeOffset? start,
+            DateTimeOffset expiry,
             CancellationToken cancellationToken = default) =>
             await GetUserDelegationKeyInternal(
-                startsOn,
-                expiresOn,
+                start,
+                expiry,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -947,11 +947,11 @@ namespace Azure.Storage.Blobs
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.BlobSasBuilder"/>.
         /// </summary>
-        /// <param name="startsOn">
+        /// <param name="start">
         /// Start time for the key's validity, with null indicating an
         /// immediate start.  The time should be specified in UTC.
         /// </param>
-        /// <param name="expiresOn">
+        /// <param name="expiry">
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
@@ -969,8 +969,8 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
-            DateTimeOffset? startsOn,
-            DateTimeOffset expiresOn,
+            DateTimeOffset? start,
+            DateTimeOffset expiry,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -979,17 +979,17 @@ namespace Azure.Storage.Blobs
                 Pipeline.LogMethodEnter(nameof(BlobServiceClient), message: $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    if (startsOn.HasValue && startsOn.Value.Offset != TimeSpan.Zero)
+                    if (start.HasValue && start.Value.Offset != TimeSpan.Zero)
                     {
-                        throw BlobErrors.InvalidDateTimeUtc(nameof(startsOn));
+                        throw BlobErrors.InvalidDateTimeUtc(nameof(start));
                     }
 
-                    if (expiresOn.Offset != TimeSpan.Zero)
+                    if (expiry.Offset != TimeSpan.Zero)
                     {
-                        throw BlobErrors.InvalidDateTimeUtc(nameof(expiresOn));
+                        throw BlobErrors.InvalidDateTimeUtc(nameof(expiry));
                     }
 
-                    var keyInfo = new KeyInfo { StartsOn = startsOn, ExpiresOn = expiresOn };
+                    var keyInfo = new KeyInfo { Start = start, Expiry = expiry };
 
                     return await BlobRestClient.Service.GetUserDelegationKeyAsync(
                         ClientDiagnostics,

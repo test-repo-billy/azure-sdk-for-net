@@ -453,6 +453,4 @@ directive:
     $.CorsRule["x-ms-client-name"] = "QueueCorsRule";
     $.CorsRule.xml = { "name": "CorsRule"};
     $.QueueServiceProperties.properties.Cors.xml.name = "CorsRule";
-    $.RetentionPolicy["x-ms-client-name"] = "QueueRetentionPolicy";
-    $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
 ```

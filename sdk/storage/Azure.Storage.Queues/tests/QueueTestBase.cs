@@ -142,20 +142,11 @@ namespace Azure.Storage.Queues.Tests
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Queues,
                 ResourceTypes = AccountSasResourceTypes.Container,
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
-            };
-            builder.SetPermissions(
-                AccountSasPermissions.Read |
-                AccountSasPermissions.Write |
-                AccountSasPermissions.Update |
-                AccountSasPermissions.Process |
-                AccountSasPermissions.Add |
-                AccountSasPermissions.Delete |
-                AccountSasPermissions.List);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
-        }
+                StartTime = Recording.UtcNow.AddHours(-1),
+                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                Permissions = new QueueAccountSasPermissions { Read = true, Write = true, Update = true, Process = true, Add = true, Delete = true, List = true }.ToString(),
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+            }.ToSasQueryParameters(sharedKeyCredentials);
 
         public SasQueryParameters GetNewQueueServiceSasCredentials(string queueName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
@@ -163,13 +154,11 @@ namespace Azure.Storage.Queues.Tests
             {
                 QueueName = queueName,
                 Protocol = SasProtocol.None,
-                StartsOn = Recording.UtcNow.AddHours(-1),
-                ExpiresOn = Recording.UtcNow.AddHours(+1),
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
-            };
-            builder.SetPermissions(QueueAccountSasPermissions.Read | QueueAccountSasPermissions.Update | QueueAccountSasPermissions.Process | QueueAccountSasPermissions.Add);
-            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
-        }
+                StartTime = Recording.UtcNow.AddHours(-1),
+                ExpiryTime = Recording.UtcNow.AddHours(+1),
+                Permissions = new QueueAccountSasPermissions { Read = true, Update = true, Process = true, Add = true }.ToString(),
+                IPRange = new IPRange(IPAddress.None, IPAddress.None)
+            }.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
 
         private class DisposingQueue : IDisposable
         {
@@ -205,11 +194,11 @@ namespace Azure.Storage.Queues.Tests
                 {
                     Id = GetNewString(),
                     AccessPolicy =
-                        new QueueAccessPolicy
+                        new AccessPolicy
                         {
-                            StartsOn =  Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
-                            Permissions = "raup"
+                            Start =  Recording.UtcNow.AddHours(-1),
+                            Expiry =  Recording.UtcNow.AddHours(1),
+                            Permission = "raup"
                         }
                 }
             };

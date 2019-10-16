@@ -147,7 +147,7 @@ namespace Azure.Storage.Blobs.Samples
                 ResourceTypes = AccountSasResourceTypes.Service,
 
                 // Access expires in 1 hour!
-                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
             };
             // Allow read access
             sas.SetPermissions(AccountSasPermissions.Read);

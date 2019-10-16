@@ -17,7 +17,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_02_02;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2018_11_09;
 
         /// <summary>
         /// The versions of Azure Blob Storage supported by this client
@@ -28,10 +28,10 @@ namespace Azure.Storage.Blobs
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The 2019-02-02 service version described at
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
+            /// The 2018-11-09 service version described at
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/version-2018-11-09" />
             /// </summary>
-            V2019_02_02 = 1
+            V2018_11_09 = 0
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -46,6 +46,26 @@ namespace Azure.Storage.Blobs
         /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
         /// </summary>
         public CustomerProvidedKey? CustomerProvidedKey { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobClientOptions"/>
+        /// class.
+        /// </summary>
+        /// <param name="version">
+        /// The <see cref="ServiceVersion"/> of the service API used when
+        /// making requests
+        /// </param>
+        /// <param name="customerProvidedKey">
+        /// The customer provided key to be used by the service to encrypt data.
+        /// </param>
+        public BlobClientOptions(
+            ServiceVersion version = LatestVersion,
+            CustomerProvidedKey? customerProvidedKey = default)
+        {
+            Version = version;
+            CustomerProvidedKey = customerProvidedKey;
+            this.Initialize();
+        }
 
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the

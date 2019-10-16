@@ -15,7 +15,12 @@ namespace Azure.Storage
     internal static class StorageExceptionExtensions
     {
         /// <summary>
-        /// Create a RequestFailedException with a proper error message.
+        /// Well known error codes for common failure conditions
+        /// </summary>
+        public string ErrorCode { get; private set; }
+
+        /// <summary>
+        /// Additional information helpful in debugging errors.
         /// </summary>
         /// <param name="response">The failed response.</param>
         /// <param name="message">The optional message.</param>
@@ -29,15 +34,17 @@ namespace Azure.Storage
             Exception innerException = null,
             string errorCode = null,
             IDictionary<string, string> additionalInfo = null)
+            : base(
+                  response?.Status ?? throw Errors.ArgumentNull(nameof(response)),
+                  CreateMessage(response, message ?? response?.ReasonPhrase, errorCode, additionalInfo),
+                  innerException)
         {
-            int status = response?.Status ?? throw Errors.ArgumentNull(nameof(response));
-            string code = GetErrorCode(response, errorCode);
-
-            var exception = new RequestFailedException(
-                status,
-                CreateMessage(response, message ?? response.ReasonPhrase, code, additionalInfo),
-                code,
-                innerException);
+            // Get the error code, if it wasn't provided
+            if (string.IsNullOrEmpty(errorCode))
+            {
+                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
+            }
+            ErrorCode = errorCode;
 
             if (additionalInfo != null)
             {
@@ -48,21 +55,6 @@ namespace Azure.Storage
             }
 
             return exception;
-        }
-
-        /// <summary>
-        /// Attempt to get the error code from a response if it's not provided.
-        /// </summary>
-        /// <param name="response">The response.</param>
-        /// <param name="errorCode">An optional error code.</param>
-        /// <returns>The response's error code.</returns>
-        private static string GetErrorCode(Response response, string errorCode)
-        {
-            if (string.IsNullOrEmpty(errorCode))
-            {
-                response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out errorCode);
-            }
-            return errorCode;
         }
 
         /// <summary>

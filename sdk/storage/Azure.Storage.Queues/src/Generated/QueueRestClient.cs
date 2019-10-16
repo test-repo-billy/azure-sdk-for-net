@@ -2334,7 +2334,102 @@ namespace Azure.Storage.Queues
 #endregion Service
 
 #region Models
-#region enum ListQueuesIncludeType
+#region class AccessPolicy
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// An Access policy
+    /// </summary>
+    public partial class AccessPolicy
+    {
+        /// <summary>
+        /// the date-time the policy is active
+        /// </summary>
+        public System.DateTimeOffset? Start { get; set; }
+
+        /// <summary>
+        /// the date-time the policy expires
+        /// </summary>
+        public System.DateTimeOffset? Expiry { get; set; }
+
+        /// <summary>
+        /// the permissions for the acl policy
+        /// </summary>
+        public string Permission { get; set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AccessPolicy instances.
+        /// You can use QueuesModelFactory.AccessPolicy instead.
+        /// </summary>
+        internal AccessPolicy() { }
+
+        /// <summary>
+        /// Serialize a AccessPolicy instance as XML.
+        /// </summary>
+        /// <param name="value">The AccessPolicy instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "AccessPolicy".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.AccessPolicy value, string name = "AccessPolicy", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            if (value.Start != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Start", ""),
+                    value.Start.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.Expiry != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Expiry", ""),
+                    value.Expiry.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffZ", System.Globalization.CultureInfo.InvariantCulture)));
+            }
+            if (value.Permission != null)
+            {
+                _element.Add(new System.Xml.Linq.XElement(
+                    System.Xml.Linq.XName.Get("Permission", ""),
+                    value.Permission));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new AccessPolicy instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized AccessPolicy instance.</returns>
+        internal static Azure.Storage.Queues.Models.AccessPolicy FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.AccessPolicy _value = new Azure.Storage.Queues.Models.AccessPolicy();
+            _child = element.Element(System.Xml.Linq.XName.Get("Start", ""));
+            if (_child != null)
+            {
+                _value.Start = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry", ""));
+            if (_child != null)
+            {
+                _value.Expiry = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Permission", ""));
+            if (_child != null)
+            {
+                _value.Permission = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.AccessPolicy value);
+    }
+}
+#endregion class AccessPolicy
+
+#region class DequeuedMessage
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
@@ -2613,6 +2708,296 @@ namespace Azure.Storage.Queues.Models
         /// the retention policy
         /// </summary>
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new QueueAnalyticsLogging instance
+        /// </summary>
+        public static GeoReplication GeoReplication(
+            Azure.Storage.Queues.Models.GeoReplicationStatus status,
+            System.DateTimeOffset lastSyncTime)
+        {
+            return new GeoReplication()
+            {
+                Status = status,
+                LastSyncTime = lastSyncTime,
+            };
+        }
+    }
+}
+#endregion class GeoReplication
+
+#region enum strings GeoReplicationStatus
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// The status of the secondary location
+    /// </summary>
+    public readonly struct GeoReplicationStatus : System.IEquatable<GeoReplicationStatus>
+    {
+        /// <summary>
+        /// The GeoReplicationStatus value.
+        /// </summary>
+        private readonly string _value;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeoReplicationStatus"/> structure.
+        /// </summary>
+        /// <param name="value">The string value of the instance.</param>
+        public GeoReplicationStatus(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+
+        /// <summary>
+        /// live
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Live = new GeoReplicationStatus(@"live");
+
+        /// <summary>
+        /// bootstrap
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Bootstrap = new GeoReplicationStatus(@"bootstrap");
+
+        /// <summary>
+        /// unavailable
+        /// </summary>
+        public static readonly Azure.Storage.Queues.Models.GeoReplicationStatus Unavailable = new GeoReplicationStatus(@"unavailable");
+
+        /// <summary>
+        /// Determines if two <see cref="GeoReplicationStatus"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="GeoReplicationStatus"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <param name="right">The second <see cref="GeoReplicationStatus"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(Azure.Storage.Queues.Models.GeoReplicationStatus left, Azure.Storage.Queues.Models.GeoReplicationStatus right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="GeoReplicationStatus"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The GeoReplicationStatus value.</returns>
+        public static implicit operator GeoReplicationStatus(string value) => new Azure.Storage.Queues.Models.GeoReplicationStatus(value);
+
+        /// <summary>
+        /// Check if two <see cref="GeoReplicationStatus"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Queues.Models.GeoReplicationStatus other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="GeoReplicationStatus"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Queues.Models.GeoReplicationStatus other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="GeoReplicationStatus"/>.
+        /// </summary>
+        /// <returns>Hash code for the GeoReplicationStatus.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="GeoReplicationStatus"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the GeoReplicationStatus.</returns>
+        public override string ToString() => _value;
+    }
+}
+#endregion enum strings GeoReplicationStatus
+
+#region enum ListQueuesIncludeType
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// ListQueuesIncludeType values
+    /// </summary>
+    internal enum ListQueuesIncludeType
+    {
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata
+    }
+}
+
+namespace Azure.Storage.Queues
+{
+    internal static partial class QueueRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Queues.Models.ListQueuesIncludeType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata => "metadata",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.")
+                };
+            }
+
+            public static Azure.Storage.Queues.Models.ListQueuesIncludeType ParseListQueuesIncludeType(string value)
+            {
+                return value switch
+                {
+                    "metadata" => Azure.Storage.Queues.Models.ListQueuesIncludeType.Metadata,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Queues.Models.ListQueuesIncludeType value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListQueuesIncludeType
+
+#region class PeekedMessage
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// The object returned in the QueueMessageList array when calling Peek Messages on a Queue
+    /// </summary>
+    public partial class PeekedMessage
+    {
+        /// <summary>
+        /// The Id of the Message.
+        /// </summary>
+        public string MessageId { get; internal set; }
+
+        /// <summary>
+        /// The time the Message was inserted into the Queue.
+        /// </summary>
+        public System.DateTimeOffset InsertionTime { get; internal set; }
+
+        /// <summary>
+        /// The time that the Message will expire and be automatically deleted.
+        /// </summary>
+        public System.DateTimeOffset ExpirationTime { get; internal set; }
+
+        /// <summary>
+        /// The number of times the message has been dequeued.
+        /// </summary>
+        public long DequeueCount { get; internal set; }
+
+        /// <summary>
+        /// The content of the Message.
+        /// </summary>
+        public string MessageText { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of PeekedMessage instances.
+        /// You can use QueuesModelFactory.PeekedMessage instead.
+        /// </summary>
+        internal PeekedMessage() { }
+
+        /// <summary>
+        /// Deserializes XML into a new PeekedMessage instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized PeekedMessage instance.</returns>
+        internal static Azure.Storage.Queues.Models.PeekedMessage FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Queues.Models.PeekedMessage _value = new Azure.Storage.Queues.Models.PeekedMessage();
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageId", ""));
+            if (_child != null)
+            {
+                _value.MessageId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("InsertionTime", ""));
+            if (_child != null)
+            {
+                _value.InsertionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ExpirationTime", ""));
+            if (_child != null)
+            {
+                _value.ExpirationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DequeueCount", ""));
+            if (_child != null)
+            {
+                _value.DequeueCount = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("MessageText", ""));
+            if (_child != null)
+            {
+                _value.MessageText = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Queues.Models.PeekedMessage value);
+    }
+
+    /// <summary>
+    /// QueuesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class QueuesModelFactory
+    {
+        /// <summary>
+        /// Creates a new PeekedMessage instance for mocking.
+        /// </summary>
+        public static PeekedMessage PeekedMessage(
+            string messageId,
+            System.DateTimeOffset insertionTime,
+            System.DateTimeOffset expirationTime,
+            long dequeueCount,
+            string messageText)
+        {
+            return new PeekedMessage()
+            {
+                MessageId = messageId,
+                InsertionTime = insertionTime,
+                ExpirationTime = expirationTime,
+                DequeueCount = dequeueCount,
+                MessageText = messageText,
+            };
+        }
+    }
+}
+#endregion class PeekedMessage
+
+#region class QueueAnalyticsLogging
+namespace Azure.Storage.Queues.Models
+{
+    /// <summary>
+    /// Azure Analytics Logging settings.
+    /// </summary>
+    public partial class QueueAnalyticsLogging
+    {
+        /// <summary>
+        /// The version of Storage Analytics to configure.
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
+        /// Indicates whether all delete requests should be logged.
+        /// </summary>
+        public bool Delete { get; set; }
+
+        /// <summary>
+        /// Indicates whether all read requests should be logged.
+        /// </summary>
+        public bool Read { get; set; }
+
+        /// <summary>
+        /// Indicates whether all write requests should be logged.
+        /// </summary>
+        public bool Write { get; set; }
+
+        /// <summary>
+        /// the retention policy
+        /// </summary>
+        public Azure.Storage.Queues.Models.RetentionPolicy RetentionPolicy { get; set; }
 
         /// <summary>
         /// Creates a new QueueAnalyticsLogging instance
@@ -4320,7 +4705,55 @@ namespace Azure.Storage.Queues.Models
     public static partial class QueuesModelFactory
     {
         /// <summary>
-        /// Creates a new SendReceipt instance for mocking.
+        /// a unique id
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// An Access policy
+        /// </summary>
+        public Azure.Storage.Queues.Models.AccessPolicy AccessPolicy { get; set; }
+
+        /// <summary>
+        /// Creates a new SignedIdentifier instance
+        /// </summary>
+        public SignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new SignedIdentifier instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal SignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                AccessPolicy = new Azure.Storage.Queues.Models.AccessPolicy();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a SignedIdentifier instance as XML.
+        /// </summary>
+        /// <param name="value">The SignedIdentifier instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "SignedIdentifier".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Queues.Models.SignedIdentifier value, string name = "SignedIdentifier", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Id", ""),
+                value.Id));
+            _element.Add(Azure.Storage.Queues.Models.AccessPolicy.ToXml(value.AccessPolicy, "AccessPolicy", ""));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new SignedIdentifier instance.
         /// </summary>
         public static SendReceipt SendReceipt(
             string messageId,
@@ -4331,12 +4764,10 @@ namespace Azure.Storage.Queues.Models
         {
             return new SendReceipt()
             {
-                MessageId = messageId,
-                InsertionTime = insertionTime,
-                ExpirationTime = expirationTime,
-                PopReceipt = popReceipt,
-                TimeNextVisible = timeNextVisible,
-            };
+                _value.AccessPolicy = Azure.Storage.Queues.Models.AccessPolicy.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
         }
     }
 }

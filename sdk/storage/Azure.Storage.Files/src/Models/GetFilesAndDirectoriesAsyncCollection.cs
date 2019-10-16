@@ -11,14 +11,14 @@ namespace Azure.Storage.Files.Models
     internal class GetFilesAndDirectoriesAsyncCollection : StorageCollectionEnumerator<StorageFileItem>
     {
         private readonly DirectoryClient _client;
-        private readonly string _prefix;
+        private readonly GetFilesAndDirectoriesOptions? _options;
 
         public GetFilesAndDirectoriesAsyncCollection(
             DirectoryClient client,
-            string prefix)
+            GetFilesAndDirectoriesOptions? options)
         {
             _client = client;
-            _prefix = prefix;
+            _options = options;
         }
 
         public override async ValueTask<Page<StorageFileItem>> GetNextPageAsync(
@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Models
         {
             Task<Response<FilesAndDirectoriesSegment>> task = _client.GetFilesAndDirectoriesInternal(
                 continuationToken,
-                _prefix,
+                _options,
                 pageSizeHint,
                 isAsync,
                 cancellationToken);
@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Models
             var items = new List<StorageFileItem>();
             items.AddRange(response.Value.DirectoryItems.Select(d => new StorageFileItem(true, d.Name)));
             items.AddRange(response.Value.FileItems.Select(f => new StorageFileItem(false, f.Name, f.Properties?.ContentLength)));
-            return Page<StorageFileItem>.FromValues(
+            return new Page<StorageFileItem>(
                 items.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

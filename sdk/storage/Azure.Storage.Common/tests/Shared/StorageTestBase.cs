@@ -153,9 +153,7 @@ namespace Azure.Storage.Test.Shared
             => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
                     { "foo", "bar" },
-                    { "meta", "data" },
-                    { "Capital", "letter" },
-                    { "UPPER", "case" }
+                    { "meta", "data" }
                 };
 
         public IPAddress GetIPAddress()

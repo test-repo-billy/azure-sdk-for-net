@@ -22,9 +22,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCase("unwrapKey", false)]
         public void SupportsOperation(string operationValue, bool supported)
         {
-            JsonWebKey jwk = KeyModelFactory.JsonWebKey(KeyType.Ec, curveName: KeyCurveName.P256, keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
+            JsonWebKey jwk = new JsonWebKey
+            {
+                CurveName = KeyCurveName.P256,
+                KeyOps = new[] { KeyOperation.Sign, KeyOperation.Verify },
+            };
 
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             KeyOperation operation = new KeyOperation(operationValue);
 
             Assert.AreEqual(supported, client.SupportsOperation(operation));
@@ -33,9 +37,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void SupportsOperationUnsupportedCurve()
         {
-            JsonWebKey jwk = KeyModelFactory.JsonWebKey(KeyType.Ec, curveName: "invalid", keyOps: new[] { KeyOperation.Sign, KeyOperation.Verify });
+            JsonWebKey jwk = new JsonWebKey
+            {
+                CurveName = "invalid",
+                KeyOps = new[] { KeyOperation.Sign, KeyOperation.Verify },
+            };
 
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
 
             // The provider caches the original allow key operations to facilitate tracing. Operation will still be sent to the service.
             Assert.IsTrue(client.SupportsOperation(KeyOperation.Sign));
@@ -44,9 +52,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void SupportsOperationUnauthorizedOperation()
         {
-            JsonWebKey jwk = KeyModelFactory.JsonWebKey(KeyType.Ec, curveName: "invalid", keyOps: new[] { KeyOperation.Verify });
+            JsonWebKey jwk = new JsonWebKey
+            {
+                CurveName = "invalid",
+                KeyOps = new[] { KeyOperation.Verify },
+            };
 
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
 
             Assert.IsFalse(client.SupportsOperation(KeyOperation.Sign));
         }
@@ -58,7 +70,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, true) { Id = "test" };
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
@@ -75,7 +87,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
 
             JsonWebKey jwk = new JsonWebKey(ecdsa);
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.Throws<ArgumentNullException>(() => client.Sign(algorithm, null, default));
@@ -84,7 +96,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetInvalidKeys))]
         public void SignThrowsOnInvalidKey(JsonWebKey jwk, SignatureAlgorithm algorithm)
         {
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
 
             byte[] digest = new byte[1] { 0xff };
             Assert.Throws<ArgumentException>(() => client.Sign(algorithm, digest, default), "Expected exception with wrong key length");
@@ -102,7 +114,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Id = "test",
             };
 
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.IsNull(client.Sign(algorithm, new byte[] { 0xff }, default));
@@ -111,9 +123,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void SignReturnsNullOnUnsupported()
         {
-            JsonWebKey jwk = KeyModelFactory.JsonWebKey(KeyType.Ec, curveName: "invalid", keyOps: new[] { KeyOperation.Sign });
+            JsonWebKey jwk = new JsonWebKey
+            {
+                CurveName = "invalid",
+                KeyOps = new[] { KeyOperation.Sign },
+            };
 
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignResult result = client.Sign(default, new byte[] { 0xff }, default);
 
             Assert.IsNull(result);
@@ -126,7 +142,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             ecdsa.GenerateKey(ECCurve.NamedCurves.nistP256);
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, true) { Id = "test" };
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
@@ -144,7 +160,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
 
             JsonWebKey jwk = new JsonWebKey(ecdsa);
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.Throws<ArgumentNullException>(() => client.Verify(algorithm, null, null, default));
@@ -156,7 +172,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             using ECDsa ecdsa = ECDsa.Create();
 
             JsonWebKey jwk = new JsonWebKey(ecdsa);
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
             SignatureAlgorithm algorithm = GetSignatureAlgorithm(jwk);
 
             Assert.Throws<ArgumentNullException>(() => client.Verify(algorithm, new byte[] { 0xff }, null, default));
@@ -165,7 +181,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [TestCaseSource(nameof(GetInvalidKeys))]
         public void VerifyThrowsOnInvalidKey(JsonWebKey jwk, SignatureAlgorithm algorithm)
         {
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
 
             byte[] digest = new byte[] { 0xff };
             byte[] signature = new byte[] { 0xff, 0xff };
@@ -175,9 +191,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void VerifyReturnsNullOnUnsupported()
         {
-            JsonWebKey jwk = KeyModelFactory.JsonWebKey(KeyType.Ec, curveName: "invalid", keyOps: new[] { KeyOperation.Sign });
+            JsonWebKey jwk = new JsonWebKey
+            {
+                CurveName = "invalid",
+                KeyOps = new[] { KeyOperation.Sign },
+            };
 
-            EcCryptographyProvider client = new EcCryptographyProvider(new KeyVaultKey { Key = jwk });
+            EcCryptographyProvider client = new EcCryptographyProvider(new Key { KeyMaterial = jwk });
 
             byte[] digest = new byte[] { 0xff };
             byte[] signature = new byte[] { 0xff, 0xff };
@@ -191,9 +211,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             using ECDsa ecdsa = ECDsa.Create();
 
-            KeyVaultKey key = new KeyVaultKey("test")
+            Key key = new Key("test")
             {
-                Key = new JsonWebKey(ecdsa),
+                KeyMaterial = new JsonWebKey(ecdsa),
                 Properties =
                 {
                     NotBefore = DateTimeOffset.Now.AddDays(1),
@@ -203,7 +223,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EcCryptographyProvider client = new EcCryptographyProvider(key);
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => client.Sign(GetSignatureAlgorithm(key.Key), digest, default));
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => client.Sign(GetSignatureAlgorithm(key.KeyMaterial), digest, default));
             Assert.AreEqual($"The key \"test\" is not valid before {key.Properties.NotBefore.Value:r}.", ex.Message);
         }
 
@@ -212,20 +232,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             using ECDsa ecdsa = ECDsa.Create();
 
-            KeyVaultKey key = new KeyVaultKey("test")
+            Key key = new Key("test")
             {
-                Key = new JsonWebKey(ecdsa),
+                KeyMaterial = new JsonWebKey(ecdsa),
                 Properties =
                 {
-                    ExpiresOn = DateTimeOffset.Now.AddDays(-1),
+                    Expires = DateTimeOffset.Now.AddDays(-1),
                 },
             };
 
             EcCryptographyProvider client = new EcCryptographyProvider(key);
 
             byte[] digest = new byte[] { 0x9f, 0x86, 0xd0, 0x81, 0x88, 0x4c, 0x7d, 0x65, 0x9a, 0x2f, 0xea, 0xa0, 0xc5, 0x5a, 0xd0, 0x15, 0xa3, 0xbf, 0x4f, 0x1b, 0x2b, 0x0b, 0x82, 0x2c, 0xd1, 0x5d, 0x6c, 0x15, 0xb0, 0xf0, 0x0a, 0x08 };
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => client.Sign(GetSignatureAlgorithm(key.Key), digest, default));
-            Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.ExpiresOn.Value:r}.", ex.Message);
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => client.Sign(GetSignatureAlgorithm(key.KeyMaterial), digest, default));
+            Assert.AreEqual($"The key \"test\" is not valid after {key.Properties.Expires.Value:r}.", ex.Message);
         }
 
         private static IEnumerable<TestCaseData> GetInvalidKeys()

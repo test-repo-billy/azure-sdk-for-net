@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.Models
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
-            return Page<ShareItem>.FromValues(
+            return new Page<ShareItem>(
                 response.Value.ShareItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());

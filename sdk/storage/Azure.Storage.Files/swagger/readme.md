@@ -330,8 +330,8 @@ directive:
 - from: swagger-document
   where: $.definitions
   transform: >
-    if (!$.StorageFileHandle) {
-        $.StorageFileHandle = $.HandleItem;
+    if (!$.StorageHandle) {
+        $.StorageHandle = $.HandleItem;
         delete $.HandleItem;
         $.StorageFileHandle.properties.OpenedOn = $.StorageFileHandle.properties.OpenTime;
         $.StorageFileHandle.properties.OpenedOn.xml = { "name": "OpenTime" };
@@ -347,7 +347,7 @@ directive:
         const path = $.StorageHandlesSegment.properties.HandleList.items.$ref.replace(/[#].*$/, "#/definitions/");
         $.StorageHandlesSegment.properties.Handles = {
             "type": "array",
-            "items": { "$ref": path + "StorageFileHandle" },
+            "items": { "$ref": path + "StorageHandle" },
             "xml": { "name": "Entries", "wrapped": true }
         };
         delete $.StorageHandlesSegment.properties.HandleList;
@@ -706,52 +706,4 @@ directive:
     $.FileServiceProperties.properties.Cors.xml.name = "Cors";
     $.RetentionPolicy["x-ms-client-name"] = "FileRetentionPolicy";
     $.RetentionPolicy.xml = { "name": "RetentionPolicy"};
-```
-
-### Access Policy properties renaming
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.AccessPolicy
-  transform: >
-    $["x-ms-client-name"] = "FileAccessPolicy";
-    $.xml = {"name": "AccessPolicy"};
-    $.properties.StartsOn = $.properties.Start;
-    $.properties.StartsOn.xml = { "name": "Start"};
-    delete $.properties.Start;
-    $.properties.ExpiresOn = $.properties.Expiry;
-    $.properties.ExpiresOn.xml = { "name": "Expiry"};
-    delete $.properties.Expiry;
-    $.properties.Permissions = $.properties.Permission;
-    $.properties.Permissions.xml = { "name": "Permission"};
-    delete $.properties.Permission;
-    $.required = ["StartsOn", "ExpiresOn", "Permissions"];
-```
-
-### ShareQuota properties renaming
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters.ShareQuota
-  transform: >
-    $["x-ms-client-name"] = "quotaInGB";
-```
-
-### SignedIdentifier
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions.SignedIdentifier
-  transform: >
-    $["x-ms-client-name"] = "FileSignedIdentifier";
-    $.xml = {"name": "SignedIdentifier"};
-```
-
-### Hide DeleteSnapshotsOptionType
-``` yaml
-directive:
-- from: swagger-document
-  where: $.parameters.DeleteSnapshots
-  transform: >
-    $["x-az-public"] = false;
 ```

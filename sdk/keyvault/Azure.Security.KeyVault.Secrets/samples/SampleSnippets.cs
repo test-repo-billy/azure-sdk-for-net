@@ -29,13 +29,10 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #region CreateClient
             // Create a new secret client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new SecretClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
-            // Create a new secret using the secret client.
-            KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
-
-            // Retrieve a secret using the secret client.
-            secret = client.GetSecret("secret-name");
+            // Create a new secret using the secret client
+            Secret secret = client.SetSecret("secret-name", "secret-value");
             #endregion
 
             this.client = client;
@@ -45,7 +42,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public async Task CreateSecret()
         {
             #region CreateSecret
-            KeyVaultSecret secret = await client.SetSecretAsync("secret-name", "secret-value");
+            Secret secret = client.SetSecret("secret-name", "secret-value");
 
             Console.WriteLine(secret.Name);
             Console.WriteLine(secret.Value);
@@ -57,8 +54,8 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         [Test]
         public void CreateSecretSync()
         {
-            #region CreateSecretSync
-            KeyVaultSecret secret = client.SetSecret("secret-name", "secret-value");
+            #region CreateSecretAsync
+            Secret secret = await client.SetSecretAsync("secret-name", "secret-value");
 
             Console.WriteLine(secret.Name);
             Console.WriteLine(secret.Value);
@@ -72,7 +69,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await client.SetSecretAsync("secret-name", "secret-value");
 
             #region RetrieveSecret
-            KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
+            Secret secret = client.GetSecret("secret-name");
 
             Console.WriteLine(secret.Name);
             Console.WriteLine(secret.Value);
@@ -86,7 +83,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             await client.SetSecretAsync("secret-name", "secret-value");
 
             #region UpdateSecret
-            KeyVaultSecret secret = await client.GetSecretAsync("secret-name");
+            Secret secret = client.GetSecret("secret-name");
 
             // Clients may specify the content type of a secret to assist in interpreting the secret data when it's retrieved.
             secret.Properties.ContentType = "text/plain";
@@ -106,7 +103,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public async Task ListSecrets()
         {
             #region ListSecrets
-            AsyncPageable<SecretProperties> allSecrets = client.GetPropertiesOfSecretsAsync();
+            Pageable<SecretProperties> allSecrets = client.GetSecrets();
 
             await foreach (SecretProperties secretProperties in allSecrets)
             {
@@ -121,7 +118,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #region NotFound
             try
             {
-                KeyVaultSecret secret = await client.GetSecretAsync("some_secret");
+                Secret secret = client.GetSecret("some_secret");
             }
             catch (RequestFailedException ex)
             {

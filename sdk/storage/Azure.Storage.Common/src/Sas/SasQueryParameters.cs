@@ -115,13 +115,13 @@ namespace Azure.Storage.Sas
         /// time when the storage service receives the request.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset StartsOn => _startTime;
+        public DateTimeOffset StartTime => _startTime;
 
         /// <summary>
         /// Gets the time at which the shared access signature becomes invalid.
         /// <see cref="DateTimeOffset.MinValue"/> means not set.
         /// </summary>
-        public DateTimeOffset ExpiresOn => _expiryTime;
+        public DateTimeOffset ExpiryTime => _expiryTime;
 
         /// <summary>
         /// Gets the optional IP address or a range of IP addresses from which
@@ -226,9 +226,9 @@ namespace Azure.Storage.Sas
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
-            DateTimeOffset startsOn,
-            DateTimeOffset expiresOn,
-            SasIPRange ipRange,
+            DateTimeOffset startTime,
+            DateTimeOffset expiryTime,
+            IPRange ipRange,
             string identifier,
             string resource,
             string permissions,
@@ -250,8 +250,8 @@ namespace Azure.Storage.Sas
             _services = services;
             _resourceTypes = resourceTypes;
             _protocol = protocol;
-            _startTime = startsOn;
-            _expiryTime = expiresOn;
+            _startTime = startTime;
+            _expiryTime = expiryTime;
             _ipRange = ipRange;
             _identifier = identifier ?? string.Empty;
             _resource = resource ?? string.Empty;
@@ -433,14 +433,14 @@ namespace Azure.Storage.Sas
                 AddToBuilder(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
             }
 
-            if (StartsOn != DateTimeOffset.MinValue)
+            if (StartTime != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(StartTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
-            if (ExpiresOn != DateTimeOffset.MinValue)
+            if (ExpiryTime != DateTimeOffset.MinValue)
             {
-                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                AddToBuilder(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(ExpiryTime.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
             }
 
             var ipr = IPRange.ToString();
