@@ -11,31 +11,31 @@
 namespace Microsoft.Azure.Management.CostManagement.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The details of the error.
+    /// Result of listing exports. It contains a list of available exports in
+    /// the scope provided.
     /// </summary>
-    public partial class ErrorDetails
+    public partial class ExportListResult
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the ExportListResult class.
         /// </summary>
-        public ErrorDetails()
+        public ExportListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the ExportListResult class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorDetails(string code = default(string), string message = default(string))
+        /// <param name="value">The list of exports.</param>
+        public ExportListResult(IList<Export> value = default(IList<Export>))
         {
-            Code = code;
-            Message = message;
+            Value = value;
             CustomInit();
         }
 
@@ -45,16 +45,10 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error code.
+        /// Gets the list of exports.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
-
-        /// <summary>
-        /// Gets error message indicating why the operation failed.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Export> Value { get; private set; }
 
     }
 }

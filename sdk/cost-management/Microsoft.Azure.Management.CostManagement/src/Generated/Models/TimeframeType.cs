@@ -19,6 +19,9 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         public const string WeekToDate = "WeekToDate";
         public const string MonthToDate = "MonthToDate";
         public const string YearToDate = "YearToDate";
+        public const string TheLastWeek = "TheLastWeek";
+        public const string TheLastMonth = "TheLastMonth";
+        public const string TheLastYear = "TheLastYear";
         public const string Custom = "Custom";
     }
 }

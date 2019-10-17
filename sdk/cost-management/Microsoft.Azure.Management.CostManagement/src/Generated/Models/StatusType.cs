@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.CostManagement.Models
 {
 
     /// <summary>
-    /// Defines values for GranularityType.
+    /// Defines values for StatusType.
     /// </summary>
-    public static class GranularityType
+    public static class StatusType
     {
-        public const string Daily = "Daily";
-        public const string Hourly = "Hourly";
+        public const string Active = "Active";
+        public const string Inactive = "Inactive";
     }
 }

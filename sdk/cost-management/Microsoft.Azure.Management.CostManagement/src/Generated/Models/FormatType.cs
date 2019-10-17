@@ -12,11 +12,10 @@ namespace Microsoft.Azure.Management.CostManagement.Models
 {
 
     /// <summary>
-    /// Defines values for GranularityType.
+    /// Defines values for FormatType.
     /// </summary>
-    public static class GranularityType
+    public static class FormatType
     {
-        public const string Daily = "Daily";
-        public const string Hourly = "Hourly";
+        public const string Csv = "Csv";
     }
 }

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.CostManagement
         public CostManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the available consumption REST API operations.
+        /// Lists all of the available cost management REST API operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.CostManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Operation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.CostManagement
         }
 
         /// <summary>
-        /// Lists all of the available consumption REST API operations.
+        /// Lists all of the available cost management REST API operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.CostManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<Operation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
