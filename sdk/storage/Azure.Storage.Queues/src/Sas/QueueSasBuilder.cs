@@ -11,7 +11,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage queue.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public class QueueSasBuilder
+    public struct QueueSasBuilder : IEquatable<QueueSasBuilder>
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -147,7 +147,8 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString() =>
+            base.ToString();
 
         /// <summary>
         /// Check if two QueueSasBuilder instances are equal.
@@ -155,7 +156,8 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) =>
+            obj is QueueSasBuilder other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the QueueSasBuilder.

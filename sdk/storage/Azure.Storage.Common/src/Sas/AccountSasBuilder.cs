@@ -12,7 +12,7 @@ namespace Azure.Storage.Sas
     /// For more information, see
     /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
     /// </summary>
-    public class AccountSasBuilder
+    public struct AccountSasBuilder : IEquatable<AccountSasBuilder>
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -143,7 +143,8 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
+        public override string ToString() =>
+            base.ToString();
 
         /// <summary>
         /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
@@ -151,7 +152,9 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) =>
+            obj is AccountSasBuilder other &&
+            Equals(other);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasBuilder"/>.

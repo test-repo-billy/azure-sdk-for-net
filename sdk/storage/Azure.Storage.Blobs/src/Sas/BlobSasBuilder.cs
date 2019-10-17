@@ -14,7 +14,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage container or blob.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public class BlobSasBuilder
+    public struct BlobSasBuilder : IEquatable<BlobSasBuilder>
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -355,7 +355,7 @@ namespace Azure.Storage.Sas
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
-            => base.Equals(obj);
+            => obj is BlobSasBuilder other && Equals(other);
 
         /// <summary>
         /// Get a hash code for the BlobSasBuilder.

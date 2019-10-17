@@ -8,11 +8,6 @@ using System.Threading;
 
 namespace Azure
 {
-    /// <summary>
-    /// A collection of values that may take multiple service requests to
-    /// iterate over.
-    /// </summary>
-    /// <typeparam name="T">The type of the values.</typeparam>
     public abstract class Pageable<T> : IEnumerable<T> where T : notnull
     {
         /// <summary>
@@ -41,7 +36,7 @@ namespace Azure
 
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time.  This may
-        /// make multiple service requests.
+        /// make mutliple service requests.
         /// </summary>
         /// <param name="continuationToken">
         /// A continuation token indicating where to resume paging or null to

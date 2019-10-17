@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(storageFileInfo.LastModified);
             Assert.IsNotNull(storageFileInfo.IsServerEncrypted);
             Assert.IsNotNull(storageFileInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageFileInfo.SmbProperties);
+            AssertValidFileSmbProperties(storageFileInfo.SmbProperties.Value);
         }
 
         public static void AssertValidStorageDirectoryInfo(StorageDirectoryInfo storageDirectoryInfo)
@@ -187,7 +187,7 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(storageDirectoryInfo.ETag);
             Assert.IsNotNull(storageDirectoryInfo.LastModified);
             Assert.IsNotNull(storageDirectoryInfo.SmbProperties);
-            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties);
+            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties.Value);
         }
 
         public static void AssertValidFileSmbProperties(FileSmbProperties fileSmbProperties)
@@ -199,17 +199,6 @@ namespace Azure.Storage.Files.Tests
             Assert.IsNotNull(fileSmbProperties.FileChangeTime);
             Assert.IsNotNull(fileSmbProperties.FileId);
             Assert.IsNotNull(fileSmbProperties.ParentId);
-        }
-
-        internal static void AssertPropertiesEqual(FileSmbProperties left, FileSmbProperties right)
-        {
-            Assert.AreEqual(left.FileAttributes, right.FileAttributes);
-            Assert.AreEqual(left.FileCreationTime, right.FileCreationTime);
-            Assert.AreEqual(left.FileChangeTime, right.FileChangeTime);
-            Assert.AreEqual(left.FileId, right.FileId);
-            Assert.AreEqual(left.FileLastWriteTime, right.FileLastWriteTime);
-            Assert.AreEqual(left.FilePermissionKey, right.FilePermissionKey);
-            Assert.AreEqual(left.ParentId, right.ParentId);
         }
 
         private class DisposingShare : IDisposable
