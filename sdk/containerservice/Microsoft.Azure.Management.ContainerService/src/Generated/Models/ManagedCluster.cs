@@ -48,6 +48,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="dnsPrefix">DNS prefix specified when creating the
         /// managed cluster.</param>
         /// <param name="fqdn">FQDN for the master pool.</param>
+        /// <param name="privateFQDN">FQDN of private cluster.</param>
         /// <param name="agentPoolProfiles">Properties of the agent
         /// pool.</param>
         /// <param name="linuxProfile">Profile for Linux VMs in the container
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// cluster API server.</param>
         /// <param name="identity">The identity of the managed cluster, if
         /// configured.</param>
-        public ManagedCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), int? maxAgentPools = default(int?), string kubernetesVersion = default(string), string dnsPrefix = default(string), string fqdn = default(string), IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<ManagedClusterAgentPoolProfile>), ContainerServiceLinuxProfile linuxProfile = default(ContainerServiceLinuxProfile), ManagedClusterWindowsProfile windowsProfile = default(ManagedClusterWindowsProfile), ManagedClusterServicePrincipalProfile servicePrincipalProfile = default(ManagedClusterServicePrincipalProfile), IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default(IDictionary<string, ManagedClusterAddonProfile>), string nodeResourceGroup = default(string), bool? enableRBAC = default(bool?), bool? enablePodSecurityPolicy = default(bool?), ContainerServiceNetworkProfile networkProfile = default(ContainerServiceNetworkProfile), ManagedClusterAADProfile aadProfile = default(ManagedClusterAADProfile), ManagedClusterAPIServerAccessProfile apiServerAccessProfile = default(ManagedClusterAPIServerAccessProfile), ManagedClusterIdentity identity = default(ManagedClusterIdentity))
+        public ManagedCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), int? maxAgentPools = default(int?), string kubernetesVersion = default(string), string dnsPrefix = default(string), string fqdn = default(string), string privateFQDN = default(string), IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<ManagedClusterAgentPoolProfile>), ContainerServiceLinuxProfile linuxProfile = default(ContainerServiceLinuxProfile), ManagedClusterWindowsProfile windowsProfile = default(ManagedClusterWindowsProfile), ManagedClusterServicePrincipalProfile servicePrincipalProfile = default(ManagedClusterServicePrincipalProfile), IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default(IDictionary<string, ManagedClusterAddonProfile>), string nodeResourceGroup = default(string), bool? enableRBAC = default(bool?), bool? enablePodSecurityPolicy = default(bool?), ContainerServiceNetworkProfile networkProfile = default(ContainerServiceNetworkProfile), ManagedClusterAADProfile aadProfile = default(ManagedClusterAADProfile), ManagedClusterAPIServerAccessProfile apiServerAccessProfile = default(ManagedClusterAPIServerAccessProfile), ManagedClusterIdentity identity = default(ManagedClusterIdentity))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -81,6 +82,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             KubernetesVersion = kubernetesVersion;
             DnsPrefix = dnsPrefix;
             Fqdn = fqdn;
+            PrivateFQDN = privateFQDN;
             AgentPoolProfiles = agentPoolProfiles;
             LinuxProfile = linuxProfile;
             WindowsProfile = windowsProfile;
@@ -133,6 +135,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.fqdn")]
         public string Fqdn { get; private set; }
+
+        /// <summary>
+        /// Gets FQDN of private cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateFQDN")]
+        public string PrivateFQDN { get; private set; }
 
         /// <summary>
         /// Gets or sets properties of the agent pool.
