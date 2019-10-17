@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.CostManagement.Models
 {
 
     /// <summary>
-    /// Defines values for GranularityType.
+    /// Defines values for SortDirection.
     /// </summary>
-    public static class GranularityType
+    public static class SortDirection
     {
-        public const string Daily = "Daily";
-        public const string Hourly = "Hourly";
+        public const string Ascending = "Ascending";
+        public const string Descending = "Descending";
     }
 }

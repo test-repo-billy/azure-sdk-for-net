@@ -13,29 +13,25 @@ namespace Microsoft.Azure.Management.CostManagement.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// The details of the error.
-    /// </summary>
-    public partial class ErrorDetails
+    public partial class QueryColumn
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the QueryColumn class.
         /// </summary>
-        public ErrorDetails()
+        public QueryColumn()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorDetails class.
+        /// Initializes a new instance of the QueryColumn class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorDetails(string code = default(string), string message = default(string))
+        /// <param name="name">The name of column.</param>
+        /// <param name="type">The type of column.</param>
+        public QueryColumn(string name = default(string), string type = default(string))
         {
-            Code = code;
-            Message = message;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -45,16 +41,16 @@ namespace Microsoft.Azure.Management.CostManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error code.
+        /// Gets or sets the name of column.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets error message indicating why the operation failed.
+        /// Gets or sets the type of column.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

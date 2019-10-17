@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.CostManagement
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2019-04-01-preview
+        /// version is 2018-05-31.
         /// </summary>
         string ApiVersion { get; }
 
@@ -70,19 +70,19 @@ namespace Microsoft.Azure.Management.CostManagement
 
 
         /// <summary>
-        /// Gets the IViewsOperations.
+        /// Gets the IDimensionsOperations.
         /// </summary>
-        IViewsOperations Views { get; }
+        IDimensionsOperations Dimensions { get; }
 
         /// <summary>
-        /// Gets the IBudgetsOperations.
+        /// Gets the IQueryOperations.
         /// </summary>
-        IBudgetsOperations Budgets { get; }
+        IQueryOperations Query { get; }
 
         /// <summary>
-        /// Gets the IBudgetOperations.
+        /// Gets the IExportsOperations.
         /// </summary>
-        IBudgetOperations Budget { get; }
+        IExportsOperations Exports { get; }
 
         /// <summary>
         /// Gets the IOperations.
