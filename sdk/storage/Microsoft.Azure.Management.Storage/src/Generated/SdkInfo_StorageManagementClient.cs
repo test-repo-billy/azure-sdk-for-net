@@ -19,15 +19,17 @@ namespace Microsoft.Azure.Management.Storage
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Storage", "BlobContainers", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "BlobServices", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "FileServices", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "FileShares", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "ManagementPolicies", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "Operations", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "Skus", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "StorageAccounts", "2019-04-01"),
-                new Tuple<string, string, string>("Storage", "Usages", "2019-04-01"),
+                new Tuple<string, string, string>("Storage", "BlobContainers", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "BlobServices", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "FileServices", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "FileShares", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "ManagementPolicies", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "Operations", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "PrivateEndpointConnections", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "PrivateLinkResources", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "Skus", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "StorageAccounts", "2019-06-01"),
+                new Tuple<string, string, string>("Storage", "Usages", "2019-06-01"),
               }.AsEnumerable();
           }
       }

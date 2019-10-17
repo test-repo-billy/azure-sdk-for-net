@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DirectoryServiceOptions.
+    /// Defines values for PrivateEndpointConnectionProvisioningState.
     /// </summary>
-    public static class DirectoryServiceOptions
+    public static class PrivateEndpointConnectionProvisioningState
     {
-        public const string None = "None";
-        public const string AADDS = "AADDS";
+        public const string Succeeded = "Succeeded";
+        public const string Creating = "Creating";
+        public const string Deleting = "Deleting";
+        public const string Failed = "Failed";
     }
 }

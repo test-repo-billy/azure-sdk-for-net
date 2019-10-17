@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for DirectoryServiceOptions.
+    /// Defines values for PrivateEndpointServiceConnectionStatus.
     /// </summary>
-    public static class DirectoryServiceOptions
+    public static class PrivateEndpointServiceConnectionStatus
     {
-        public const string None = "None";
-        public const string AADDS = "AADDS";
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
     }
 }
