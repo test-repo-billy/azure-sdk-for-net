@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace Azure
 {
-    /// <summary>
-    /// Extension for various <see cref="Azure"/> types.
-    /// </summary>
     public static class AzureExtensions
     {
         /// <summary>
