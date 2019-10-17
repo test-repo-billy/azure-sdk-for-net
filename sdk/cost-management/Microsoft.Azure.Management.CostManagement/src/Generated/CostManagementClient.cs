@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.CostManagement
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2019-04-01-preview
+        /// is 2018-05-31.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -73,19 +73,19 @@ namespace Microsoft.Azure.Management.CostManagement
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IViewsOperations.
+        /// Gets the IDimensionsOperations.
         /// </summary>
-        public virtual IViewsOperations Views { get; private set; }
+        public virtual IDimensionsOperations Dimensions { get; private set; }
 
         /// <summary>
-        /// Gets the IBudgetsOperations.
+        /// Gets the IQueryOperations.
         /// </summary>
-        public virtual IBudgetsOperations Budgets { get; private set; }
+        public virtual IQueryOperations Query { get; private set; }
 
         /// <summary>
-        /// Gets the IBudgetOperations.
+        /// Gets the IExportsOperations.
         /// </summary>
-        public virtual IBudgetOperations Budget { get; private set; }
+        public virtual IExportsOperations Exports { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -333,12 +333,12 @@ namespace Microsoft.Azure.Management.CostManagement
         /// </summary>
         private void Initialize()
         {
-            Views = new ViewsOperations(this);
-            Budgets = new BudgetsOperations(this);
-            Budget = new BudgetOperations(this);
+            Dimensions = new DimensionsOperations(this);
+            Query = new QueryOperations(this);
+            Exports = new ExportsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01-preview";
+            ApiVersion = "2019-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

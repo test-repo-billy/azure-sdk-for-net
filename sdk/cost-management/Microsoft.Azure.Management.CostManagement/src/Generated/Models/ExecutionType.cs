@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.CostManagement.Models
 {
 
     /// <summary>
-    /// Defines values for GranularityType.
+    /// Defines values for ExecutionType.
     /// </summary>
-    public static class GranularityType
+    public static class ExecutionType
     {
-        public const string Daily = "Daily";
-        public const string Hourly = "Hourly";
+        public const string OnDemand = "OnDemand";
+        public const string Scheduled = "Scheduled";
     }
 }

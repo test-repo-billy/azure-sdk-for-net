@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.CostManagement.Models
 {
 
     /// <summary>
-    /// Defines values for GranularityType.
+    /// Defines values for RecurrenceType.
     /// </summary>
-    public static class GranularityType
+    public static class RecurrenceType
     {
         public const string Daily = "Daily";
-        public const string Hourly = "Hourly";
+        public const string Weekly = "Weekly";
+        public const string Monthly = "Monthly";
+        public const string Annually = "Annually";
     }
 }
