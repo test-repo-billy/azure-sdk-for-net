@@ -28,13 +28,21 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// The scope associated with reservation recommendations operations. This
+            /// includes '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// BillingAccount scope, and
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope
+            /// </param>
             /// <param name='filter'>
             /// May be used to filter reservationRecommendations by properties/scope and
             /// properties/lookBackPeriod.
             /// </param>
-            public static IPage<ReservationRecommendation> List(this IReservationRecommendationsOperations operations, string filter = default(string))
+            public static IPage<ReservationRecommendation> ListByScope(this IReservationRecommendationsOperations operations, string scope, string filter = default(string))
             {
-                return operations.ListAsync(filter).GetAwaiter().GetResult();
+                return operations.ListByScopeAsync(scope, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,6 +52,14 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// The scope associated with reservation recommendations operations. This
+            /// includes '/subscriptions/{subscriptionId}/' for subscription scope,
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+            /// BillingAccount scope, and
+            /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
+            /// for billingProfile scope
+            /// </param>
             /// <param name='filter'>
             /// May be used to filter reservationRecommendations by properties/scope and
             /// properties/lookBackPeriod.
@@ -51,9 +67,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationRecommendation>> ListAsync(this IReservationRecommendationsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationRecommendation>> ListByScopeAsync(this IReservationRecommendationsOperations operations, string scope, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByScopeWithHttpMessagesAsync(scope, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -69,9 +85,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ReservationRecommendation> ListNext(this IReservationRecommendationsOperations operations, string nextPageLink)
+            public static IPage<ReservationRecommendation> ListByScopeNext(this IReservationRecommendationsOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -87,9 +103,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ReservationRecommendation>> ListNextAsync(this IReservationRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationRecommendation>> ListByScopeNextAsync(this IReservationRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

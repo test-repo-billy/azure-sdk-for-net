@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReservationRecommendationsOperations operations.
+    /// ReservationTransactionsOperations operations.
     /// </summary>
-    internal partial class ReservationRecommendationsOperations : IServiceOperations<ConsumptionManagementClient>, IReservationRecommendationsOperations
+    internal partial class ReservationTransactionsOperations : IServiceOperations<ConsumptionManagementClient>, IReservationTransactionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ReservationRecommendationsOperations class.
+        /// Initializes a new instance of the ReservationTransactionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ReservationRecommendationsOperations(ConsumptionManagementClient client)
+        internal ReservationTransactionsOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {
@@ -51,20 +51,15 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List of recommendations for purchasing reserved instances.
+        /// List of transactions for reserved instances on billing account scope
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='scope'>
-        /// The scope associated with reservation recommendations operations. This
-        /// includes '/subscriptions/{subscriptionId}/' for subscription scope,
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
-        /// BillingAccount scope, and
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
-        /// for billingProfile scope
+        /// <param name='billingAccountId'>
+        /// BillingAccount ID
         /// </param>
         /// <param name='filter'>
-        /// May be used to filter reservationRecommendations by properties/scope and
-        /// properties/lookBackPeriod.
+        /// Filter reservation transactions by date range. The properties/UsageDate for
+        /// start date and end date. The filter supports 'le' and  'ge'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,15 +82,15 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ReservationRecommendation>>> ListByScopeWithHttpMessagesAsync(string scope, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReservationTransaction>>> ListByBillingAccountIdWithHttpMessagesAsync(string billingAccountId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (scope == null)
+            if (billingAccountId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -105,14 +100,14 @@ namespace Microsoft.Azure.Management.Consumption
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("filter", filter);
-                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("billingAccountId", billingAccountId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByScope", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountId", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Consumption/reservationRecommendations").ToString();
-            _url = _url.Replace("{scope}", scope);
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Consumption/reservationTransactions").ToString();
+            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
             List<string> _queryParameters = new List<string>();
             if (filter != null)
             {
@@ -210,7 +205,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ReservationRecommendation>>();
+            var _result = new AzureOperationResponse<IPage<ReservationTransaction>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -223,7 +218,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReservationRecommendation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReservationTransaction>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -243,7 +238,7 @@ namespace Microsoft.Azure.Management.Consumption
         }
 
         /// <summary>
-        /// List of recommendations for purchasing reserved instances.
+        /// List of transactions for reserved instances on billing account scope
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -270,7 +265,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ReservationRecommendation>>> ListByScopeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ReservationTransaction>>> ListByBillingAccountIdNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -285,7 +280,7 @@ namespace Microsoft.Azure.Management.Consumption
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByScopeNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountIdNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -379,7 +374,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ReservationRecommendation>>();
+            var _result = new AzureOperationResponse<IPage<ReservationTransaction>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -392,7 +387,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReservationRecommendation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReservationTransaction>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
