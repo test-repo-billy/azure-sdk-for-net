@@ -29,6 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the StackMinorVersion class.
         /// </summary>
+        /// <param name="testOnly">For test</param>
         /// <param name="displayVersion">Application stack minor version
         /// (display only).</param>
         /// <param name="runtimeVersion">Application stack minor version
@@ -40,8 +41,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// name="isRemoteDebuggingEnabled">&lt;code&gt;true&lt;/code&gt; if
         /// this supports Remote Debugging, otherwise
         /// &lt;code&gt;false&lt;/code&gt;.</param>
-        public StackMinorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), bool? isRemoteDebuggingEnabled = default(bool?))
+        public StackMinorVersion(bool? testOnly = default(bool?), string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), bool? isRemoteDebuggingEnabled = default(bool?))
         {
+            TestOnly = testOnly;
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
@@ -53,6 +55,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets for test
+        /// </summary>
+        [JsonProperty(PropertyName = "testOnly")]
+        public bool? TestOnly { get; set; }
 
         /// <summary>
         /// Gets or sets application stack minor version (display only).
