@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateSubscription operation.
+    /// Defines headers for CreateCspSubscription operation.
     /// </summary>
-    public partial class SubscriptionsCreateSubscriptionHeaders
+    public partial class SubscriptionFactoryCreateCspSubscriptionHeaders
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// SubscriptionsCreateSubscriptionHeaders class.
+        /// SubscriptionFactoryCreateCspSubscriptionHeaders class.
         /// </summary>
-        public SubscriptionsCreateSubscriptionHeaders()
+        public SubscriptionFactoryCreateCspSubscriptionHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// SubscriptionsCreateSubscriptionHeaders class.
+        /// SubscriptionFactoryCreateCspSubscriptionHeaders class.
         /// </summary>
         /// <param name="location">GET this URL to retrieve the status of the
         /// asynchronous operation.</param>
         /// <param name="retryAfter">The amount of delay to use while the
         /// status of the operation is checked. The value is expressed in
         /// seconds.</param>
-        public SubscriptionsCreateSubscriptionHeaders(string location = default(string), int? retryAfter = default(int?))
+        public SubscriptionFactoryCreateCspSubscriptionHeaders(string location = default(string), int? retryAfter = default(int?))
         {
             Location = location;
             RetryAfter = retryAfter;
