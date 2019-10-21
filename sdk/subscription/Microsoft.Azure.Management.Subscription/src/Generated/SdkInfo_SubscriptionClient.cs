@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Subscription
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Billing", "SubscriptionFactory", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Billing", "Subscriptions", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "SubscriptionFactory", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Subscription", "Operations", "2018-03-01-preview"),
                 new Tuple<string, string, string>("Subscription", "SubscriptionOperation", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Subscription", "SubscriptionOperations", "2018-03-01-preview"),
