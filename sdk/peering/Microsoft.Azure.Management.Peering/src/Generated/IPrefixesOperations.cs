@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
+        /// <param name='myPeeringService'>
         /// The name of the peering service.
         /// </param>
         /// <param name='prefixName'>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeeringServicePrefix>> GetWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeeringServicePrefix>> GetWithHttpMessagesAsync(string resourceGroupName, string myPeeringService, string prefixName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new prefix with the specified name under the given
         /// subscription, resource group and peering service.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
+        /// <param name='myPeeringService'>
         /// The name of the peering service.
         /// </param>
         /// <param name='prefixName'>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeeringServicePrefix>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string myPeeringService, string prefixName, string prefix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing prefix with the specified name under the given
         /// subscription, resource group and peering service.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
+        /// <param name='myPeeringService'>
         /// The name of the peering service.
         /// </param>
         /// <param name='prefixName'>
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string prefixName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string myPeeringService, string prefixName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all prefixes under the given subscription, resource group and
         /// peering service.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringServiceName'>
+        /// <param name='myPeeringService'>
         /// The name of the peering service.
         /// </param>
         /// <param name='expand'>
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceWithHttpMessagesAsync(string resourceGroupName, string peeringServiceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PeeringServicePrefix>>> ListByPeeringServiceWithHttpMessagesAsync(string resourceGroupName, string myPeeringService, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all prefixes under the given subscription, resource group and
         /// peering service.

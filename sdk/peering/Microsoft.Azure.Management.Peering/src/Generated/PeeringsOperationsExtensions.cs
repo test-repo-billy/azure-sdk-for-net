@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
-            public static PeeringModel Get(this IPeeringsOperations operations, string resourceGroupName, string peeringName)
+            public static PeeringModel Get(this IPeeringsOperations operations, string resourceGroupName, string myPeering)
             {
-                return operations.GetAsync(resourceGroupName, peeringName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, myPeering).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,15 +51,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringModel> GetAsync(this IPeeringsOperations operations, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringModel> GetAsync(this IPeeringsOperations operations, string resourceGroupName, string myPeering, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, peeringName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, myPeering, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -75,15 +75,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
             /// <param name='peering'>
             /// The properties needed to create or update a peering.
             /// </param>
-            public static PeeringModel CreateOrUpdate(this IPeeringsOperations operations, string resourceGroupName, string peeringName, PeeringModel peering)
+            public static PeeringModel CreateOrUpdate(this IPeeringsOperations operations, string resourceGroupName, string myPeering, PeeringModel peering)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, peeringName, peering).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, myPeering, peering).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
             /// <param name='peering'>
@@ -105,9 +105,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringModel> CreateOrUpdateAsync(this IPeeringsOperations operations, string resourceGroupName, string peeringName, PeeringModel peering, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringModel> CreateOrUpdateAsync(this IPeeringsOperations operations, string resourceGroupName, string myPeering, PeeringModel peering, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, peeringName, peering, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, myPeering, peering, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -123,12 +123,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
-            public static void Delete(this IPeeringsOperations operations, string resourceGroupName, string peeringName)
+            public static void Delete(this IPeeringsOperations operations, string resourceGroupName, string myPeering)
             {
-                operations.DeleteAsync(resourceGroupName, peeringName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, myPeering).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,15 +141,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPeeringsOperations operations, string resourceGroupName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IPeeringsOperations operations, string resourceGroupName, string myPeering, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, peeringName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, myPeering, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -162,15 +162,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
             /// <param name='tags'>
             /// Gets or sets the tags, a dictionary of descriptors arm object
             /// </param>
-            public static PeeringModel Update(this IPeeringsOperations operations, string resourceGroupName, string peeringName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static PeeringModel Update(this IPeeringsOperations operations, string resourceGroupName, string myPeering, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, peeringName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, myPeering, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringName'>
+            /// <param name='myPeering'>
             /// The name of the peering.
             /// </param>
             /// <param name='tags'>
@@ -192,9 +192,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringModel> UpdateAsync(this IPeeringsOperations operations, string resourceGroupName, string peeringName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringModel> UpdateAsync(this IPeeringsOperations operations, string resourceGroupName, string myPeering, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, peeringName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, myPeering, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <summary>
         /// Gets the peer ASN with the specified name under the given subscription.
         /// </summary>
-        /// <param name='peerAsnName'>
+        /// <param name='myPeerAsn'>
         /// The peer ASN name.
         /// </param>
         /// <param name='customHeaders'>
@@ -77,11 +77,11 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeerAsn>> GetWithHttpMessagesAsync(string peerAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeerAsn>> GetWithHttpMessagesAsync(string myPeerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (peerAsnName == null)
+            if (myPeerAsn == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peerAsnName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeerAsn");
             }
             if (Client.SubscriptionId == null)
             {
@@ -98,14 +98,14 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("peerAsnName", peerAsnName);
+                tracingParameters.Add("myPeerAsn", myPeerAsn);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}").ToString();
-            _url = _url.Replace("{peerAsnName}", System.Uri.EscapeDataString(peerAsnName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{MyPeerAsn}").ToString();
+            _url = _url.Replace("{MyPeerAsn}", System.Uri.EscapeDataString(myPeerAsn));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Peering
         /// Creates a new peer ASN or updates an existing peer ASN with the specified
         /// name under the given subscription.
         /// </summary>
-        /// <param name='peerAsnName'>
+        /// <param name='myPeerAsn'>
         /// The peer ASN name.
         /// </param>
         /// <param name='peerAsn'>
@@ -263,11 +263,11 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeerAsn>> CreateOrUpdateWithHttpMessagesAsync(string peerAsnName, PeerAsn peerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeerAsn>> CreateOrUpdateWithHttpMessagesAsync(string myPeerAsn, PeerAsn peerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (peerAsnName == null)
+            if (myPeerAsn == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peerAsnName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeerAsn");
             }
             if (peerAsn == null)
             {
@@ -288,15 +288,15 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("peerAsnName", peerAsnName);
+                tracingParameters.Add("myPeerAsn", myPeerAsn);
                 tracingParameters.Add("peerAsn", peerAsn);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}").ToString();
-            _url = _url.Replace("{peerAsnName}", System.Uri.EscapeDataString(peerAsnName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{MyPeerAsn}").ToString();
+            _url = _url.Replace("{MyPeerAsn}", System.Uri.EscapeDataString(myPeerAsn));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Management.Peering
         /// Deletes an existing peer ASN with the specified name under the given
         /// subscription.
         /// </summary>
-        /// <param name='peerAsnName'>
+        /// <param name='myPeerAsn'>
         /// The peer ASN name.
         /// </param>
         /// <param name='customHeaders'>
@@ -472,11 +472,11 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string peerAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string myPeerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (peerAsnName == null)
+            if (myPeerAsn == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peerAsnName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeerAsn");
             }
             if (Client.SubscriptionId == null)
             {
@@ -493,14 +493,14 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("peerAsnName", peerAsnName);
+                tracingParameters.Add("myPeerAsn", myPeerAsn);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}").ToString();
-            _url = _url.Replace("{peerAsnName}", System.Uri.EscapeDataString(peerAsnName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{MyPeerAsn}").ToString();
+            _url = _url.Replace("{MyPeerAsn}", System.Uri.EscapeDataString(myPeerAsn));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

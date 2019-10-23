@@ -27,12 +27,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='peerAsnName'>
+            /// <param name='myPeerAsn'>
             /// The peer ASN name.
             /// </param>
-            public static PeerAsn Get(this IPeerAsnsOperations operations, string peerAsnName)
+            public static PeerAsn Get(this IPeerAsnsOperations operations, string myPeerAsn)
             {
-                return operations.GetAsync(peerAsnName).GetAwaiter().GetResult();
+                return operations.GetAsync(myPeerAsn).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,15 +41,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='peerAsnName'>
+            /// <param name='myPeerAsn'>
             /// The peer ASN name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeerAsn> GetAsync(this IPeerAsnsOperations operations, string peerAsnName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeerAsn> GetAsync(this IPeerAsnsOperations operations, string myPeerAsn, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(peerAsnName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(myPeerAsn, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -62,15 +62,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='peerAsnName'>
+            /// <param name='myPeerAsn'>
             /// The peer ASN name.
             /// </param>
             /// <param name='peerAsn'>
             /// The peer ASN.
             /// </param>
-            public static PeerAsn CreateOrUpdate(this IPeerAsnsOperations operations, string peerAsnName, PeerAsn peerAsn)
+            public static PeerAsn CreateOrUpdate(this IPeerAsnsOperations operations, string myPeerAsn, PeerAsn peerAsn)
             {
-                return operations.CreateOrUpdateAsync(peerAsnName, peerAsn).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(myPeerAsn, peerAsn).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='peerAsnName'>
+            /// <param name='myPeerAsn'>
             /// The peer ASN name.
             /// </param>
             /// <param name='peerAsn'>
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeerAsn> CreateOrUpdateAsync(this IPeerAsnsOperations operations, string peerAsnName, PeerAsn peerAsn, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeerAsn> CreateOrUpdateAsync(this IPeerAsnsOperations operations, string myPeerAsn, PeerAsn peerAsn, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(peerAsnName, peerAsn, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(myPeerAsn, peerAsn, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -104,12 +104,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='peerAsnName'>
+            /// <param name='myPeerAsn'>
             /// The peer ASN name.
             /// </param>
-            public static void Delete(this IPeerAsnsOperations operations, string peerAsnName)
+            public static void Delete(this IPeerAsnsOperations operations, string myPeerAsn)
             {
-                operations.DeleteAsync(peerAsnName).GetAwaiter().GetResult();
+                operations.DeleteAsync(myPeerAsn).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -119,15 +119,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='peerAsnName'>
+            /// <param name='myPeerAsn'>
             /// The peer ASN name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPeerAsnsOperations operations, string peerAsnName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IPeerAsnsOperations operations, string myPeerAsn, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(peerAsnName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(myPeerAsn, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Peering
         /// Gets the peer ASN with the specified name under the given
         /// subscription.
         /// </summary>
-        /// <param name='peerAsnName'>
+        /// <param name='myPeerAsn'>
         /// The peer ASN name.
         /// </param>
         /// <param name='customHeaders'>
@@ -45,12 +45,12 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeerAsn>> GetWithHttpMessagesAsync(string peerAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeerAsn>> GetWithHttpMessagesAsync(string myPeerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new peer ASN or updates an existing peer ASN with the
         /// specified name under the given subscription.
         /// </summary>
-        /// <param name='peerAsnName'>
+        /// <param name='myPeerAsn'>
         /// The peer ASN name.
         /// </param>
         /// <param name='peerAsn'>
@@ -71,12 +71,12 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PeerAsn>> CreateOrUpdateWithHttpMessagesAsync(string peerAsnName, PeerAsn peerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PeerAsn>> CreateOrUpdateWithHttpMessagesAsync(string myPeerAsn, PeerAsn peerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing peer ASN with the specified name under the
         /// given subscription.
         /// </summary>
-        /// <param name='peerAsnName'>
+        /// <param name='myPeerAsn'>
         /// The peer ASN name.
         /// </param>
         /// <param name='customHeaders'>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string peerAsnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string myPeerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the peer ASNs under the given subscription.
         /// </summary>

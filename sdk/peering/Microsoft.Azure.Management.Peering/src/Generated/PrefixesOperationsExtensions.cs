@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='prefixName'>
@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='expand'>
             /// The properties to be expanded.
             /// </param>
-            public static PeeringServicePrefix Get(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string))
+            public static PeeringServicePrefix Get(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string prefixName, string expand = default(string))
             {
-                return operations.GetAsync(resourceGroupName, peeringServiceName, prefixName, expand).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, myPeeringService, prefixName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='prefixName'>
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringServicePrefix> GetAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringServicePrefix> GetAsync(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string prefixName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, myPeeringService, prefixName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='prefixName'>
@@ -94,9 +94,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='prefix'>
             /// The prefix from which your traffic originates.
             /// </param>
-            public static PeeringServicePrefix CreateOrUpdate(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string))
+            public static PeeringServicePrefix CreateOrUpdate(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string prefixName, string prefix = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, peeringServiceName, prefixName, prefix).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, myPeeringService, prefixName, prefix).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='prefixName'>
@@ -121,9 +121,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringServicePrefix> CreateOrUpdateAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, string prefix = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringServicePrefix> CreateOrUpdateAsync(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string prefixName, string prefix = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, prefix, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, myPeeringService, prefixName, prefix, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -139,15 +139,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='prefixName'>
             /// The name of the prefix.
             /// </param>
-            public static void Delete(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName)
+            public static void Delete(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string prefixName)
             {
-                operations.DeleteAsync(resourceGroupName, peeringServiceName, prefixName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, myPeeringService, prefixName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='prefixName'>
@@ -169,9 +169,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string prefixName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string prefixName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, peeringServiceName, prefixName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, myPeeringService, prefixName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -184,15 +184,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='expand'>
             /// The properties to be expanded.
             /// </param>
-            public static IPage<PeeringServicePrefix> ListByPeeringService(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string expand = default(string))
+            public static IPage<PeeringServicePrefix> ListByPeeringService(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string expand = default(string))
             {
-                return operations.ListByPeeringServiceAsync(resourceGroupName, peeringServiceName, expand).GetAwaiter().GetResult();
+                return operations.ListByPeeringServiceAsync(resourceGroupName, myPeeringService, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            /// <param name='peeringServiceName'>
+            /// <param name='myPeeringService'>
             /// The name of the peering service.
             /// </param>
             /// <param name='expand'>
@@ -214,9 +214,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringServicePrefix>> ListByPeeringServiceAsync(this IPrefixesOperations operations, string resourceGroupName, string peeringServiceName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringServicePrefix>> ListByPeeringServiceAsync(this IPrefixesOperations operations, string resourceGroupName, string myPeeringService, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByPeeringServiceWithHttpMessagesAsync(resourceGroupName, peeringServiceName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByPeeringServiceWithHttpMessagesAsync(resourceGroupName, myPeeringService, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

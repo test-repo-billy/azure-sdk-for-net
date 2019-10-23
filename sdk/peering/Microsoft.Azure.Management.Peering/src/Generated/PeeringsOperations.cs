@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringName'>
+        /// <param name='myPeering'>
         /// The name of the peering.
         /// </param>
         /// <param name='customHeaders'>
@@ -81,15 +81,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeeringModel>> GetWithHttpMessagesAsync(string resourceGroupName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeeringModel>> GetWithHttpMessagesAsync(string resourceGroupName, string myPeering, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringName == null)
+            if (myPeering == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeering");
             }
             if (Client.SubscriptionId == null)
             {
@@ -107,15 +107,15 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("myPeering", myPeering);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{MyPeering}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{MyPeering}", System.Uri.EscapeDataString(myPeering));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringName'>
+        /// <param name='myPeering'>
         /// The name of the peering.
         /// </param>
         /// <param name='peering'>
@@ -276,15 +276,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeeringModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string peeringName, PeeringModel peering, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeeringModel>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string myPeering, PeeringModel peering, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringName == null)
+            if (myPeering == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeering");
             }
             if (peering == null)
             {
@@ -310,16 +310,16 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("myPeering", myPeering);
                 tracingParameters.Add("peering", peering);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{MyPeering}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{MyPeering}", System.Uri.EscapeDataString(myPeering));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -477,7 +477,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringName'>
+        /// <param name='myPeering'>
         /// The name of the peering.
         /// </param>
         /// <param name='customHeaders'>
@@ -498,15 +498,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string myPeering, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringName == null)
+            if (myPeering == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeering");
             }
             if (Client.SubscriptionId == null)
             {
@@ -524,15 +524,15 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("myPeering", myPeering);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{MyPeering}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{MyPeering}", System.Uri.EscapeDataString(myPeering));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='peeringName'>
+        /// <param name='myPeering'>
         /// The name of the peering.
         /// </param>
         /// <param name='tags'>
@@ -675,15 +675,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeeringModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string peeringName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeeringModel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string myPeering, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (peeringName == null)
+            if (myPeering == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peeringName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "myPeering");
             }
             if (Client.SubscriptionId == null)
             {
@@ -706,16 +706,16 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("peeringName", peeringName);
+                tracingParameters.Add("myPeering", myPeering);
                 tracingParameters.Add("tags1", tags1);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{MyPeering}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{peeringName}", System.Uri.EscapeDataString(peeringName));
+            _url = _url.Replace("{MyPeering}", System.Uri.EscapeDataString(myPeering));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
