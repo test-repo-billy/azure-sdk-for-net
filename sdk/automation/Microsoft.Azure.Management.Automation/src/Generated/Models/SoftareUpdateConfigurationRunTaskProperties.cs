@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="status">The status of the task.</param>
         /// <param name="source">The name of the source of the task.</param>
-        /// <param name="jobId">The job id of the task.</param>
+        /// <param name="jobId">The job ID of the task.</param>
         public SoftareUpdateConfigurationRunTaskProperties(string status = default(string), string source = default(string), string jobId = default(string))
         {
             Status = status;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the job id of the task.
+        /// Gets or sets the job ID of the task.
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
         public string JobId { get; set; }
