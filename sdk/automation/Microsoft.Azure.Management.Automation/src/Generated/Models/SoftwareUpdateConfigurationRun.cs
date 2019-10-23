@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// Software update configuration Run properties.
+    /// Software update configuration run properties.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SoftwareUpdateConfigurationRun
@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="name">Name of the software update configuration
         /// run.</param>
-        /// <param name="id">Resource Id of the software update configuration
-        /// run</param>
-        /// <param name="softwareUpdateConfiguration">software update
-        /// configuration triggered this run</param>
+        /// <param name="id">Resource ID of the software update configuration
+        /// run.</param>
+        /// <param name="softwareUpdateConfiguration">Software update
+        /// configuration triggered this run.</param>
         /// <param name="status">Status of the software update configuration
         /// run.</param>
         /// <param name="configuredDuration">Configured duration for the
@@ -96,13 +96,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets resource Id of the software update configuration run
+        /// Gets resource ID of the software update configuration run.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets software update configuration triggered this run
+        /// Gets or sets software update configuration triggered this run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.softwareUpdateConfiguration")]
         public UpdateConfigurationNavigation SoftwareUpdateConfiguration { get; set; }
