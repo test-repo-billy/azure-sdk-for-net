@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-            var client = new KeyClient(vaultEndpoint: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            var client = new KeyClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
 
             // Create a new key using the key client.
             KeyVaultKey key = client.CreateKey("key-name", KeyType.Rsa);
@@ -70,6 +70,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
+            // Because only premium key vault supports HSM backed keys , please ensure your key vault
+            // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
 
@@ -96,6 +98,8 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
+            // Because only premium key vault supports HSM backed keys , please ensure your key vault
+            // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
 
