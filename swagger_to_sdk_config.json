@@ -6,7 +6,8 @@
       "reflect-api-versions": "",
       "license-header": "MICROSOFT_MIT_NO_VERSION",
       "sdkrel:csharp-sdks-folder": "./sdk",
-      "use": "@microsoft.azure/autorest.csharp"
+      "use": "@microsoft.azure/autorest.csharp",
+      "csharp.clear-output-folder": ""
     },
     "advanced_options": {
       "create_sdk_pull_requests": true,
