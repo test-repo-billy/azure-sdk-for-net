@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// percentage of failed requests in the sample where failover should
         /// trigger.</param>
         /// <param name="httpErrorRanges">The list of Http status code ranges
-        /// that are considered as server errors for origin to be deeemed
+        /// that are considered as server errors for origin and it is marked as
         /// unhealthy.</param>
         public ResponseBasedOriginErrorDetectionParameters(ResponseBasedDetectedErrorTypes? responseBasedDetectedErrorTypes = default(ResponseBasedDetectedErrorTypes?), int? responseBasedFailoverThresholdPercentage = default(int?), IList<HttpErrorRangeParameters> httpErrorRanges = default(IList<HttpErrorRangeParameters>))
         {
@@ -75,7 +75,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets the list of Http status code ranges that are
-        /// considered as server errors for origin to be deeemed unhealthy.
+        /// considered as server errors for origin and it is marked as
+        /// unhealthy.
         /// </summary>
         [JsonProperty(PropertyName = "httpErrorRanges")]
         public IList<HttpErrorRangeParameters> HttpErrorRanges { get; set; }

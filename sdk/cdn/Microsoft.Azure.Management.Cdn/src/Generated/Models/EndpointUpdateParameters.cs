@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="contentTypesToCompress">List of content types on which
         /// compression applies. The value should be a valid MIME type.</param>
         /// <param name="originHostHeader">The host header value sent to the
-        /// origin with each request. This proerty at Endpoint is only allowed
+        /// origin with each request. This property at Endpoint is only allowed
         /// when endpoint uses single origin and can be overridden by the same
         /// property specified at origin.If you leave this blank, the request
         /// hostname determines this value. Azure CDN origins, such as Web
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets the host header value sent to the origin with each
-        /// request. This proerty at Endpoint is only allowed when endpoint
+        /// request. This property at Endpoint is only allowed when endpoint
         /// uses single origin and can be overridden by the same property
         /// specified at origin.If you leave this blank, the request hostname
         /// determines this value. Azure CDN origins, such as Web Apps, Blob
