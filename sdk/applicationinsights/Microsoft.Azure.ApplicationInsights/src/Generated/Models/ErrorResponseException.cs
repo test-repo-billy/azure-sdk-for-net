@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Query.Models
+namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
 {
     using Microsoft.Rest;
 

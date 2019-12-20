@@ -8,18 +8,15 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.ApplicationInsights.Query.Models
+namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Error details.
+    /// Error response indicates Insights service is not able to process the
+    /// incoming request. The reason is provided in the error message.
     /// </summary>
-    /// <remarks>
-    /// Contains details when the response code indicates an error.
-    /// </remarks>
     public partial class ErrorResponse
     {
         /// <summary>
@@ -33,10 +30,13 @@ namespace Microsoft.Azure.ApplicationInsights.Query.Models
         /// <summary>
         /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="error">The error details.</param>
-        public ErrorResponse(ErrorInfo error)
+        /// <param name="code">Error code.</param>
+        /// <param name="message">Error message indicating why the operation
+        /// failed.</param>
+        public ErrorResponse(string code = default(string), string message = default(string))
         {
-            Error = error;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -46,27 +46,16 @@ namespace Microsoft.Azure.ApplicationInsights.Query.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error details.
+        /// Gets or sets error code.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorInfo Error { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets error message indicating why the operation failed.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Error == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Error");
-            }
-            if (Error != null)
-            {
-                Error.Validate();
-            }
-        }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
+
     }
 }
