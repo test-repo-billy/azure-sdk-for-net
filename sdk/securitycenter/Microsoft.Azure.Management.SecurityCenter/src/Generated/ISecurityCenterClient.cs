@@ -192,6 +192,11 @@ namespace Microsoft.Azure.Management.Security
         IAutomationsOperations Automations { get; }
 
         /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; }
+
+        /// <summary>
         /// Gets the IAssessmentsMetadataOperations.
         /// </summary>
         IAssessmentsMetadataOperations AssessmentsMetadata { get; }

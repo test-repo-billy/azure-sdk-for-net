@@ -197,6 +197,11 @@ namespace Microsoft.Azure.Management.Security
         public virtual IAutomationsOperations Automations { get; private set; }
 
         /// <summary>
+        /// Gets the IAlertsSuppressionRulesOperations.
+        /// </summary>
+        public virtual IAlertsSuppressionRulesOperations AlertsSuppressionRules { get; private set; }
+
+        /// <summary>
         /// Gets the IAssessmentsMetadataOperations.
         /// </summary>
         public virtual IAssessmentsMetadataOperations AssessmentsMetadata { get; private set; }
@@ -506,6 +511,7 @@ namespace Microsoft.Azure.Management.Security
             ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             SubAssessments = new SubAssessmentsOperations(this);
             Automations = new AutomationsOperations(this);
+            AlertsSuppressionRules = new AlertsSuppressionRulesOperations(this);
             AssessmentsMetadata = new AssessmentsMetadataOperations(this);
             Assessments = new AssessmentsOperations(this);
             AdaptiveApplicationControls = new AdaptiveApplicationControlsOperations(this);

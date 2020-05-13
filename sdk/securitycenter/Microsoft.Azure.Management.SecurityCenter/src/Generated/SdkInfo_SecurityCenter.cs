@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),
+                new Tuple<string, string, string>("Security", "AlertsSuppressionRules", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "AllowedConnections", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Assessments", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AssessmentsMetadata", "2020-01-01"),
