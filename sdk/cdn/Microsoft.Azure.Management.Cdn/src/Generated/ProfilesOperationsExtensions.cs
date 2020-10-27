@@ -60,9 +60,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='resourceGroupName'>
             /// Name of the Resource group within the Azure subscription.
             /// </param>
-            public static IPage<Profile> ListByResourceGroup(this IProfilesOperations operations, string resourceGroupName)
+            public static IPage<Profile> ListByResourceGroupXX(this IProfilesOperations operations, string resourceGroupName)
             {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupXXAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Profile>> ListByResourceGroupAsync(this IProfilesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Profile>> ListByResourceGroupXXAsync(this IProfilesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupXXWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -576,9 +576,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Profile> ListByResourceGroupNext(this IProfilesOperations operations, string nextPageLink)
+            public static IPage<Profile> ListByResourceGroupXXNext(this IProfilesOperations operations, string nextPageLink)
             {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupXXNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -593,9 +593,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Profile>> ListByResourceGroupNextAsync(this IProfilesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Profile>> ListByResourceGroupXXNextAsync(this IProfilesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupXXNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
