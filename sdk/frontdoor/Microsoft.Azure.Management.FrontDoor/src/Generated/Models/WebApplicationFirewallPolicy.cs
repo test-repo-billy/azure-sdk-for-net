@@ -36,6 +36,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Initializes a new instance of the WebApplicationFirewallPolicy
         /// class.
         /// </summary>
+        /// <param name="sku">The pricing tier of web application firewall
+        /// policy.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -49,21 +51,25 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// policy.</param>
         /// <param name="frontendEndpointLinks">Describes Frontend Endpoints
         /// associated with this Web Application Firewall policy.</param>
+        /// <param name="routingRuleLinks">Describes Routing Rules associated
+        /// with this Web Application Firewall policy.</param>
         /// <param name="provisioningState">Provisioning state of the
         /// policy.</param>
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public WebApplicationFirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<FrontendEndpointLink> frontendEndpointLinks = default(IList<FrontendEndpointLink>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        public WebApplicationFirewallPolicy(Sku sku, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<FrontendEndpointLink> frontendEndpointLinks = default(IList<FrontendEndpointLink>), IList<RoutingRuleLink> routingRuleLinks = default(IList<RoutingRuleLink>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             PolicySettings = policySettings;
             CustomRules = customRules;
             ManagedRules = managedRules;
             FrontendEndpointLinks = frontendEndpointLinks;
+            RoutingRuleLinks = routingRuleLinks;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             Etag = etag;
+            Sku = sku;
             CustomInit();
         }
 
@@ -98,6 +104,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public IList<FrontendEndpointLink> FrontendEndpointLinks { get; private set; }
 
         /// <summary>
+        /// Gets describes Routing Rules associated with this Web Application
+        /// Firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingRuleLinks")]
+        public IList<RoutingRuleLink> RoutingRuleLinks { get; private set; }
+
+        /// <summary>
         /// Gets provisioning state of the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
@@ -121,6 +134,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string Etag { get; set; }
 
         /// <summary>
+        /// Gets or sets the pricing tier of web application firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -128,6 +147,10 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
             if (PolicySettings != null)
             {
                 PolicySettings.Validate();
