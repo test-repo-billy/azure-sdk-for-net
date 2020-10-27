@@ -154,7 +154,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets the accessProfile for the specified role name of the managed cluster
-            /// with a specified resource group and name.
+            /// with a specified resource group and name. **WARNING**: This API will be
+            /// deprecated. Instead use
+            /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+            /// or
+            /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+            /// .
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,6 +173,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='roleName'>
             /// The name of the role for managed cluster accessProfile resource.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static ManagedClusterAccessProfile GetAccessProfile(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string roleName)
             {
                 return operations.GetAccessProfileAsync(resourceGroupName, resourceName, roleName).GetAwaiter().GetResult();
@@ -178,7 +184,12 @@ namespace Microsoft.Azure.Management.ContainerService
             /// </summary>
             /// <remarks>
             /// Gets the accessProfile for the specified role name of the managed cluster
-            /// with a specified resource group and name.
+            /// with a specified resource group and name. **WARNING**: This API will be
+            /// deprecated. Instead use
+            /// [ListClusterUserCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusterusercredentials)
+            /// or
+            /// [ListClusterAdminCredentials](https://docs.microsoft.com/en-us/rest/api/aks/managedclusters/listclusteradmincredentials)
+            /// .
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -195,6 +206,7 @@ namespace Microsoft.Azure.Management.ContainerService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
             public static async Task<ManagedClusterAccessProfile> GetAccessProfileAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, string roleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAccessProfileWithHttpMessagesAsync(resourceGroupName, resourceName, roleName, null, cancellationToken).ConfigureAwait(false))
@@ -690,6 +702,92 @@ namespace Microsoft.Azure.Management.ContainerService
             }
 
             /// <summary>
+            /// Stop Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Stops a Running Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static void Stop(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.StopAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Stops a Running Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StopAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StopWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Starts a Stopped Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static void Start(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.StartAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Starts a Stopped Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task StartAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.StartWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates or updates a managed cluster.
             /// </summary>
             /// <remarks>
@@ -981,6 +1079,92 @@ namespace Microsoft.Azure.Management.ContainerService
             public static async Task BeginRotateClusterCertificatesAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginRotateClusterCertificatesWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Stop Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Stops a Running Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static void BeginStop(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.BeginStopAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Stop Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Stops a Running Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStopAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Start Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Starts a Stopped Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            public static void BeginStart(this IManagedClustersOperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.BeginStartAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start Managed Cluster
+            /// </summary>
+            /// <remarks>
+            /// Starts a Stopped Managed Cluster
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the managed cluster resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginStartAsync(this IManagedClustersOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
