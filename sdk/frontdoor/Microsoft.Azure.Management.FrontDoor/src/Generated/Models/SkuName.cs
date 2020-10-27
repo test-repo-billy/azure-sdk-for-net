@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for PrivateEndpointStatus.
+    /// Defines values for SkuName.
     /// </summary>
-    public static class PrivateEndpointStatus
+    public static class SkuName
     {
-        public const string Pending = "Pending";
-        public const string Approved = "Approved";
-        public const string Rejected = "Rejected";
-        public const string Disconnected = "Disconnected";
-        public const string Timeout = "Timeout";
+        public const string ClassicAzureFrontDoor = "Classic_AzureFrontDoor";
+        public const string StandardAzureFrontDoor = "Standard_AzureFrontDoor";
+        public const string PremiumAzureFrontDoor = "Premium_AzureFrontDoor";
     }
 }
