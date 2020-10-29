@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationHeaderResponse<RecommendationsGenerateHeaders>> GenerateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationHeaderResponse<RecommendationsGabABDAateHeaders>> GabABDAateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Advisor
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Generate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GabABDAate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Advisor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationHeaderResponse<RecommendationsGenerateHeaders>();
+            var _result = new AzureOperationHeaderResponse<RecommendationsGabABDAateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Advisor
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<RecommendationsGenerateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<RecommendationsGabABDAateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -392,7 +392,11 @@ namespace Microsoft.Azure.Management.Advisor
         /// generated or computed by invoking generateRecommendations.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply to the recommendations.
+        /// The filter to apply to the recommendations.&lt;br&gt;Filter can be applied
+        /// to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid',
+        /// '[Category](#category)'] with operators ['eq', 'and',
+        /// 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and
+        /// ResourceGroup eq 'MyResourceGroup'
         /// </param>
         /// <param name='top'>
         /// The number of recommendations per page if a paged version of this API is

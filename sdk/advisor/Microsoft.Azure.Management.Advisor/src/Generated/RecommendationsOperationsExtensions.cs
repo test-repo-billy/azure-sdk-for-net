@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static RecommendationsGenerateHeaders Generate(this IRecommendationsOperations operations)
+            public static RecommendationsGabABDAateHeaders GabABDAate(this IRecommendationsOperations operations)
             {
-                return operations.GenerateAsync().GetAwaiter().GetResult();
+                return operations.GabABDAateAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecommendationsGenerateHeaders> GenerateAsync(this IRecommendationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecommendationsGabABDAateHeaders> GabABDAateAsync(this IRecommendationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GenerateWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GabABDAateWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -98,7 +98,11 @@ namespace Microsoft.Azure.Management.Advisor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// The filter to apply to the recommendations.
+            /// The filter to apply to the recommendations.&lt;br&gt;Filter can be applied
+            /// to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid',
+            /// '[Category](#category)'] with operators ['eq', 'and',
+            /// 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and
+            /// ResourceGroup eq 'MyResourceGroup'
             /// </param>
             /// <param name='top'>
             /// The number of recommendations per page if a paged version of this API is
@@ -120,7 +124,11 @@ namespace Microsoft.Azure.Management.Advisor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='filter'>
-            /// The filter to apply to the recommendations.
+            /// The filter to apply to the recommendations.&lt;br&gt;Filter can be applied
+            /// to properties ['ResourceId', 'ResourceGroup', 'RecommendationTypeGuid',
+            /// '[Category](#category)'] with operators ['eq', 'and',
+            /// 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category eq 'Cost' and
+            /// ResourceGroup eq 'MyResourceGroup'
             /// </param>
             /// <param name='top'>
             /// The number of recommendations per page if a paged version of this API is

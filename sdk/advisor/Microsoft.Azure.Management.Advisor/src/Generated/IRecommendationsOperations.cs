@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<RecommendationsGenerateHeaders>> GenerateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<RecommendationsGabABDAateHeaders>> GabABDAateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the status of the recommendation computation or
         /// generation process. Invoke this API after calling the generation
@@ -70,7 +70,11 @@ namespace Microsoft.Azure.Management.Advisor
         /// generateRecommendations.
         /// </summary>
         /// <param name='filter'>
-        /// The filter to apply to the recommendations.
+        /// The filter to apply to the recommendations.&lt;br&gt;Filter can be
+        /// applied to properties ['ResourceId', 'ResourceGroup',
+        /// 'RecommendationTypeGuid', '[Category](#category)'] with operators
+        /// ['eq', 'and', 'or'].&lt;br&gt;Example:&lt;br&gt;- $filter=Category
+        /// eq 'Cost' and ResourceGroup eq 'MyResourceGroup'
         /// </param>
         /// <param name='top'>
         /// The number of recommendations per page if a paged version of this
