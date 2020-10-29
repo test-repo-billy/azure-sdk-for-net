@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ConfigData> ListBySubscription(this IConfigurationsOperations operations)
+            public static IPage<ConfigData> AAAABySubscription(this IConfigurationsOperations operations)
             {
-                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+                return operations.AAAABySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConfigData>> ListBySubscriptionAsync(this IConfigurationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConfigData>> AAAABySubscriptionAsync(this IConfigurationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AAAABySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='configContract'>
             /// The Azure Advisor configuration data structure.
             /// </param>
-            public static ARMErrorResponseBody CreateInSubscription(this IConfigurationsOperations operations, ConfigData configContract)
+            public static ConfigData CreateInSubscription(this IConfigurationsOperations operations, ConfigData configContract)
             {
                 return operations.CreateInSubscriptionAsync(configContract).GetAwaiter().GetResult();
             }
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ARMErrorResponseBody> CreateInSubscriptionAsync(this IConfigurationsOperations operations, ConfigData configContract, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConfigData> CreateInSubscriptionAsync(this IConfigurationsOperations operations, ConfigData configContract, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateInSubscriptionWithHttpMessagesAsync(configContract, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='resourceGroup'>
             /// The name of the Azure resource group.
             /// </param>
-            public static ARMErrorResponseBody CreateInResourceGroup(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup)
+            public static ConfigData CreateInResourceGroup(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup)
             {
                 return operations.CreateInResourceGroupAsync(configContract, resourceGroup).GetAwaiter().GetResult();
             }
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ARMErrorResponseBody> CreateInResourceGroupAsync(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConfigData> CreateInResourceGroupAsync(this IConfigurationsOperations operations, ConfigData configContract, string resourceGroup, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateInResourceGroupWithHttpMessagesAsync(configContract, resourceGroup, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -188,9 +188,9 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ConfigData> ListBySubscriptionNext(this IConfigurationsOperations operations, string nextPageLink)
+            public static IPage<ConfigData> AAAABySubscriptionNext(this IConfigurationsOperations operations, string nextPageLink)
             {
-                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.AAAABySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,9 +209,9 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConfigData>> ListBySubscriptionNextAsync(this IConfigurationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConfigData>> AAAABySubscriptionNextAsync(this IConfigurationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AAAABySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
