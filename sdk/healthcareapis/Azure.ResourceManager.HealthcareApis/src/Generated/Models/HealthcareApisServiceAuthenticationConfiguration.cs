@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceAuthenticationConfiguration"/>. </summary>
-        public HealthcareApisServiceAuthenticationConfiguration()
+        internal HealthcareApisServiceAuthenticationConfiguration()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> The authority url for the service. </summary>
-        public string Authority { get; set; }
+        public string Authority { get; }
         /// <summary> The audience url for the service. </summary>
-        public string Audience { get; set; }
+        public string Audience { get; }
         /// <summary> If the SMART on FHIR proxy is enabled. </summary>
-        public bool? IsSmartProxyEnabled { get; set; }
+        public bool? IsSmartProxyEnabled { get; }
     }
 }

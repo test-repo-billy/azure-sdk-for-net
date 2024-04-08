@@ -124,11 +124,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("storageConfiguration"u8);
                 writer.WriteObjectValue<HealthcareApisServiceStorageConfiguration>(StorageConfiguration, options);
             }
-            if (Optional.IsDefined(IsDataPartitionsEnabled))
-            {
-                writer.WritePropertyName("enableDataPartitions"u8);
-                writer.WriteBooleanValue(IsDataPartitionsEnabled.Value);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -185,7 +180,6 @@ namespace Azure.ResourceManager.HealthcareApis
             FhirServiceEventState? eventState = default;
             Encryption encryption = default;
             HealthcareApisServiceStorageConfiguration storageConfiguration = default;
-            bool? enableDataPartitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -347,15 +341,6 @@ namespace Azure.ResourceManager.HealthcareApis
                             storageConfiguration = HealthcareApisServiceStorageConfiguration.DeserializeHealthcareApisServiceStorageConfiguration(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("enableDataPartitions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableDataPartitions = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -381,7 +366,6 @@ namespace Azure.ResourceManager.HealthcareApis
                 eventState,
                 encryption,
                 storageConfiguration,
-                enableDataPartitions,
                 identity,
                 etag,
                 serializedAdditionalRawData);

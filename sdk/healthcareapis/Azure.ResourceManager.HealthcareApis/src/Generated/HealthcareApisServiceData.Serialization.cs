@@ -35,16 +35,8 @@ namespace Azure.ResourceManager.HealthcareApis
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToSerialString());
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -56,8 +48,16 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.HealthcareApis
             }
             HealthcareApisServiceProperties properties = default;
             HealthcareApisKind kind = default;
+            AzureLocation location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ETag? etag = default;
             ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -144,22 +144,9 @@ namespace Azure.ResourceManager.HealthcareApis
                     kind = property.Value.GetString().ToHealthcareApisKind();
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -176,9 +163,22 @@ namespace Azure.ResourceManager.HealthcareApis
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (property.NameEquals("etag"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
                 kind,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 etag,
                 identity,
                 serializedAdditionalRawData);
