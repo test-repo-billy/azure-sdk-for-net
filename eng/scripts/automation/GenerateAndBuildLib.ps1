@@ -762,14 +762,20 @@ function GeneratePackage()
         }
     }
 
+    $errMsg = ""
     if ($isGenerateSuccess) {
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            Write-Error "[ERROR] Failed to build the following project with exit code: $?."
-            Write-Error "[ERROR] $srcPath"
-            Write-Error "Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            $errMsg = "[ERROR] Failed to build the following project with exit code: $?." + 
+                "`n$srcPath" + 
+                "`nPlease review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            #Write-Error "[ERROR] Failed to build the following project with exit code: $?."
+            #Write-Error "[ERROR] $srcPath"
+            #Write-Error "Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Error $errMsg
+            Write-Host $errMsg -ForegroundColor Red
             $result = "failed"
         } else {
             # Build the whole solution and generate artifacts if the project build successfully
