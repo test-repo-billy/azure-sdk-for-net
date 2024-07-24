@@ -638,7 +638,9 @@ function Invoke-GenerateAndBuildSDK () {
         New-MgmtPackageFolder -service $service -packageName $package -sdkPath $sdkRootPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
         if ( !$?) {
             Write-Error "[ERROR] Failed to create sdk project folder.service:$service,package:$package,"
-            Write-Error "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Error "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?."
+            Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             exit 1
         }
         $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -669,7 +671,9 @@ function Invoke-GenerateAndBuildSDK () {
             New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkRootPath -readme $readmeFile -autorestConfigYaml "$autorestConfigYaml" -outputJsonFile $newpackageoutput
             if ( !$? ) {
                 Write-Error "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace,"
-                Write-Error "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Error "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?."
+                Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 exit 1
             }
             $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -696,7 +700,9 @@ function Invoke-GenerateAndBuildSDK () {
                         New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
                         if ( !$? ) {
                             Write-Error "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
-                            Write-Error "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                            Write-Error "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
+                            Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                            Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                             exit 1
                         }
                         $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
@@ -756,26 +762,22 @@ function GeneratePackage()
             dotnet build /t:GenerateCode $srcPath /p:SpecRepoRoot=$specRepoRoot
         }
         if ( !$?) {
-            Write-Error "[ERROR] Failed to generate sdk for package:$packageName. exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Error "[ERROR] Failed to generate sdk for package:$packageName. exit code: $?."
+            Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
             $isGenerateSuccess = $false
         }
     }
 
-    $errMsg = ""
     if ($isGenerateSuccess) {
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
-            $errMsg = "[ERROR] Failed to build the following project with exit code: $?." + 
-                "`n$srcPath" + 
-                "`nPlease review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            #Write-Error "[ERROR] Failed to build the following project with exit code: $?."
-            #Write-Error "[ERROR] $srcPath"
-            #Write-Error "Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-            Write-Error $errMsg
-            Write-Host $errMsg -ForegroundColor Red
+            Write-Error "[ERROR] Failed to build the sdk project for service: $service with exit code: $?."
+            Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
         } else {
             # Build the whole solution and generate artifacts if the project build successfully
@@ -784,7 +786,9 @@ function GeneratePackage()
             $serviceProjFilePath = Join-Path $sdkRootPath 'eng' 'service.proj'
             dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
-                Write-Error "[ERROR] Failed to build sdk solution:$packageName. exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Error "[ERROR] Failed to build sdk solution:$packageName. exit code: $?."
+                Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # pack
@@ -792,8 +796,9 @@ function GeneratePackage()
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
                 Write-Error "[ERROR] Failed to pack the following sdk with exit code: $?."
-                Write-Error "$srcPath."
-                Write-Error "Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Error "[ERROR] $srcPath."
+                Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             } else {
                 # artifacts
@@ -807,7 +812,9 @@ function GeneratePackage()
                     # check the artifact in Release folder
                     $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
                     if (-not (Test-Path $artifactsPath)) {
-                        Write-Error "[ERROR] Artifact folder not found for $artifactsPath. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                        Write-Error "[ERROR] Artifact folder not found for $artifactsPath."
+                        Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                        Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                     }
                     else {
                         $artifacts += Get-ChildItem $artifactsPath -Filter *.nupkg -exclude *.symbols.nupkg -Recurse | Select-Object -ExpandProperty FullName | Resolve-Path -Relative
@@ -815,7 +822,8 @@ function GeneratePackage()
                 }
                 $apiViewArtifact = ""
                 if ( $artifacts.count -eq 0) {
-                    Write-Error "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    Write-Error "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                    Write-Error "[ERROR] If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 } else {
                     $apiViewArtifact = $artifacts[0]
                 }
@@ -834,7 +842,8 @@ function GeneratePackage()
             Write-Host "Start to export api for $service"
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
-                Write-Error "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq . If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Error "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Error "[ERROR] If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # breaking change validation
