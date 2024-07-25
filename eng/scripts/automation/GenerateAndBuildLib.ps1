@@ -775,6 +775,11 @@ function GeneratePackage()
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
+            Write-Host "[ERROR] Failed to build the sdk project for service: $service with exit code: $?."
+            Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Host "host[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            Write-Output "output[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            
             Write-Error "[ERROR] Failed to build the sdk project for service: $service with exit code: $?."
             Write-Error "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
             Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
